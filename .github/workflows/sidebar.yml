@@ -1,31 +1,42 @@
-name: Python Sidebar Auto-Gen
+name: Auto-Sidebar Generator
 
 on:
   push:
     branches:
-      - main
+      - main  # Vérifie que c'est bien le nom de ta branche principale
     paths:
       - '**.md'
+      - 'generate_sidebar.py'
 
 jobs:
-  build:
+  update-sidebar:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    
+    # Autorise l'Action à écrire dans le dépôt
+    permissions:
+      contents: write
 
-      - name: Set up Python
+    steps:
+      - name: 📥 Récupération du code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Configuration de Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      - name: Run Generator
-        run: python sidebar_gen.py
+      - name: ⚙️ Génération de la sidebar
+        run: python generate_sidebar.py
 
-      - name: Commit and Push
+      - name: 🚀 Commit et Push des changements
         run: |
-          git config --global user.name "Solus Bot"
+          git config --global user.name "Solus-Bot"
           git config --global user.email "bot@solus.wiki"
           git add _sidebar.md
-          git commit -m "Auto-sidebar (Python) [skip ci]" || exit 0
-          git push
+          # On vérifie s'il y a des changements avant de commit pour éviter une erreur
+          if git diff --staged --quiet; then
+            echo "Aucune modification détectée sur la sidebar."
+          else
+            git commit -m "docs: mise à jour automatique de la sidebar [skip ci]"
+            git push
+          fi
