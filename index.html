@@ -6,13 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   
-  <!-- 1. POLICES D'ÉCRITURE (Style Anime / Moderne) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <!-- 1. POLICES STYLE ANIME -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   
-  <!-- 2. STYLES DE BASE DOCSIFY + THÈME SOMBRE -->
+  <!-- 2. CSS DOCSIFY + PLUGIN DOSSIERS -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-  
-  <!-- 3. STYLE DU PLUGIN SIDEBAR COLLAPSE (Indispensable pour tes dossiers) -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
 
   <style>
@@ -20,7 +18,7 @@
        THÈME OSHI NO KO (DESIGN ULTRA)
        ========================================= */
     :root {
-      /* Palette Ai Hoshino */
+      /* Couleurs par défaut (Ai Hoshino) */
       --theme-color: #ff2a85;
       --theme-glow: rgba(255, 42, 133, 0.5);
       --bg-color: #0b0510;
@@ -28,14 +26,9 @@
       --sidebar-bg: rgba(15, 8, 25, 0.85);
       --card-bg: rgba(25, 12, 35, 0.7);
       --bg-image: url('https://images.unsplash.com/photo-1534796636918-9b4580518835?q=80&w=2000');
-      
-      /* Variables Docsify surchargées */
-      --base-font-family: 'Quicksand', sans-serif;
-      --heading-color: var(--theme-color);
-      --link-color: var(--theme-color);
     }
 
-    /* --- FOND ET AMBIANCE --- */
+    /* FOND ET CORPS */
     body {
       background-color: var(--bg-color) !important;
       background-image: var(--bg-image) !important;
@@ -45,234 +38,169 @@
       color: var(--text-color) !important;
       font-family: 'Quicksand', sans-serif;
     }
-    
-    /* Overlay Vignette (Assombrit les bords) */
+    /* Filtre sombre par dessus l'image */
     body::after {
       content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: radial-gradient(circle, transparent 40%, var(--bg-color) 100%);
       pointer-events: none; z-index: -1;
     }
 
-    /* --- CONTENU PRINCIPAL (CARTE DE VERRE) --- */
+    /* CONTENU (CARTE) */
     .content { padding-top: 40px; }
     .markdown-section {
       background: var(--card-bg);
       backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-      border-radius: 20px;
-      padding: 50px !important;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.1);
+      border-radius: 15px; padding: 40px !important;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
       margin: 0 auto 40px auto; max-width: 950px;
     }
-
-    /* TITRES STYLÉS */
     .markdown-section h1, .markdown-section h2 {
-      font-family: 'Poppins', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border-bottom: 2px solid rgba(255,255,255,0.1);
-      padding-bottom: 15px;
-      text-shadow: 0 0 20px var(--theme-glow);
+      font-family: 'Poppins', sans-serif; color: var(--theme-color) !important;
+      text-shadow: 0 0 15px var(--theme-glow); border-bottom: 2px solid rgba(255,255,255,0.1);
     }
-    .markdown-section h1::before { content: '⭐ '; animation: spin 10s linear infinite; display: inline-block; }
-
-    /* LIENS */
     .markdown-section a {
-      font-weight: 700; text-decoration: none; border-bottom: 1px dashed var(--theme-color);
-      transition: 0.3s;
+      color: var(--theme-color); font-weight: bold; text-decoration: none;
+      border-bottom: 1px dashed var(--theme-color); transition: 0.3s;
     }
     .markdown-section a:hover {
-      background: var(--theme-glow); color: white !important; border-bottom-style: solid;
-      padding: 0 5px; border-radius: 4px;
+      background: var(--theme-glow); color: white !important;
     }
 
-    /* --- BARRE LATÉRALE (SIDEBAR) --- */
+    /* BARRE LATÉRALE (SIDEBAR) */
     .sidebar {
       background: var(--sidebar-bg) !important;
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-right: 1px solid rgba(255,255,255,0.05);
       width: 300px;
     }
-    
-    /* Nom du site */
     .app-name-link {
-      font-family: 'Poppins', sans-serif; font-weight: 900; letter-spacing: 2px;
-      text-shadow: 0 0 15px var(--theme-color);
-      color: var(--theme-color) !important;
+      font-family: 'Poppins', sans-serif; font-weight: 900;
+      color: var(--theme-color) !important; text-shadow: 0 0 10px var(--theme-glow);
     }
-
-    /* Éléments du menu (Plugin Collapse) */
-    .sidebar-nav ul li { margin: 5px 0; }
+    
+    /* GESTION DU PLUGIN SIDEBAR COLLAPSE (DOSSIERS) */
+    .sidebar-nav ul li { margin: 2px 0; }
     .sidebar-nav ul li a {
-      font-weight: 600; color: #ddd !important; transition: 0.2s; border: none !important;
-      font-size: 15px;
+      color: #ddd !important; transition: 0.2s; border: none !important; font-size: 15px;
     }
     .sidebar-nav ul li a:hover {
-      color: var(--theme-color) !important; transform: translateX(5px); text-shadow: 0 0 10px var(--theme-glow);
+      color: var(--theme-color) !important; text-shadow: 0 0 5px var(--theme-glow);
     }
-    /* Dossier actif */
+    /* Dossier/Fichier actif */
     .sidebar-nav li.active > a {
       color: white !important; background: linear-gradient(90deg, var(--theme-color), transparent);
-      border-radius: 5px; padding-left: 10px; box-shadow: 0 0 15px var(--theme-glow);
+      border-left: 3px solid white; padding-left: 10px;
     }
-    
-    /* Icônes du plugin Collapse (Flèches) */
-    .app-sub-sidebar li:before { display: none; } /* Enlève les puces moches */
-    .sidebar-nav > ul > li > a:before { display: none; }
-    
-    /* Personnalisation des flèches de dossier */
-    .sidebar-nav .folder { cursor: pointer; color: var(--text-color); }
-    .sidebar-nav .app-sub-sidebar { padding-left: 20px; }
+    /* Icones de dossiers */
+    .app-sub-sidebar li:before { display: none; } 
+    .folder { cursor: pointer; color: var(--text-color); font-weight: bold; }
 
-    /* BARRE DE RECHERCHE */
-    .search input {
-      background: rgba(255,255,255,0.05) !important; border: 1px solid rgba(255,255,255,0.2) !important;
-      color: white !important; border-radius: 10px !important; padding: 10px !important;
-    }
-
-    /* --- SETTINGS PANEL --- */
+    /* MENU PARAMÈTRES */
     #theme-panel {
       position: fixed; top: 20px; right: -320px; width: 280px;
       background: rgba(10, 5, 15, 0.95); backdrop-filter: blur(25px);
       border: 1px solid var(--theme-color); border-radius: 15px; padding: 25px;
       box-shadow: 0 0 50px rgba(0,0,0,0.8); z-index: 9999; color: white;
-      transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition: right 0.4s;
     }
     #theme-panel.open { right: 20px; }
-    
     #theme-toggle-btn {
       position: fixed; top: 20px; right: 20px; z-index: 10000;
       width: 50px; height: 50px; border-radius: 50%; border: none;
       background: var(--theme-color); color: white; font-size: 24px; cursor: pointer;
       box-shadow: 0 0 20px var(--theme-glow); transition: 0.3s;
-      display: flex; align-items: center; justify-content: center;
     }
     #theme-toggle-btn:hover { transform: scale(1.1) rotate(90deg); }
-
+    
     .theme-group { margin-bottom: 15px; }
-    .theme-group label { display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 5px; color: #aaa; font-family: 'Poppins'; }
-    .theme-group input[type="color"] { width: 100%; height: 40px; border: none; background: transparent; cursor: pointer; border-radius: 5px; }
-    .theme-group input[type="text"] { width: 100%; padding: 10px; background: rgba(255,255,255,0.1); border: 1px solid #444; color: white; border-radius: 5px; }
-    
-    .presets { display: flex; gap: 10px; margin-top: 10px; }
-    .preset-btn { flex: 1; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; color: white; font-family: 'Poppins'; }
-    .preset-btn:hover { filter: brightness(1.2); transform: translateY(-3px); }
-    .btn-ai { background: linear-gradient(45deg, #ff2a85, #ff7eb3); }
-    .btn-aqua { background: linear-gradient(45deg, #2a85ff, #00d2ff); }
-    .btn-ruby { background: linear-gradient(45deg, #ff2a2a, #ffb347); }
-
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-    
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 3px; }
+    .theme-group input[type="color"] { width: 100%; border: none; background: transparent; cursor: pointer; height: 30px;}
+    .theme-group input[type="text"] { width: 100%; padding: 5px; background: rgba(255,255,255,0.1); border: 1px solid #444; color: white; }
+    .presets { display: flex; gap: 5px; margin-top: 5px; }
+    .preset-btn { flex: 1; padding: 5px; border:none; cursor:pointer; color:white; font-weight:bold; }
   </style>
 </head>
 <body>
 
-  <!-- Bouton Paramètres -->
+  <!-- BOUTON & MENU SETTINGS -->
   <button id="theme-toggle-btn">✨</button>
-
-  <!-- Panneau Paramètres -->
   <div id="theme-panel">
-    <h3 style="margin-top:0; color:var(--theme-color); font-family:'Poppins'; text-align:center; text-shadow:0 0 10px var(--theme-glow)">Costume de Scène</h3>
-    <div class="theme-group"><label>Couleur Principale</label><input type="color" id="color-theme" value="#ff2a85"></div>
-    <div class="theme-group"><label>Couleur Texte</label><input type="color" id="color-text" value="#fce8f8"></div>
-    <div class="theme-group"><label>Couleur Fond</label><input type="color" id="color-bg" value="#0b0510"></div>
-    <div class="theme-group"><label>Image URL</label><input type="text" id="url-bg" placeholder="https://..."></div>
-    <div class="theme-group">
-      <label>Presets Idoles</label>
-      <div class="presets">
-        <button class="preset-btn btn-ai" onclick="applyPreset('ai')">Ai</button>
-        <button class="preset-btn btn-aqua" onclick="applyPreset('aqua')">Aqua</button>
-        <button class="preset-btn btn-ruby" onclick="applyPreset('ruby')">Ruby</button>
-      </div>
+    <h3 style="margin:0 0 15px 0; color:var(--theme-color); text-align:center;">Costume de Scène</h3>
+    <div class="theme-group"><label>Thème</label><input type="color" id="color-theme"></div>
+    <div class="theme-group"><label>Texte</label><input type="color" id="color-text"></div>
+    <div class="theme-group"><label>Fond</label><input type="color" id="color-bg"></div>
+    <div class="theme-group"><label>Image URL</label><input type="text" id="url-bg"></div>
+    <div class="presets">
+      <button class="preset-btn" style="background:#ff2a85" onclick="applyPreset('ai')">Ai</button>
+      <button class="preset-btn" style="background:#2a85ff" onclick="applyPreset('aqua')">Aqua</button>
+      <button class="preset-btn" style="background:#ff2a2a" onclick="applyPreset('ruby')">Ruby</button>
     </div>
-    <button onclick="resetTheme()" style="width:100%; margin-top:15px; padding:10px; background:transparent; border:1px solid #666; color:#ccc; border-radius:5px; cursor:pointer;">Réinitialiser</button>
+    <button onclick="resetTheme()" style="width:100%; margin-top:10px; background:transparent; border:1px solid #666; color:#ccc; cursor:pointer;">Reset</button>
   </div>
 
-  <!-- Zone de chargement -->
-  <div id="app">Chargement du monde... 🌟</div>
+  <div id="app">Chargement...</div>
 
-  <!-- 4. CONFIGURATION DOCSIFY (Le Cœur du système) -->
+  <!-- CONFIGURATION SIMPLE (COMME TON EXEMPLE) -->
   <script>
     window.$docsify = {
       name: 'Oshi no Ko Wiki',
       
-      // --- IMPORTANT : CONFIGURATION DOSSIER WIKI ---
-      basePath: 'wiki/',    // Tout est dans le dossier wiki
+      // On garde juste ça pour dire que les fichiers sont dans le dossier wiki
+      basePath: 'wiki/',
+      
+      // Config standard
       homepage: 'README.md',
-      loadSidebar: true,    // Charge _sidebar.md
-      
-      // --- IMPORTANT : FIX DU MENU ---
-      // Force Docsify à utiliser le _sidebar.md de la racine wiki même dans les sous-dossiers
-      alias: {
-        '/.*/_sidebar.md': '/_sidebar.md'
-      },
-      
-      subMaxLevel: 3,
+      loadSidebar: true, // Va chercher _sidebar.md dans wiki/ automatiquement
+      subMaxLevel: 2,
       auto2top: true,
       
-      // --- CONFIGURATION PLUGIN SEARCH ---
+      // Config Recherche
       search: {
         placeholder: 'Rechercher...',
-        noData: 'Aucun résultat trouvé.',
+        noData: 'Rien trouvé.',
         depth: 6
       },
 
-      // --- CONFIGURATION PLUGIN SIDEBAR COLLAPSE ---
-      // C'est ça qui fait l'effet dossier comme sur LifeSteal Wiki
-      sidebarDisplayLevel: 1, // 0 = Tout fermé, 1 = Niveau 1 ouvert
-    };
+      // Config Plugin Dossiers (Sidebar Collapse)
+      sidebarDisplayLevel: 1, // 1 = Fermé par défaut, clique pour ouvrir
+    }
   </script>
 
-  <!-- 5. CHARGEMENT DES SCRIPTS (DANS L'ORDRE) -->
+  <!-- SCRIPTS -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
   
-  <!-- LE PLUGIN MAGIQUE -->
+  <!-- LE PLUGIN QUI TE MANQUAIT -->
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 
-  <!-- SCRIPT DU THÈME PERSO (COOKIES) -->
+  <!-- SCRIPT THEME (COOKIES) -->
   <script>
-    const root = document.documentElement;
-    const panel = document.getElementById('theme-panel');
-    const toggleBtn = document.getElementById('theme-toggle-btn');
-    const inputs = {
-      theme: document.getElementById('color-theme'), text: document.getElementById('color-text'),
-      bg: document.getElementById('color-bg'), bgUrl: document.getElementById('url-bg')
-    };
+    const root = document.documentElement, panel = document.getElementById('theme-panel'), toggle = document.getElementById('theme-toggle-btn');
+    const inputs = { theme: document.getElementById('color-theme'), text: document.getElementById('color-text'), bg: document.getElementById('color-bg'), bgUrl: document.getElementById('url-bg') };
     const presets = {
       ai: { theme: '#ff2a85', text: '#fce8f8', bg: '#0b0510', bgUrl: 'https://images.unsplash.com/photo-1534796636918-9b4580518835?q=80&w=2000' },
       aqua: { theme: '#2a85ff', text: '#e8f4fc', bg: '#050a10', bgUrl: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=2000' },
       ruby: { theme: '#ff2a2a', text: '#fce8e8', bg: '#100505', bgUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2000' }
     };
+    
+    toggle.addEventListener('click', () => panel.classList.toggle('open'));
 
-    toggleBtn.addEventListener('click', () => panel.classList.toggle('open'));
-
-    function hexToRgba(hex, alpha) {
-        let r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
-        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    }
-    function applyColors(c) {
+    function apply(c) {
       root.style.setProperty('--theme-color', c.theme);
-      root.style.setProperty('--theme-glow', hexToRgba(c.theme, 0.6));
+      root.style.setProperty('--theme-glow', c.theme + '80'); // Ajoute transparence
       root.style.setProperty('--text-color', c.text);
       root.style.setProperty('--bg-color', c.bg);
       root.style.setProperty('--bg-image', c.bgUrl ? `url('${c.bgUrl}')` : 'none');
-      inputs.theme.value = c.theme; inputs.text.value = c.text;
-      inputs.bg.value = c.bg; inputs.bgUrl.value = c.bgUrl;
+      inputs.theme.value = c.theme; inputs.text.value = c.text; inputs.bg.value = c.bg; inputs.bgUrl.value = c.bgUrl;
     }
-    function saveTheme(c) { localStorage.setItem('oshiTheme', JSON.stringify(c)); applyColors(c); }
-    function loadTheme() { const s = localStorage.getItem('oshiTheme'); applyColors(s ? JSON.parse(s) : presets.ai); }
-
-    Object.keys(inputs).forEach(k => inputs[k].addEventListener('input', () => {
-      saveTheme({ theme: inputs.theme.value, text: inputs.text.value, bg: inputs.bg.value, bgUrl: inputs.bgUrl.value });
-    }));
-    function applyPreset(n) { saveTheme(presets[n]); }
-    function resetTheme() { localStorage.removeItem('oshiTheme'); applyColors(presets.ai); }
-
-    loadTheme();
+    
+    function save(c) { localStorage.setItem('oshiTheme', JSON.stringify(c)); apply(c); }
+    Object.keys(inputs).forEach(k => inputs[k].addEventListener('input', () => save({ theme: inputs.theme.value, text: inputs.text.value, bg: inputs.bg.value, bgUrl: inputs.bgUrl.value })));
+    function applyPreset(n) { save(presets[n]); }
+    function resetTheme() { localStorage.removeItem('oshiTheme'); apply(presets.ai); }
+    
+    const saved = localStorage.getItem('oshiTheme');
+    apply(saved ? JSON.parse(saved) : presets.ai);
   </script>
 </body>
 </html>
