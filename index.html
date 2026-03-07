@@ -6,28 +6,36 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   
-  <!-- Polices d'écriture style Anime / Japon moderne -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+  <!-- Polices : Poppins (Titres) et Quicksand (Texte) pour le style Anime Moderne -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   
-  <!-- Base de Docsify -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <!-- Thème de base (Dark) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
   
   <style>
     /* =========================================
-       THÈME OSHI NO KO (Version ULTRA)
+       THÈME OSHI NO KO (Ultra Complet)
        ========================================= */
     :root {
-      /* Palette Ai Hoshino par défaut */
-      --bg-color: #08030c;
+      /* Palette par défaut (Ai Hoshino) */
+      --theme-color: #ff2a85;
+      --theme-color-glow: rgba(255, 42, 133, 0.5);
+      --bg-color: #0b0510;
       --text-color: #fce8f8;
-      --theme-color: #ff2a85; /* Rose Idole */
-      --theme-color-glow: rgba(255, 42, 133, 0.6);
-      --sidebar-bg: rgba(12, 5, 20, 0.65);
+      --sidebar-bg: rgba(11, 5, 16, 0.8);
+      --card-bg: rgba(20, 10, 30, 0.6);
       --bg-image: url('https://images.unsplash.com/photo-1534796636918-9b4580518835?q=80&w=2000');
+      
+      /* Docsify Themeable Variables overrides */
+      --base-font-family: 'Quicksand', sans-serif;
+      --heading-h1-font-family: 'Poppins', sans-serif;
+      --heading-color: var(--theme-color);
+      --link-color: var(--theme-color);
+      --link-text-decoration: none;
+      --sidebar-width: 300px;
     }
 
+    /* FOND GLOBAL ET IMAGE */
     body {
       background-color: var(--bg-color) !important;
       background-image: var(--bg-image) !important;
@@ -35,301 +43,237 @@
       background-position: center !important;
       background-attachment: fixed !important;
       color: var(--text-color) !important;
-      font-family: 'Nunito', sans-serif;
+    }
+    
+    /* Overlay sombre pour lisibilité */
+    body::after {
+      content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, transparent 0%, var(--bg-color) 120%);
+      pointer-events: none; z-index: -1;
     }
 
-    /* Effet Scène de Concert (Overlay sombre) */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle at center, transparent 0%, var(--bg-color) 100%);
-      pointer-events: none;
-      z-index: -1;
+    /* CONTENU PRINCIPAL (Carte Glassmorphism) */
+    .content {
+      padding-top: 40px;
     }
-
-    /* --- CONTENU DU WIKI (Effet Carte de Verre) --- */
     .markdown-section {
-      background: rgba(15, 5, 20, 0.75);
-      padding: 50px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 40px var(--theme-color-glow), inset 0 0 20px rgba(0,0,0,0.5);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      max-width: 900px;
-      margin: 40px auto;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 40px 60px !important;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
+      margin: 0 auto;
+      max-width: 950px;
     }
 
-    /* Titres (Polices impactantes) */
-    .markdown-section h1, .markdown-section h2, .markdown-section h3 {
-      font-family: 'Poppins', sans-serif;
-      color: var(--theme-color) !important;
+    /* TITRES AVEC EFFET NÉON */
+    .markdown-section h1, .markdown-section h2 {
       text-shadow: 0 0 15px var(--theme-color-glow);
-      border-bottom: 2px solid rgba(255,255,255,0.05);
+      border-bottom: 2px solid rgba(255,255,255,0.1);
       padding-bottom: 10px;
-      letter-spacing: 1px;
     }
+    .markdown-section h1::before { content: '✨ '; }
 
-    /* Étoile filante sur le H1 */
-    .markdown-section h1::before {
-      content: '⭐ ';
-      animation: pulse-star 2s infinite alternate;
-    }
-
-    .markdown-section p, .markdown-section li {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: var(--text-color) !important;
-    }
-
-    /* Liens Néon */
+    /* LIENS */
     .markdown-section a {
-      color: var(--theme-color);
-      font-weight: 700;
-      text-decoration: none;
-      position: relative;
-      transition: all 0.3s ease;
+      font-weight: 700; transition: all 0.2s;
+      border-bottom: 1px dashed var(--theme-color);
     }
     .markdown-section a:hover {
-      text-shadow: 0 0 12px var(--theme-color);
-    }
-    .markdown-section a::after {
-      content: ''; position: absolute; width: 100%; transform: scaleX(0); height: 2px;
-      bottom: -2px; left: 0; background-color: var(--theme-color);
-      transform-origin: bottom right; transition: transform 0.25s ease-out;
-    }
-    .markdown-section a:hover::after {
-      transform: scaleX(1); transform-origin: bottom left;
+      text-shadow: 0 0 8px var(--theme-color);
+      border-bottom-style: solid;
     }
 
-    /* --- BARRE LATÉRALE (Le fameux Menu) --- */
+    /* BARRE LATÉRALE (SIDEBAR) */
     .sidebar {
       background: var(--sidebar-bg) !important;
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-right: 1px solid rgba(255, 255, 255, 0.05);
-      box-shadow: 5px 0 30px rgba(0,0,0,0.5);
+      border-right: 1px solid rgba(255,255,255,0.05);
     }
-    /* Le titre du Wiki en haut à gauche */
-    .sidebar h1.app-name {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.8rem;
-      text-transform: uppercase;
-      background: linear-gradient(45deg, var(--text-color), var(--theme-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px var(--theme-color-glow);
+    .sidebar-nav ul li a {
+      font-weight: 600; color: #ccc; transition: all 0.2s; border: none !important;
     }
-    
-    .sidebar ul li a {
-      color: var(--text-color) !important;
-      font-family: 'Nunito', sans-serif;
-      font-size: 16px;
-      border-radius: 8px;
-      padding: 5px 10px;
-      transition: all 0.3s;
+    .sidebar-nav ul li a:hover {
+      color: #fff !important; text-shadow: 0 0 10px var(--theme-color); transform: translateX(5px);
     }
-    .sidebar ul li a:hover, .sidebar ul li.active > a {
-      color: #fff !important;
-      background: var(--theme-color-glow);
-      text-shadow: 0 0 8px #fff;
-      transform: translateX(5px);
+    /* Lien actif */
+    .sidebar-nav li.active > a {
+      color: var(--theme-color) !important; border-left: 3px solid var(--theme-color) !important; padding-left: 15px; background: linear-gradient(90deg, var(--theme-color-glow), transparent);
     }
-    .sidebar-toggle { background: rgba(0,0,0,0.8) !important; }
+
+    /* SEARCH BOX */
+    .search { margin-bottom: 20px; }
+    .search input {
+      background: rgba(0,0,0,0.3) !important; border: 1px solid rgba(255,255,255,0.1) !important;
+      border-radius: 20px !important; color: white !important; font-family: 'Quicksand';
+    }
+
+    /* BOUTON TOGGLE MENU MOBILE */
+    .sidebar-toggle { background: transparent !important; }
     .sidebar-toggle span { background: var(--theme-color) !important; }
 
-    /* --- PANNEAU DE CONFIGURATION --- */
+    /* --- PANNEAU DE CONFIGURATION (Settings) --- */
     #theme-panel {
-      position: fixed; top: 20px; right: -350px; width: 300px;
-      background: rgba(10, 2, 15, 0.9); backdrop-filter: blur(25px);
-      border: 1px solid var(--theme-color); border-radius: 20px;
-      padding: 25px; box-shadow: 0 0 40px rgba(0,0,0,0.9);
-      transition: right 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 9999; color: white;
+      position: fixed; top: 20px; right: -320px; width: 280px;
+      background: rgba(15, 10, 25, 0.95); backdrop-filter: blur(20px);
+      border: 1px solid var(--theme-color); border-radius: 15px; padding: 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.8); z-index: 9999; color: white;
+      transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     #theme-panel.open { right: 20px; }
     
     #theme-toggle-btn {
-      position: fixed; top: 20px; right: 20px;
-      background: var(--theme-color); border: none; border-radius: 50%;
-      width: 55px; height: 55px; cursor: pointer;
-      box-shadow: 0 0 20px var(--theme-color); z-index: 10000;
-      color: white; font-size: 26px; transition: all 0.3s;
-      animation: float 3s ease-in-out infinite;
+      position: fixed; top: 20px; right: 20px; z-index: 10000;
+      width: 50px; height: 50px; border-radius: 50%; border: none;
+      background: var(--theme-color); color: white; font-size: 24px; cursor: pointer;
+      box-shadow: 0 0 15px var(--theme-color); transition: transform 0.3s;
+      display: flex; align-items: center; justify-content: center;
     }
-    #theme-toggle-btn:hover { transform: scale(1.15) rotate(180deg); }
+    #theme-toggle-btn:hover { transform: scale(1.1) rotate(45deg); }
 
-    .theme-group { margin-bottom: 20px; }
-    .theme-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 8px; color: #ddd; text-transform: uppercase; font-family: 'Poppins'; letter-spacing: 1px;}
-    .theme-group input[type="color"] { width: 100%; height: 45px; border: none; border-radius: 8px; cursor: pointer; background: transparent; }
-    .theme-group input[type="text"] { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--theme-color); color: white; border-radius: 8px; outline: none; transition: 0.3s;}
-    .theme-group input[type="text"]:focus { box-shadow: 0 0 10px var(--theme-color-glow); }
-
-    .presets { display: flex; gap: 10px; }
-    .preset-btn {
-      flex: 1; padding: 12px 0; border: none; border-radius: 8px; cursor: pointer; font-family: 'Poppins'; font-weight: bold; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); transition: 0.3s;
-    }
-    .preset-btn:hover { transform: translateY(-3px); filter: brightness(1.2); }
-    .btn-ai { background: linear-gradient(135deg, #ff2a85, #ff7eb3); }
-    .btn-aqua { background: linear-gradient(135deg, #2a85ff, #00d2ff); }
-    .btn-ruby { background: linear-gradient(135deg, #ff2a2a, #ffb347); }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-color); }
-    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 10px; }
-
-    /* Animations */
-    @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
-    @keyframes pulse-star { 0% { opacity: 0.5; text-shadow: 0 0 5px var(--theme-color); } 100% { opacity: 1; text-shadow: 0 0 25px var(--theme-color), 0 0 40px white; } }
+    .theme-group { margin-bottom: 15px; }
+    .theme-group label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; color: #aaa; }
+    .theme-group input[type="color"] { width: 100%; height: 35px; border: none; background: transparent; cursor: pointer; }
+    .theme-group input[type="text"] { width: 100%; padding: 8px; background: rgba(255,255,255,0.1); border: 1px solid #444; color: white; border-radius: 5px; }
+    
+    .presets { display: flex; gap: 8px; margin-top: 10px; }
+    .preset-btn { flex: 1; padding: 8px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; color: white; font-family: 'Poppins'; transition: 0.2s; }
+    .preset-btn:hover { filter: brightness(1.2); transform: translateY(-2px); }
+    
+    .btn-ai { background: #ff2a85; }
+    .btn-aqua { background: #2a85ff; }
+    .btn-ruby { background: #ff2a2a; }
   </style>
 </head>
 <body>
 
-  <!-- Bouton magique -->
   <button id="theme-toggle-btn">✨</button>
 
-  <!-- Menu de thème -->
   <div id="theme-panel">
-    <h3 style="margin-top:0; font-family:'Poppins'; color: var(--theme-color); text-shadow: 0 0 10px var(--theme-color); text-align: center;">Costume de Scène</h3>
-    
+    <h3 style="margin-top:0; color:var(--theme-color); font-family:'Poppins'; text-align:center;">Costume de Scène</h3>
+    <div class="theme-group"><label>Couleur Thème</label><input type="color" id="color-theme" value="#ff2a85"></div>
+    <div class="theme-group"><label>Couleur Texte</label><input type="color" id="color-text" value="#fce8f8"></div>
+    <div class="theme-group"><label>Couleur Fond</label><input type="color" id="color-bg" value="#0b0510"></div>
+    <div class="theme-group"><label>Image de fond (URL)</label><input type="text" id="url-bg" placeholder="https://..."></div>
     <div class="theme-group">
-      <label>Couleur Idole (Néon)</label>
-      <input type="color" id="color-theme" value="#ff2a85">
-    </div>
-    <div class="theme-group">
-      <label>Couleur du Texte</label>
-      <input type="color" id="color-text" value="#fce8f8">
-    </div>
-    <div class="theme-group">
-      <label>Couleur de Fond</label>
-      <input type="color" id="color-bg" value="#08030c">
-    </div>
-    <div class="theme-group">
-      <label>Image de Scène (URL)</label>
-      <input type="text" id="url-bg" placeholder="Lien de l'image (https://...)">
-    </div>
-    <div class="theme-group">
-      <label>Apparence Rapide</label>
+      <label>Presets</label>
       <div class="presets">
         <button class="preset-btn btn-ai" onclick="applyPreset('ai')">Ai</button>
         <button class="preset-btn btn-aqua" onclick="applyPreset('aqua')">Aqua</button>
         <button class="preset-btn btn-ruby" onclick="applyPreset('ruby')">Ruby</button>
       </div>
     </div>
-    <button onclick="resetTheme()" style="width:100%; padding:10px; background:transparent; border:1px solid #aaa; color:#aaa; border-radius:8px; cursor:pointer;">Remettre à zéro</button>
+    <button onclick="resetTheme()" style="width:100%; margin-top:15px; padding:8px; background:transparent; border:1px solid #666; color:#ccc; border-radius:5px; cursor:pointer;">Reset</button>
   </div>
 
-  <!-- Conteneur WIKI -->
-  <div id="app">
-    <h2 style="text-align:center; margin-top: 20%; font-family: 'Poppins'; color: #ff2a85; text-shadow: 0 0 20px #ff2a85; animation: pulse-star 1.5s infinite alternate;">
-      Mise en scène en cours... 🎤🌟
-    </h2>
-  </div>
+  <div id="app">Chargement du Monde...</div>
 
-  <!-- LE COEUR DU WIKI : CONFIGURATION DOCSIFY CORRIGÉE -->
+  <!-- CONFIGURATION DOCSIFY (Basée sur ta config Cardinal OS + Fixes) -->
   <script>
     window.$docsify = {
       name: 'Oshi no Ko Wiki',
+      repo: '', // Ajoute ton lien GitHub ici si tu veux
       
-      // 1. On dit à Docsify que tes fichiers sont dans "wiki"
-      basePath: 'wiki/', 
+      // --- PARTIE CRUCIALE POUR QUE ÇA MARCHE ---
+      basePath: 'wiki/',    // Tous les fichiers sont dans le dossier wiki
+      homepage: 'README.md', // Le fichier d'accueil
+      loadSidebar: true,    // Charge _sidebar.md
       
-      // 2. On FORCE le chargement du menu
-      loadSidebar: '_sidebar.md', 
-      
-      // 3. LA CORRECTION MAGIQUE :
-      // Empêche Docsify de chercher un fichier _sidebar.md inexistant quand tu cliques sur un sous-dossier.
-      // Il utilisera toujours le _sidebar.md principal !
+      // Alias : Force tous les sous-dossiers à utiliser le _sidebar.md de la racine wiki
       alias: {
         '/.*/_sidebar.md': '/_sidebar.md'
       },
+      // -------------------------------------------
 
-      // 4. On force l'accueil
-      homepage: 'README.md',
-
-      subMaxLevel: 3,
+      subMaxLevel: 3,         // Affiche H1, H2, H3 dans le menu
+      sidebarDisplayLevel: 1, // Comme ta config Cardinal
       auto2top: true,
       
-      // Recherche
+      // Ta configuration de recherche Cardinal OS
       search: {
-        paths: 'auto',
-        placeholder: '🔍 Rechercher un secret...',
-        noData: 'Aucun résultat...',
-        depth: 3
-      }
-    }
+        placeholder: 'RECHERCHER...',
+        noData: 'AUCUN RÉSULTAT',
+        depth: 6,
+        hideOtherSidebarContent: false
+      },
+
+      // Plugins (Sound effects placeholder + Theme Init)
+      plugins: [
+        function(hook, vm) {
+          // Au chargement initial
+          hook.init(function() {
+             // Init Theme logic here if needed beyond pure JS
+          });
+          
+          // À chaque changement de page (Comme ton script Cardinal)
+          hook.doneEach(function() {
+            // J'ai commenté playSound car je n'ai pas tes fichiers audio, 
+            // mais la structure est là si tu veux les remettre !
+            /*
+            document.querySelectorAll('.sidebar-nav a, .search input').forEach(el => {
+              el.addEventListener('mouseenter', () => playSound('hover'));
+              if(el.tagName === 'A') el.addEventListener('click', () => playSound('click'));
+            });
+            */
+          });
+        }
+      ]
+    };
   </script>
 
-  <!-- Scripts de Docsify -->
+  <!-- Docsify Core -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
 
-  <!-- Script des Cookies/Thèmes -->
+  <!-- SCRIPT LOGIQUE DU THÈME & COOKIES -->
   <script>
     const root = document.documentElement;
     const panel = document.getElementById('theme-panel');
     const toggleBtn = document.getElementById('theme-toggle-btn');
-    
     const inputs = {
-      theme: document.getElementById('color-theme'),
-      text: document.getElementById('color-text'),
-      bg: document.getElementById('color-bg'),
-      bgUrl: document.getElementById('url-bg')
+      theme: document.getElementById('color-theme'), text: document.getElementById('color-text'),
+      bg: document.getElementById('color-bg'), bgUrl: document.getElementById('url-bg')
     };
 
-    const defaultTheme = {
-      theme: '#ff2a85', text: '#fce8f8', bg: '#08030c', 
-      bgUrl: 'https://images.unsplash.com/photo-1534796636918-9b4580518835?q=80&w=2000'
-    };
     const presets = {
-      ai: defaultTheme,
-      aqua: { theme: '#00d2ff', text: '#e8f4fc', bg: '#02050a', bgUrl: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=2000' },
-      ruby: { theme: '#ff2a2a', text: '#fff0f0', bg: '#0a0202', bgUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2000' }
+      ai: { theme: '#ff2a85', text: '#fce8f8', bg: '#0b0510', bgUrl: 'https://images.unsplash.com/photo-1534796636918-9b4580518835?q=80&w=2000' },
+      aqua: { theme: '#2a85ff', text: '#e8f4fc', bg: '#050a10', bgUrl: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=2000' },
+      ruby: { theme: '#ff2a2a', text: '#fce8e8', bg: '#100505', bgUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2000' }
     };
 
     toggleBtn.addEventListener('click', () => panel.classList.toggle('open'));
 
     function hexToRgba(hex, alpha) {
-        let r = parseInt(hex.slice(1, 3), 16),
-            g = parseInt(hex.slice(3, 5), 16),
-            b = parseInt(hex.slice(5, 7), 16);
+        let r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
         return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     }
 
-    function applyColors(colors) {
-      root.style.setProperty('--theme-color', colors.theme);
-      root.style.setProperty('--theme-color-glow', hexToRgba(colors.theme, 0.6));
-      root.style.setProperty('--text-color', colors.text);
-      root.style.setProperty('--bg-color', colors.bg);
-      root.style.setProperty('--bg-image', colors.bgUrl ? `url('${colors.bgUrl}')` : 'none');
+    function applyColors(c) {
+      root.style.setProperty('--theme-color', c.theme);
+      root.style.setProperty('--theme-color-glow', hexToRgba(c.theme, 0.5));
+      root.style.setProperty('--text-color', c.text);
+      root.style.setProperty('--bg-color', c.bg);
+      root.style.setProperty('--bg-image', c.bgUrl ? `url('${c.bgUrl}')` : 'none');
       
-      inputs.theme.value = colors.theme; inputs.text.value = colors.text;
-      inputs.bg.value = colors.bg; inputs.bgUrl.value = colors.bgUrl;
-      window.$docsify.themeColor = colors.theme;
+      inputs.theme.value = c.theme; inputs.text.value = c.text;
+      inputs.bg.value = c.bg; inputs.bgUrl.value = c.bgUrl;
     }
 
-    function saveTheme(colors) {
-      localStorage.setItem('oshiTheme', JSON.stringify(colors));
-      applyColors(colors);
-    }
-
+    function saveTheme(c) { localStorage.setItem('oshiTheme', JSON.stringify(c)); applyColors(c); }
     function loadTheme() {
-      const saved = localStorage.getItem('oshiTheme');
-      if (saved) applyColors(JSON.parse(saved));
-      else applyColors(defaultTheme);
+      const s = localStorage.getItem('oshiTheme');
+      applyColors(s ? JSON.parse(s) : presets.ai);
     }
 
-    Object.keys(inputs).forEach(key => {
-      inputs[key].addEventListener('input', () => {
-        saveTheme({ theme: inputs.theme.value, text: inputs.text.value, bg: inputs.bg.value, bgUrl: inputs.bgUrl.value });
-      });
-    });
+    Object.keys(inputs).forEach(k => inputs[k].addEventListener('input', () => {
+      saveTheme({ theme: inputs.theme.value, text: inputs.text.value, bg: inputs.bg.value, bgUrl: inputs.bgUrl.value });
+    }));
 
-    function applyPreset(name) { saveTheme(presets[name]); }
-    function resetTheme() { localStorage.removeItem('oshiTheme'); applyColors(defaultTheme); }
+    function applyPreset(n) { saveTheme(presets[n]); }
+    function resetTheme() { localStorage.removeItem('oshiTheme'); applyColors(presets.ai); }
 
     loadTheme();
   </script>
