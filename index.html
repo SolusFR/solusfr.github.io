@@ -2,33 +2,26 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Cardinal Wiki</title>
+  <title>Mon Wiki</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.css" />
 </head>
 <body>
-  <div id="app">Chargement du wiki...</div>
+  <div id="app">Chargement...</div>
   <script>
     window.$docsify = {
-      name: 'Cardinal Wiki',
-      loadSidebar: true,
-      // FORCE l'accueil sur le README du dossier wiki
-      homepage: 'wiki/README.md', 
-      
-      // Configuration des chemins
+      name: 'Mon Wiki',
+      repo: '',
+      loadSidebar: true, // Obligatoire pour l'addon
       alias: {
-        # Permet de trouver le sidebar à la racine même depuis un sous-dossier
-        '/.*/_sidebar.md': '/_sidebar.md',
-        # Si docsify cherche un fichier à la racine, il regarde dans wiki/
-        '/([^wiki].*)': '/wiki/$1'
+        '/.*/_sidebar.md': '/_sidebar.md'
       },
-      
-      subMaxLevel: 3,
-      sidebarDisplayLevel: 1,
+      subMaxLevel: 2,
+      sidebarDisplayLevel: 1, // Niveau d'affichage par défaut (0, 1, ou plus)
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 </body>
 </html>
