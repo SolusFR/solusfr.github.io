@@ -2,46 +2,51 @@ import os
 from pathlib import Path
 
 def generate_sidebar():
-    sidebar_content = []
-    # On définit l'ordre des dossiers racines
     base_folders = ['staff', 'player']
-    
+    lines = []
+
     for folder in base_folders:
-        folder_path = Path(folder)
-        if not folder_path.exists():
+        if not os.path.exists(folder):
             continue
             
-        sidebar_content.append(f"* **{folder.upper()}**")
+        # Dossier principal (ex: STAFF)
+        lines.append(f"* **{folder.upper()}**")
         
-        # On parcourt de manière récursive
+        # On scanne récursivement
         for root, dirs, files in os.walk(folder):
+            # Trier pour garder un ordre alphabétique
+            dirs.sort()
             files.sort()
-            # Calcul de l'indentation basé sur la profondeur relative
-            rel_path = Path(root).relative_to(Path(folder).parent)
-            depth = len(rel_path.parts) - 1
-            indent = "  " * depth
+            
+            # Calculer l'indentation relative au dossier racine
+            rel_path = os.path.relpath(root, folder)
+            if rel_path == ".":
+                depth = 1
+            else:
+                depth = rel_path.count(os.sep) + 2
+            
+            indent = "  " * (depth - 1)
 
-            # Si on est dans un sous-dossier (pas à la racine du dossier staff/player)
-            if root != folder:
-                folder_name = Path(root).name.replace('-', ' ').title()
-                sidebar_content.append(f"{indent}* **{folder_name}**")
+            # Afficher le nom du dossier actuel comme une catégorie si ce n'est pas la racine
+            if rel_path != ".":
+                folder_name = os.path.basename(root).replace('-', ' ').title()
+                lines.append(f"{indent}* **{folder_name}**")
                 indent += "  "
 
+            # Ajouter les fichiers .md
             for file in files:
                 if file.endswith('.md') and file not in ['_sidebar.md', 'README.md']:
-                    full_path = Path(root) / file
-                    # Formatage du nom : supprime .md, remplace tirets par espaces
-                    display_name = file[:-3].replace('-', ' ').title()
-                    if display_name.lower() == 'readme':
-                        display_name = "Introduction"
+                    name = file[:-3].replace('-', ' ').title()
+                    # Si c'est un fichier d'intro dans un sous-dossier
+                    if name.lower() == 'index' or name.lower() == 'intro':
+                        name = "Introduction"
                     
-                    # Transformation du chemin en format URL (slashs)
-                    url_path = str(full_path).replace('\\', '/')
-                    sidebar_content.append(f"{indent}  * [{display_name}]({url_path})")
+                    full_path = os.path.join(root, file).replace('\\', '/')
+                    lines.append(f"{indent}* [{name}]({full_path})")
 
-    # Écriture finale
     with open('_sidebar.md', 'w', encoding='utf-8') as f:
-        f.write('\n'.join(sidebar_content))
+        f.write('\n'.join(lines))
+    print("✅ _sidebar.md généré pour docsify-sidebar-collapse.")
 
 if __name__ == "__main__":
     generate_sidebar()
