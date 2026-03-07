@@ -5,245 +5,220 @@
   <title>Solus Wiki ★ Oshi no Ko</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Polices Google (Poppins pour le côté Pop/Idol) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap" rel="stylesheet">
+  <!-- Police Poppins pour le style moderne -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.css" />
 
   <style>
-    /* --- SYSTÈME DE THÈMES OSHI NO KO --- */
+    /* --- SYSTÈME DE THÈMES V2 (Couleurs Profondes & Contrastées) --- */
     :root {
-      --theme-color: #ff66b2; /* Ai Pink par défaut */
-      --theme-glow: rgba(255, 102, 178, 0.6);
-      --bg-main: #0f0c29;
-      --bg-accent: #302b63;
-      --text-color: #f8f8f2;
+      /* Valeurs par défaut (Ai) */
+      --theme-color: #ff55aa; 
+      --theme-dim: #550022;
+      --bg-radial-center: #2a0a1a;
+      --bg-main: #0a0105;
+      --text-color: #f0f0f0;
+      --folder-icon: "★";
     }
 
     [data-theme='ai'] { 
-      --theme-color: #ff66b2; 
-      --theme-glow: rgba(255, 102, 178, 0.8);
-      --bg-main: #140024; 
-      --bg-accent: #4a0e4e; 
+      --theme-color: #ff55aa; /* Rose Ai vibrant */
+      --theme-dim: #440a22;
+      --bg-radial-center: #1f0510;
+      --bg-main: #080103;
+      --folder-icon: "★";
     }
     [data-theme='ruby'] { 
-      --theme-color: #ff0055; 
-      --theme-glow: rgba(255, 0, 85, 0.8);
-      --bg-main: #240008; 
-      --bg-accent: #660022; 
+      --theme-color: #ff0044; /* Rouge Ruby intense */
+      --theme-dim: #44000a;
+      --bg-radial-center: #200005;
+      --bg-main: #050001;
+      --folder-icon: "❤";
     }
     [data-theme='aqua'] { 
-      --theme-color: #00e5ff; 
-      --theme-glow: rgba(0, 229, 255, 0.8);
-      --bg-main: #000c24; 
-      --bg-accent: #003366; 
+      --theme-color: #00eeff; /* Cyan Aqua électrique */
+      --theme-dim: #002233;
+      --bg-radial-center: #00111f;
+      --bg-main: #000205;
+      --folder-icon: "♦";
     }
 
-    /* --- GLOBAL & ANIMATIONS DE SCÈNE --- */
+    /* --- FOND ET BASE --- */
     body { 
       font-family: 'Poppins', sans-serif !important;
-      background: linear-gradient(-45deg, #000000, var(--bg-main), var(--bg-accent), #000000) !important;
-      background-size: 400% 400% !important;
-      animation: stageLights 15s ease infinite;
+      background-color: var(--bg-main) !important;
+      /* Dégradé Radial Fixe (Spotlight) : Plus de bandes moches */
+      background-image: radial-gradient(circle at 50% -20%, var(--bg-radial-center) 0%, var(--bg-main) 80%) !important;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
       color: var(--text-color);
       overflow-x: hidden;
     }
 
-    @keyframes stageLights {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Particules / Étoiles en fond */
+    /* Étoiles d'ambiance */
     #stars-container {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none; z-index: -1; overflow: hidden;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: -1;
     }
     .star {
       position: absolute; color: var(--theme-color);
-      animation: twinkle linear infinite; opacity: 0;
+      opacity: 0; animation: twinkle linear infinite;
     }
     @keyframes twinkle {
-      0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-      50% { opacity: 0.8; text-shadow: 0 0 10px var(--theme-color); transform: scale(1.2) rotate(180deg); }
-      100% { opacity: 0; transform: scale(0.5) rotate(360deg); }
+      0% { opacity: 0; transform: scale(0.3); }
+      50% { opacity: 0.7; text-shadow: 0 0 8px var(--theme-color); transform: scale(1); }
+      100% { opacity: 0; transform: scale(0.3); }
     }
 
     /* --- SIDEBAR (LOGE VIP) --- */
     .sidebar { 
-      background: rgba(10, 10, 20, 0.6) !important; 
-      backdrop-filter: blur(15px); /* Effet verre */
-      -webkit-backdrop-filter: blur(15px);
-      border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
-      box-shadow: 5px 0 20px rgba(0,0,0,0.5);
+      background: rgba(5, 5, 8, 0.85) !important; 
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+      padding-top: 20px;
     }
     
-    /* Titre du Wiki */
     .sidebar h1 {
-      font-weight: 800; letter-spacing: 2px;
-      color: #fff !important;
-      text-shadow: 0 0 15px var(--theme-color), 0 0 30px var(--theme-color);
-      text-transform: uppercase;
+      font-weight: 800; letter-spacing: 1px; color: #fff;
+      text-shadow: 0 0 15px var(--theme-color);
+      border-bottom: 2px solid var(--theme-color);
+      padding-bottom: 15px; margin-bottom: 20px;
     }
 
-    /* Effet Néon sur le lien actif */
-    .sidebar-nav li.active > a {
-      color: #fff !important;
-      border-right: 4px solid var(--theme-color);
-      background: linear-gradient(90deg, transparent, var(--theme-glow));
-      font-weight: 800;
-      text-shadow: 0 0 8px var(--theme-color);
-      padding-left: 10px;
-      transition: all 0.3s ease;
-    }
-
-    /* --- CONTENU MARKDOWN --- */
-    .markdown-section h1, .markdown-section h2, .markdown-section h3 {
-      font-weight: 800;
-      color: #fff;
-      text-shadow: 0 2px 10px var(--theme-glow);
-    }
-    .markdown-section h1 { border-bottom: 2px solid var(--theme-color); padding-bottom: 10px; }
-    .markdown-section a {
-      color: var(--theme-color);
-      font-weight: 500;
-      text-decoration: none;
-      transition: text-shadow 0.3s;
-    }
-    .markdown-section a:hover { text-shadow: 0 0 10px var(--theme-color); }
+    /* --- SYSTÈME DE DOSSIERS (OPEN/CLOSE) --- */
     
-    /* Sélection de texte */
-    ::selection { background: var(--theme-color); color: #fff; text-shadow: none; }
+    /* Style général des liens */
+    .sidebar ul li a {
+      transition: all 0.3s ease;
+      font-weight: 400;
+      border-left: 2px solid transparent;
+      padding-left: 10px;
+      color: #aaa;
+    }
+    .sidebar ul li a:hover { color: #fff; }
 
-    /* --- SÉLECTEUR DE THÈME (PENLIGHTS) --- */
+    /* 1. Dossier DEPLIÉ (Open) - Le parent */
+    .sidebar ul li.open > a {
+      color: #fff !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 10px var(--theme-color);
+      background: linear-gradient(90deg, var(--theme-dim), transparent);
+      border-left: 3px solid var(--theme-color);
+    }
+    
+    /* Petit indicateur visuel (pseudo-élément) pour dossier ouvert */
+    .sidebar ul li.open > a::after {
+      content: var(--folder-icon); /* Change selon le thème */
+      float: right;
+      margin-right: 10px;
+      color: var(--theme-color);
+      animation: spinIcon 10s linear infinite;
+    }
+
+    /* 2. Sous-menu (L'intérieur du dossier) */
+    .app-sub-sidebar {
+      margin-left: 10px !important;
+      border-left: 1px dashed rgba(255, 255, 255, 0.2);
+    }
+    
+    /* 3. Page ACTIVE (Le fichier qu'on lit) */
+    .sidebar ul li.active > a {
+      color: var(--theme-color) !important;
+      font-weight: 600;
+      text-shadow: none; /* Pas de glow excessif sur le lien final, juste la couleur */
+      background: transparent; 
+    }
+
+    @keyframes spinIcon { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* --- CONTENU --- */
+    .markdown-section h1, .markdown-section h2, .markdown-section h3 {
+      color: #fff; text-shadow: 0 2px 15px var(--bg-radial-center);
+    }
+    .markdown-section a { color: var(--theme-color); font-weight: 600; text-decoration: none; }
+    .markdown-section strong { color: var(--theme-color); text-shadow: 0 0 5px var(--theme-dim); }
+    
+    /* Code blocks style */
+    .markdown-section pre { background: #0e0e0e !important; border: 1px solid #333; }
+    code { background: var(--theme-dim) !important; color: #fff !important; }
+
+    /* --- THEME PICKER --- */
     #theme-picker {
       position: fixed; top: 15px; right: 25px; z-index: 1000;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 10px 15px; border-radius: 30px;
-      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.7);
+      padding: 8px 15px; border-radius: 50px;
       border: 1px solid var(--theme-color);
-      box-shadow: 0 0 15px var(--theme-glow);
-      display: flex; gap: 12px; align-items: center;
-      transition: all 0.5s ease;
-    }
-    #theme-picker span {
-      color: white; font-size: 11px; font-weight: 800; letter-spacing: 1px;
+      box-shadow: 0 0 10px var(--theme-color);
+      display: flex; gap: 10px; align-items: center;
     }
     .theme-dot {
-      width: 20px; height: 20px; border-radius: 50%;
-      cursor: pointer; border: 2px solid #fff;
-      box-shadow: 0 0 10px rgba(255,255,255,0.2);
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      width: 18px; height: 18px; border-radius: 50%; cursor: pointer;
+      border: 2px solid #fff; transition: transform 0.2s;
     }
-    .theme-dot:hover { transform: scale(1.5); box-shadow: 0 0 15px currentColor; }
-
-    /* --- SCROLLBAR --- */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #000; }
-    ::-webkit-scrollbar-thumb { 
-      background: var(--theme-color); 
-      border-radius: 10px; 
-      box-shadow: 0 0 10px var(--theme-color);
-    }
-
-    /* --- ANIMATION DE CHARGEMENT (RIDEAU) --- */
-    #app:empty {
-      display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;
-      background: #000; z-index: 9999; position: fixed; width: 100%;
-    }
-    .star-loader {
-      font-size: 5rem; color: var(--theme-color);
-      text-shadow: 0 0 20px var(--theme-color);
-      animation: spin 2s linear infinite, pulse 1s alternate infinite;
-    }
-    .text-loader {
-      margin-top: 20px; font-weight: 800; letter-spacing: 3px;
-      color: #fff; text-transform: uppercase;
-      animation: pulse 1s alternate infinite;
-    }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-    @keyframes pulse { 0% { opacity: 0.5; text-shadow: 0 0 5px var(--theme-color); } 100% { opacity: 1; text-shadow: 0 0 25px var(--theme-color); } }
+    .theme-dot:hover { transform: scale(1.3); box-shadow: 0 0 10px currentColor; }
 
   </style>
 </head>
 <body>
   
-  <!-- Conteneur pour les étoiles générées en JS -->
   <div id="stars-container"></div>
 
-  <!-- SÉLECTEUR DE THÈMES -->
   <div id="theme-picker">
-    <span>OSHI (推し)</span>
-    <div class="theme-dot" style="background:#ff66b2; color:#ff66b2" onclick="setTheme('ai')" title="B-Komachi - Ai Hoshino"></div>
-    <div class="theme-dot" style="background:#ff0055; color:#ff0055" onclick="setTheme('ruby')" title="B-Komachi - Ruby Hoshino"></div>
-    <div class="theme-dot" style="background:#00e5ff; color:#00e5ff" onclick="setTheme('aqua')" title="Acteur - Aqua Hoshino"></div>
+    <span style="color:#fff; font-size:10px; font-weight:bold; letter-spacing:1px; margin-right:5px;">OSHI</span>
+    <div class="theme-dot" style="background:#ff55aa; color:#ff55aa" onclick="setTheme('ai')" title="Ai"></div>
+    <div class="theme-dot" style="background:#ff0044; color:#ff0044" onclick="setTheme('ruby')" title="Ruby"></div>
+    <div class="theme-dot" style="background:#00eeff; color:#00eeff" onclick="setTheme('aqua')" title="Aqua"></div>
   </div>
 
-  <!-- CHARGEMENT -->
-  <div id="app">
-    <div class="star-loader">★</div>
-    <div class="text-loader">Le spectacle commence...</div>
-  </div>
+  <div id="app">Chargement du wiki...</div>
 
   <script>
-    // --- MOTEUR DE THÈMES ---
+    // --- Gestion des Thèmes ---
     function setTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('solus-wiki-theme', theme);
-      if (window.$docsify) {
-        window.$docsify.themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-color').trim();
-      }
-      generateStars(); // Regénère les étoiles avec la nouvelle couleur
+      if (window.$docsify) window.$docsify.themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-color').trim();
+      generateStars();
     }
-
     const saved = localStorage.getItem('solus-wiki-theme') || 'ai';
     setTheme(saved);
 
-    // --- GÉNÉRATEUR D'ÉTOILES (Ambiance Scène) ---
+    // --- Étoiles de fond (Discrètes) ---
     function generateStars() {
       const container = document.getElementById('stars-container');
-      container.innerHTML = ''; // Reset
-      const starCount = 40; // Nombre d'étoiles
-      
+      container.innerHTML = '';
+      const starCount = 50;
       for (let i = 0; i < starCount; i++) {
         let star = document.createElement('div');
         star.className = 'star';
-        star.innerHTML = '★';
-        
-        // Position aléatoire
+        star.innerHTML = '✦'; // Forme différente
         star.style.left = Math.random() * 100 + 'vw';
         star.style.top = Math.random() * 100 + 'vh';
-        
-        // Taille et durée d'animation aléatoires
-        star.style.fontSize = (Math.random() * 15 + 5) + 'px';
-        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        star.style.fontSize = (Math.random() * 10 + 2) + 'px';
+        star.style.animationDuration = (Math.random() * 5 + 3) + 's';
         star.style.animationDelay = (Math.random() * 5) + 's';
-        
         container.appendChild(star);
       }
     }
-    // Lancer au chargement de la page
     window.onload = generateStars;
 
-    // --- CONFIGURATION DOCSIFY ---
     window.$docsify = {
-      name: 'Solus Wiki ★',
+      name: 'Solus Wiki <span>★</span>', // Le span permet de colorer l'étoile via CSS si besoin
       repo: '',
       loadSidebar: true,
       subMaxLevel: 3,
-      sidebarDisplayLevel: 1,
-      auto2top: true, // Remonte en haut de page à chaque clic
+      sidebarDisplayLevel: 1, // Important pour le plugin collapse
+      auto2top: true,
       search: {
-        maxAge: 86400000,
-        placeholder: 'Rechercher un secret...',
-        noData: 'Aucune rumeur trouvée'
+        placeholder: 'Rechercher...',
+        noData: 'Rien trouvé !'
       }
     }
   </script>
 
-  <!-- SCRIPTS DOCSIFY -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
