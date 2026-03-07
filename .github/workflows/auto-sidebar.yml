@@ -1,0 +1,35 @@
+name: Auto Sidebar Generator ★
+
+# Le robot se réveille quand tu pousses (push) du code
+on:
+  push:
+    paths:
+      - '**/*.md'        # Seulement si des fichiers Markdown changent
+      - '!_sidebar.md'   # On ignore si c'est juste la sidebar (pour éviter une boucle infinie)
+      - '!README.md'     # Optionnel
+
+permissions:
+  contents: write        # Donne au robot le droit d'écrire dans ton dépôt
+
+jobs:
+  update-sidebar:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Le robot récupère ton code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Il installe l'outil officiel Docsify
+      - name: Install Docsify CLI
+        run: npm install -g docsify-cli
+
+      # 3. Il génère la sidebar magiquement
+      - name: Generate Sidebar
+        run: docsify generate . --sidebar _sidebar.md
+
+      # 4. Il sauvegarde les changements et les renvoie sur GitHub
+      - name: Commit & Push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "★ Mise à jour auto du menu (Oshi Style)"
+          file_pattern: _sidebar.md
