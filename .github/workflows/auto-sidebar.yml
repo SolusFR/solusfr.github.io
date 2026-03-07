@@ -1,9 +1,9 @@
-name: Génération Automatique de la Sidebar (Sur-mesure)
+name: Sidebar à la Racine (Correctif)
 
 on:
   push:
     paths:
-      - 'wiki/**'
+      - 'wiki/**' # Se déclenche quand on touche au wiki
 
 permissions:
   contents: write
@@ -15,45 +15,56 @@ jobs:
       - name: Récupérer le code
         uses: actions/checkout@v4
 
-      - name: Générer la Sidebar avec emojis et majuscules
+      - name: Générer la Sidebar à la racine
         run: |
-          cd wiki
+          # On supprime l'ancienne sidebar si elle existe
           rm -f _sidebar.md
-          echo "* [🌟 Accueil](README.md)" > _sidebar.md
+          rm -f wiki/_sidebar.md 
+
+          # On crée la nouvelle à la racine
+          echo "* [🌟 Accueil](wiki/README.md)" > _sidebar.md
           echo "" >> _sidebar.md
           
-          # Chercher tous les sous-dossiers
+          # On scanne le dossier wiki
+          cd wiki
+          
+          # 1. Les Dossiers
           find . -mindepth 1 -type d | sort | while read -r dir; do
             folder=$(basename "$dir")
-            # Ignorer les dossiers cachés
             if [[ "$folder" == .* ]]; then continue; fi
             
-            # Formater le nom avec des majuscules (ex: "saison-2" -> "Saison 2")
+            # Nom joli (Majuscules)
             folder_name=$(echo "$folder" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++)sub(/./,toupper(substr($i,1,1)),$i)}1')
-            echo "* 📂 **$folder_name**" >> _sidebar.md
             
-            # Ajouter les fichiers .md du dossier
-            find "$dir" -maxdepth 1 -name "*.md" ! -name "README.md" ! -name "_sidebar.md" | sort | while read -r file; do
+            echo "* 📂 **$folder_name**" >> ../_sidebar.md
+            
+            # Fichiers dans le dossier (On ajoute le préfixe wiki/)
+            find "$dir" -maxdepth 1 -name "*.md" ! -name "README.md" | sort | while read -r file; do
               name=$(basename "$file" .md)
               clean_name=$(echo "$name" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++)sub(/./,toupper(substr($i,1,1)),$i)}1')
               filepath=$(echo "$file" | sed 's|^\./||')
-              echo "  * [📄 $clean_name]($filepath)" >> _sidebar.md
+              
+              # LA CLÉ EST ICI : On ajoute wiki/ devant le lien
+              echo "  * [📄 $clean_name](wiki/$filepath)" >> ../_sidebar.md
             done
           done
           
-          # Ajouter les fichiers qui sont à la racine (sauf README)
-          echo "" >> _sidebar.md
-          find . -maxdepth 1 -name "*.md" ! -name "README.md" ! -name "_sidebar.md" | sort | while read -r file; do
+          echo "" >> ../_sidebar.md
+
+          # 2. Les Fichiers à la racine de wiki (sauf README)
+          find . -maxdepth 1 -name "*.md" ! -name "README.md" | sort | while read -r file; do
              name=$(basename "$file" .md)
              clean_name=$(echo "$name" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++)sub(/./,toupper(substr($i,1,1)),$i)}1')
              filepath=$(echo "$file" | sed 's|^\./||')
-             echo "* 📄 [$clean_name]($filepath)" >> _sidebar.md
+             echo "* [📄 $clean_name](wiki/$filepath)" >> ../_sidebar.md
           done
 
-      - name: Sauvegarder et envoyer le fichier _sidebar.md
+      - name: Sauvegarder
         run: |
           git config --global user.name "Robot Oshi no Ko"
           git config --global user.email "actions@github.com"
           git add _sidebar.md
-          git commit -m "✨ Auto-update de la navigation du Wiki (Script Custom)" || exit 0
+          # On supprime l'ancien s'il existe encore dans git
+          git rm wiki/_sidebar.md --ignore-unmatch
+          git commit -m "✨ Fix Sidebar à la racine" || exit 0
           git push
