@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   
-  <!-- Base de Docsify -->
+  <!-- Base de Docsify (Thème Vue modifié) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
   
   <style>
@@ -19,11 +19,7 @@
       --text-color: #fce8f8;
       --theme-color: #ff2a85; /* Rose néon */
       --sidebar-bg: rgba(18, 9, 28, 0.7);
-      --bg-image: url('https://images.unsplash.com/photo-1534796636918-9b4580518835?q=80&w=2000'); /* Ciel étoilé par défaut */
-      
-      /* Variables Docsify natives */
-      --docsifytabs-border-color: var(--theme-color);
-      --docsifytabs-tab-highlight-color: var(--theme-color);
+      --bg-image: url('https://images.unsplash.com/photo-1534796636918-9b4580518835?q=80&w=2000'); /* Ciel étoilé */
     }
 
     /* Fond et texte global */
@@ -37,73 +33,94 @@
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
-    /* Ombre pour la lisibilité sur fond d'image */
+    /* Boîte de contenu principale (Effet Verre) */
     .markdown-section {
       background: rgba(11, 5, 16, 0.85);
       padding: 40px;
       border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255, 42, 133, 0.2);
-      backdrop-filter: blur(10px);
+      box-shadow: 0 0 25px rgba(255, 42, 133, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       max-width: 900px;
-      margin-top: 20px;
+      margin-top: 30px;
+      margin-bottom: 30px;
     }
 
+    /* Titres */
     .markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4 {
       color: var(--theme-color) !important;
       text-shadow: 0 0 10px var(--theme-color);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 10px;
     }
 
-    .markdown-section p, .markdown-section li {
+    /* Texte standard */
+    .markdown-section p, .markdown-section li, .markdown-section table {
       color: var(--text-color) !important;
     }
 
+    /* Liens dans le texte */
     .markdown-section a {
       color: var(--theme-color);
       font-weight: bold;
-      transition: text-shadow 0.3s ease;
+      text-decoration: none;
+      transition: all 0.3s ease;
     }
-
     .markdown-section a:hover {
       text-shadow: 0 0 8px var(--theme-color);
+      text-decoration: underline;
     }
 
-    /* Sidebar Glassmorphism */
+    /* Barre latérale (Sidebar) - Menu de navigation */
     .sidebar {
       background: var(--sidebar-bg) !important;
       backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .sidebar h1 {
+      font-weight: 800;
     }
     .sidebar h1 a {
       color: var(--theme-color) !important;
       text-shadow: 0 0 15px var(--theme-color);
-      font-size: 1.5rem;
+      font-size: 1.6rem;
     }
     .sidebar ul li a {
       color: var(--text-color) !important;
+      font-size: 15px;
+      transition: color 0.2s;
     }
     .sidebar ul li a:hover, .sidebar ul li.active > a {
       color: var(--theme-color) !important;
       text-shadow: 0 0 5px var(--theme-color);
+      font-weight: bold;
     }
+    
+    /* Bouton pour cacher/montrer la barre latérale sur mobile */
     .sidebar-toggle {
-      background: rgba(0,0,0,0.5) !important;
+      background: rgba(0,0,0,0.6) !important;
+      backdrop-filter: blur(5px);
+    }
+    .sidebar-toggle .sidebar-toggle-button span {
+      background: var(--theme-color) !important;
     }
 
     /* =========================================
-       PANNEAU DE PERSONNALISATION
+       PANNEAU DE PERSONNALISATION (Settings)
        ========================================= */
     #theme-panel {
       position: fixed;
       top: 20px;
       right: -320px;
       width: 280px;
-      background: rgba(20, 10, 30, 0.9);
+      background: rgba(15, 5, 25, 0.95);
       backdrop-filter: blur(20px);
       border: 1px solid var(--theme-color);
       border-radius: 15px;
       padding: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.8);
-      transition: right 0.3s ease-in-out;
+      box-shadow: 0 0 30px rgba(0,0,0,0.8);
+      transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 9999;
       color: white;
     }
@@ -125,70 +142,72 @@
       color: white;
       font-size: 24px;
       transition: transform 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     #theme-toggle-btn:hover {
       transform: scale(1.1) rotate(45deg);
     }
-    .theme-group {
-      margin-bottom: 15px;
-    }
-    .theme-group label {
-      display: block;
-      font-size: 12px;
-      margin-bottom: 5px;
-      color: #aaa;
-    }
+    .theme-group { margin-bottom: 15px; }
+    .theme-group label { display: block; font-size: 12px; margin-bottom: 5px; color: #ccc; }
     .theme-group input[type="color"] {
-      width: 100%;
-      height: 40px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      width: 100%; height: 40px; border: none; border-radius: 5px; cursor: pointer; background: transparent;
     }
     .theme-group input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid #555;
-      color: white;
-      border-radius: 5px;
-      box-sizing: border-box;
+      width: 100%; padding: 10px; background: rgba(0,0,0,0.5); border: 1px solid #555; color: white; border-radius: 5px; box-sizing: border-box;
     }
-    .presets {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
+    .presets { display: flex; gap: 10px; margin-top: 10px; }
     .preset-btn {
-      flex: 1;
-      padding: 8px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      color: white;
+      flex: 1; padding: 10px 5px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; color: white; text-shadow: 0 0 5px rgba(0,0,0,0.5);
     }
-    .btn-ai { background: #ff2a85; }
-    .btn-aqua { background: #2a85ff; }
-    .btn-ruby { background: #ff2a2a; }
+    .btn-ai { background: linear-gradient(45deg, #ff2a85, #ff7eb3); }
+    .btn-aqua { background: linear-gradient(45deg, #2a85ff, #7ec8ff); }
+    .btn-ruby { background: linear-gradient(45deg, #ff2a2a, #ff7e7e); }
+    .btn-reset {
+      width: 100%; padding: 12px; margin-top: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: white; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s;
+    }
+    .btn-reset:hover { background: rgba(255,255,255,0.2); }
 
     /* Scrollbar personnalisée */
-    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar { width: 10px; }
     ::-webkit-scrollbar-track { background: var(--bg-color); }
-    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 5px; }
+    
+    /* Message de chargement / erreur */
+    #app {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-top: 20vh;
+      color: var(--theme-color);
+      text-shadow: 0 0 10px var(--theme-color);
+      font-weight: bold;
+    }
+    .error-hint {
+      font-size: 0.9rem;
+      color: white;
+      text-shadow: none;
+      font-weight: normal;
+      margin-top: 20px;
+      opacity: 0.8;
+      background: rgba(0,0,0,0.5);
+      padding: 15px;
+      border-radius: 10px;
+      display: inline-block;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Bouton pour ouvrir le menu de thème -->
+  <!-- Bouton magique du thème -->
   <button id="theme-toggle-btn">✨</button>
 
-  <!-- Menu de personnalisation -->
+  <!-- Panneau latéral de paramètres -->
   <div id="theme-panel">
-    <h3 style="margin-top:0; color: var(--theme-color); text-shadow: 0 0 5px var(--theme-color);">Personnaliser le thème</h3>
+    <h3 style="margin-top:0; color: var(--theme-color); text-shadow: 0 0 8px var(--theme-color); border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px;">Costume de Scène</h3>
     
     <div class="theme-group">
-      <label>Couleur Principale (Thème)</label>
+      <label>Couleur Néon (Thème)</label>
       <input type="color" id="color-theme" value="#ff2a85">
     </div>
     <div class="theme-group">
@@ -196,48 +215,69 @@
       <input type="color" id="color-text" value="#fce8f8">
     </div>
     <div class="theme-group">
-      <label>Couleur de Fond</label>
+      <label>Couleur de Fond Unie</label>
       <input type="color" id="color-bg" value="#0b0510">
     </div>
     <div class="theme-group">
-      <label>Image de fond (URL web)</label>
-      <input type="text" id="url-bg" placeholder="https://lien-vers-image.png">
+      <label>Image de Fond (URL)</label>
+      <input type="text" id="url-bg" placeholder="https://lien-image.png">
     </div>
     <div class="theme-group">
-      <label>Thèmes Prédéfinis (Oshi no Ko)</label>
+      <label>Idoles Prédéfinies</label>
       <div class="presets">
         <button class="preset-btn btn-ai" onclick="applyPreset('ai')">Ai</button>
         <button class="preset-btn btn-aqua" onclick="applyPreset('aqua')">Aqua</button>
         <button class="preset-btn btn-ruby" onclick="applyPreset('ruby')">Ruby</button>
       </div>
     </div>
-    <button onclick="resetTheme()" style="width: 100%; padding: 10px; margin-top: 10px; background: transparent; border: 1px solid white; color: white; cursor: pointer;">Réinitialiser</button>
+    <button class="btn-reset" onclick="resetTheme()">Réinitialiser</button>
   </div>
 
-  <div id="app">Chargement du monde d'Oshi no Ko...</div>
+  <!-- Conteneur Docsify (Message affiché pendant le chargement) -->
+  <div id="app">
+    Chargement du monde d'Oshi no Ko... 🌟
+    <br>
+    <div class="error-hint">
+      ⚠️ <b>Si cette page reste bloquée ici :</b><br>
+      C'est qu'il te manque le fichier <code>README.md</code> dans ton dossier <code>wiki</code>.<br>
+      Docsify a absolument besoin de <code>wiki/README.md</code> pour démarrer !
+    </div>
+  </div>
 
+  <!-- CONFIGURATION DOCSIFY (Le Cœur du Wiki) -->
   <script>
-    // Configuration de Docsify
     window.$docsify = {
-      name: 'Wiki Oshi no Ko',
-      basePath: 'wiki/', // Va chercher les fichiers dans le dossier "wiki" à côté de l'index
-      repo: '', // Ajoute ton lien GitHub ici si tu veux la petite bulle en haut à droite
-      loadSidebar: true, // Obligatoire pour GitHub Pages (cherche wiki/_sidebar.md)
+      name: '🌟 Wiki Oshi no Ko',
+      
+      // Indique à Docsify que TOUS les fichiers sont dans le dossier "wiki"
+      basePath: 'wiki/', 
+      
+      // Force Docsify à chercher ce fichier exact pour l'accueil
+      homepage: 'README.md', 
+      
+      // Force Docsify à chercher ce fichier exact pour le menu
+      loadSidebar: '_sidebar.md', 
+      
       subMaxLevel: 3,
       auto2top: true,
-      search: 'auto', // Active la barre de recherche (nécessite le plugin search ci-dessous)
-      themeColor: '#ff2a85' // Sera écrasé par notre script dynamique
+      
+      // Barre de recherche
+      search: {
+        paths: 'auto',
+        placeholder: 'Rechercher...',
+        noData: 'Aucun résultat trouvé !',
+        depth: 3
+      }
     }
   </script>
 
-  <!-- Plugins Docsify -->
+  <!-- Moteur Docsify et Plugins -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
 
-  <!-- SCRIPTS DE GESTION DU THÈME -->
+  <!-- SCRIPT DE GESTION DU THÈME ET DES COOKIES (Local Storage) -->
   <script>
-    // 1. Définition des éléments et variables
     const root = document.documentElement;
     const panel = document.getElementById('theme-panel');
     const toggleBtn = document.getElementById('theme-toggle-btn');
@@ -249,87 +289,62 @@
       bgUrl: document.getElementById('url-bg')
     };
 
+    // Thèmes
     const defaultTheme = {
-      theme: '#ff2a85',
-      text: '#fce8f8',
-      bg: '#0b0510',
+      theme: '#ff2a85', text: '#fce8f8', bg: '#0b0510', 
       bgUrl: 'https://images.unsplash.com/photo-1534796636918-9b4580518835?q=80&w=2000'
     };
-
     const presets = {
       ai: defaultTheme,
-      aqua: {
-        theme: '#2a85ff', text: '#e8f4fc', bg: '#050a10', bgUrl: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=2000'
-      },
-      ruby: {
-        theme: '#ff2a2a', text: '#fce8e8', bg: '#100505', bgUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2000'
-      }
+      aqua: { theme: '#2a85ff', text: '#e8f4fc', bg: '#050a10', bgUrl: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=2000' },
+      ruby: { theme: '#ff2a2a', text: '#fce8e8', bg: '#100505', bgUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2000' }
     };
 
-    // 2. Ouvrir / Fermer le panneau
-    toggleBtn.addEventListener('click', () => {
-      panel.classList.toggle('open');
-    });
+    // Ouvrir/Fermer Menu
+    toggleBtn.addEventListener('click', () => panel.classList.toggle('open'));
 
-    // 3. Appliquer les couleurs au CSS
+    // Appliquer couleurs
     function applyColors(colors) {
       root.style.setProperty('--theme-color', colors.theme);
       root.style.setProperty('--text-color', colors.text);
       root.style.setProperty('--bg-color', colors.bg);
+      root.style.setProperty('--bg-image', colors.bgUrl ? `url('${colors.bgUrl}')` : 'none');
       
-      if(colors.bgUrl) {
-        root.style.setProperty('--bg-image', `url('${colors.bgUrl}')`);
-      } else {
-        root.style.setProperty('--bg-image', 'none');
-      }
-
-      // Mettre à jour les inputs visuellement
+      // Synchro avec les inputs
       inputs.theme.value = colors.theme;
       inputs.text.value = colors.text;
       inputs.bg.value = colors.bg;
       inputs.bgUrl.value = colors.bgUrl;
+
+      // Force la couleur native de docsify
+      window.$docsify.themeColor = colors.theme;
     }
 
-    // 4. Sauvegarder dans le navigateur (Local Storage = Cookies en mieux)
+    // Sauvegarder et Charger
     function saveTheme(colors) {
       localStorage.setItem('oshiTheme', JSON.stringify(colors));
       applyColors(colors);
     }
-
-    // 5. Charger le thème au lancement
     function loadTheme() {
       const saved = localStorage.getItem('oshiTheme');
-      if (saved) {
-        applyColors(JSON.parse(saved));
-      } else {
-        applyColors(defaultTheme);
-      }
+      if (saved) applyColors(JSON.parse(saved));
+      else applyColors(defaultTheme);
     }
 
-    // 6. Écouter les changements des utilisateurs dans le panneau
+    // Écouteurs d'événements
     Object.keys(inputs).forEach(key => {
       inputs[key].addEventListener('input', () => {
-        const newTheme = {
-          theme: inputs.theme.value,
-          text: inputs.text.value,
-          bg: inputs.bg.value,
-          bgUrl: inputs.bgUrl.value
-        };
-        saveTheme(newTheme);
+        saveTheme({
+          theme: inputs.theme.value, text: inputs.text.value, 
+          bg: inputs.bg.value, bgUrl: inputs.bgUrl.value
+        });
       });
     });
 
-    // 7. Fonctions pour les boutons
-    function applyPreset(name) {
-      saveTheme(presets[name]);
-    }
+    function applyPreset(name) { saveTheme(presets[name]); }
+    function resetTheme() { localStorage.removeItem('oshiTheme'); applyColors(defaultTheme); }
 
-    function resetTheme() {
-      localStorage.removeItem('oshiTheme');
-      applyColors(defaultTheme);
-    }
-
-    // Lancer au démarrage
+    // Init
     loadTheme();
   </script>
 </body>
