@@ -1,2 +1,3 @@
-* **Discord**
-    * [Reglement](wiki/Discord/Reglement.md)
+* [Accueil](README.md)
+* *****
+  * [*](docs/*/*.md)
