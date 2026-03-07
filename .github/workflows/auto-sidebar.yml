@@ -1,35 +1,67 @@
-name: Auto Sidebar Generator ★
+name: Auto Sidebar (Oshi Style) ★
 
-# Le robot se réveille quand tu pousses (push) du code
 on:
   push:
     paths:
-      - '**/*.md'        # Seulement si des fichiers Markdown changent
-      - '!_sidebar.md'   # On ignore si c'est juste la sidebar (pour éviter une boucle infinie)
-      - '!README.md'     # Optionnel
+      - '**/*.md'        # Se déclenche si un fichier Markdown change
+      - '!_sidebar.md'   # Ignore le fichier sidebar lui-même pour éviter les boucles
+      - '!README.md'
 
 permissions:
-  contents: write        # Donne au robot le droit d'écrire dans ton dépôt
+  contents: write
 
 jobs:
   update-sidebar:
     runs-on: ubuntu-latest
     steps:
-      # 1. Le robot récupère ton code
-      - name: Checkout code
+      - name: 📥 Récupération du code
         uses: actions/checkout@v3
 
-      # 2. Il installe l'outil officiel Docsify
-      - name: Install Docsify CLI
-        run: npm install -g docsify-cli
+      - name: 🐍 Génération du menu (Script Python)
+        run: |
+          python3 -c "
+          import os
 
-      # 3. Il génère la sidebar magiquement
-      - name: Generate Sidebar
-        run: docsify generate . --sidebar _sidebar.md
+          def generate_sidebar(startpath):
+              with open('_sidebar.md', 'w', encoding='utf-8') as f:
+                  # Lien Accueil
+                  f.write('* [<b>ACCUEIL</b>](/)\n')
+                  
+                  # On trie les dossiers pour qu'ils soient toujours dans le même ordre
+                  for root, dirs, files in os.walk(startpath):
+                      dirs.sort()
+                      files.sort()
+                      
+                      # Ignorer les dossiers cachés et spéciaux
+                      dirs[:] = [d for d in dirs if not d.startswith('.') and not d.startswith('_') and d != 'vendor']
+                      
+                      level = root.replace(startpath, '').count(os.sep)
+                      indent = '  ' * level
+                      
+                      # Titre du dossier (sauf racine)
+                      if root != startpath:
+                          folder_name = os.path.basename(root).replace('-', ' ').upper()
+                          f.write(f'{indent}* **{folder_name}**\n')
+                      
+                      subindent = '  ' * (level + 1)
+                      
+                      for file in files:
+                          if file.endswith('.md') and file not in ['_sidebar.md', '_navbar.md', 'README.md']:
+                              name = os.path.splitext(file)[0].replace('-', ' ').title()
+                              # Création du chemin relatif
+                              path = os.path.join(root, file)
+                              rel_path = os.path.relpath(path, startpath).replace('\\', '/')
+                              
+                              # Écriture de la ligne
+                              f.write(f'{subindent}* [{name}]({rel_path})\n')
 
-      # 4. Il sauvegarde les changements et les renvoie sur GitHub
-      - name: Commit & Push changes
+          if __name__ == '__main__':
+              generate_sidebar('.')
+              print('✅ Sidebar générée avec succès !')
+          "
+
+      - name: 💾 Sauvegarde et Push
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "★ Mise à jour auto du menu (Oshi Style)"
+          commit_message: "★ Mise à jour du menu Oshi no Ko"
           file_pattern: _sidebar.md
