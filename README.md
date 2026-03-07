@@ -58,4 +58,4 @@ C'est très simple :
 ## 🛠️ Contribuer au Projet
 **Solus Wiki** est un projet évolutif maintenu par **SolusFR**. Si vous avez des suggestions de templates ou de guides qui pourraient être utiles à la communauté, n'hésitez pas à nous contacter via GitHub.
 
-*Propulsé par Docsify | Inspiré par l'univers Oshi no Ko ★*
+*Inspiré par l'univers Oshi no Ko ★*
