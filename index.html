@@ -2,23 +2,111 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Mon Wiki</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <title>Solus Wiki ★</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.css" />
+
+  <style>
+    /* --- SYSTÈME DE THÈMES --- */
+    :root {
+      --theme-color: #ff66b2;
+      --bg-main: #0f0c29;
+      --bg-accent: #302b63;
+    }
+
+    [data-theme='ai'] { --theme-color: #ff66b2; --bg-main: #1a0033; --bg-accent: #4a0e4e; }
+    [data-theme='ruby'] { --theme-color: #e60045; --bg-main: #2d000d; --bg-accent: #800026; }
+    [data-theme='aqua'] { --theme-color: #00d4ff; --bg-main: #000428; --bg-accent: #004e92; }
+
+    /* --- DESIGN AMÉLIORÉ --- */
+    body { 
+      background: linear-gradient(135deg, var(--bg-main) 0%, var(--bg-accent) 100%) !important; 
+      transition: background 0.5s ease;
+    }
+
+    .sidebar { 
+      background-color: rgba(10, 10, 25, 0.9) !important; 
+      border-right: 2px solid var(--theme-color) !important;
+      transition: border-color 0.5s ease;
+    }
+
+    /* Effet Néon sur le titre actif */
+    .sidebar-nav li.active > a {
+      border-right: 3px solid var(--theme-color);
+      font-weight: bold;
+      text-shadow: 0 0 10px var(--theme-color);
+    }
+
+    /* Sélecteur de Thème Stylisé */
+    #theme-picker {
+      position: fixed; top: 15px; right: 25px; z-index: 1000;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 12px; border-radius: 30px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex; gap: 10px; align-items: center;
+    }
+    .theme-dot {
+      width: 18px; height: 18px; border-radius: 50%;
+      cursor: pointer; border: 2px solid #fff;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .theme-dot:hover { transform: scale(1.4); }
+
+    /* Scrollbar Look */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 10px; }
+    
+    /* Animation de chargement */
+    #app:empty {
+      display: flex; align-items: center; justify-content: center; height: 100vh;
+      color: var(--theme-color); font-family: sans-serif; font-size: 1.2rem;
+    }
+  </style>
 </head>
 <body>
-  <div id="app">Chargement...</div>
+  <div id="theme-picker">
+    <span style="color:white; font-size: 12px; font-weight: bold; margin-right: 5px;">THEME</span>
+    <div class="theme-dot" style="background:#ff66b2" onclick="setTheme('ai')" title="Ai Hoshino"></div>
+    <div class="theme-dot" style="background:#e60045" onclick="setTheme('ruby')" title="Ruby Hoshino"></div>
+    <div class="theme-dot" style="background:#00d4ff" onclick="setTheme('aqua')" title="Aqua Hoshino"></div>
+  </div>
+
+  <div id="app">Initialisation du spectacle...</div>
+
   <script>
+    // Theme Engine
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('solus-wiki-theme', theme);
+      if (window.$docsify) {
+        window.$docsify.themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-color').trim();
+      }
+    }
+
+    const saved = localStorage.getItem('solus-wiki-theme') || 'ai';
+    setTheme(saved);
+
     window.$docsify = {
-      name: 'Mon Wiki',
+      name: 'Solus Wiki ★',
       repo: '',
-      loadSidebar: true, // Obligatoire pour l'addon
-      subMaxLevel: 2,
-      sidebarDisplayLevel: 1, // Niveau d'affichage par défaut (0, 1, ou plus)
+      loadSidebar: true,
+      subMaxLevel: 3,
+      sidebarDisplayLevel: 1, // Pour l'addon collapse
+      // Suppression de l'alias pour éviter les crashs
+      search: {
+        maxAge: 86400000,
+        placeholder: 'Rechercher...',
+        noData: 'Aucun résultat'
+      }
     }
   </script>
+
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
 </body>
 </html>
