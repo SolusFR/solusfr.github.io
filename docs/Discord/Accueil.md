@@ -9,7 +9,7 @@ Bienvenue dans la section dédiée à l'optimisation et à la gestion de vos ser
 L'objectif de cette section est de vous fournir des éléments que vous pouvez **copier, coller et lier** directement sur votre serveur.
 
 ### 📋 Documents Administratifs
-* **[📜 Règlement Officiel](https://solus.lifestealmc.fr/docs/Discord/Reglement)** : Notre charte universelle prête à l'emploi. Ne perdez plus de temps à rédiger, utilisez notre lien direct pour vos membres.
+* **[📜 Règlement Officiel](https://solus.lifestealmc.fr/#/docs/Discord/Reglement)** : Notre charte universelle prête à l'emploi. Ne perdez plus de temps à rédiger, utilisez notre lien direct pour vos membres.
 * **Charte de Modération (Bientôt)** : Un guide déontologique pour vos modérateurs (comment agir, quand sanctionner).
 
 ### 🛡️ Sécurité & Protection (En cours 🚧)
