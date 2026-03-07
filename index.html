@@ -2,108 +2,248 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Solus Wiki ★</title>
+  <title>Solus Wiki ★ Oshi no Ko</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Polices Google (Poppins pour le côté Pop/Idol) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.css" />
 
   <style>
-    /* --- SYSTÈME DE THÈMES --- */
+    /* --- SYSTÈME DE THÈMES OSHI NO KO --- */
     :root {
-      --theme-color: #ff66b2;
+      --theme-color: #ff66b2; /* Ai Pink par défaut */
+      --theme-glow: rgba(255, 102, 178, 0.6);
       --bg-main: #0f0c29;
       --bg-accent: #302b63;
+      --text-color: #f8f8f2;
     }
 
-    [data-theme='ai'] { --theme-color: #ff66b2; --bg-main: #1a0033; --bg-accent: #4a0e4e; }
-    [data-theme='ruby'] { --theme-color: #e60045; --bg-main: #2d000d; --bg-accent: #800026; }
-    [data-theme='aqua'] { --theme-color: #00d4ff; --bg-main: #000428; --bg-accent: #004e92; }
+    [data-theme='ai'] { 
+      --theme-color: #ff66b2; 
+      --theme-glow: rgba(255, 102, 178, 0.8);
+      --bg-main: #140024; 
+      --bg-accent: #4a0e4e; 
+    }
+    [data-theme='ruby'] { 
+      --theme-color: #ff0055; 
+      --theme-glow: rgba(255, 0, 85, 0.8);
+      --bg-main: #240008; 
+      --bg-accent: #660022; 
+    }
+    [data-theme='aqua'] { 
+      --theme-color: #00e5ff; 
+      --theme-glow: rgba(0, 229, 255, 0.8);
+      --bg-main: #000c24; 
+      --bg-accent: #003366; 
+    }
 
-    /* --- DESIGN AMÉLIORÉ --- */
+    /* --- GLOBAL & ANIMATIONS DE SCÈNE --- */
     body { 
-      background: linear-gradient(135deg, var(--bg-main) 0%, var(--bg-accent) 100%) !important; 
-      transition: background 0.5s ease;
+      font-family: 'Poppins', sans-serif !important;
+      background: linear-gradient(-45deg, #000000, var(--bg-main), var(--bg-accent), #000000) !important;
+      background-size: 400% 400% !important;
+      animation: stageLights 15s ease infinite;
+      color: var(--text-color);
+      overflow-x: hidden;
     }
 
+    @keyframes stageLights {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Particules / Étoiles en fond */
+    #stars-container {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none; z-index: -1; overflow: hidden;
+    }
+    .star {
+      position: absolute; color: var(--theme-color);
+      animation: twinkle linear infinite; opacity: 0;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+      50% { opacity: 0.8; text-shadow: 0 0 10px var(--theme-color); transform: scale(1.2) rotate(180deg); }
+      100% { opacity: 0; transform: scale(0.5) rotate(360deg); }
+    }
+
+    /* --- SIDEBAR (LOGE VIP) --- */
     .sidebar { 
-      background-color: rgba(10, 10, 25, 0.9) !important; 
-      border-right: 2px solid var(--theme-color) !important;
-      transition: border-color 0.5s ease;
+      background: rgba(10, 10, 20, 0.6) !important; 
+      backdrop-filter: blur(15px); /* Effet verre */
+      -webkit-backdrop-filter: blur(15px);
+      border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 5px 0 20px rgba(0,0,0,0.5);
+    }
+    
+    /* Titre du Wiki */
+    .sidebar h1 {
+      font-weight: 800; letter-spacing: 2px;
+      color: #fff !important;
+      text-shadow: 0 0 15px var(--theme-color), 0 0 30px var(--theme-color);
+      text-transform: uppercase;
     }
 
-    /* Effet Néon sur le titre actif */
+    /* Effet Néon sur le lien actif */
     .sidebar-nav li.active > a {
-      border-right: 3px solid var(--theme-color);
-      font-weight: bold;
-      text-shadow: 0 0 10px var(--theme-color);
+      color: #fff !important;
+      border-right: 4px solid var(--theme-color);
+      background: linear-gradient(90deg, transparent, var(--theme-glow));
+      font-weight: 800;
+      text-shadow: 0 0 8px var(--theme-color);
+      padding-left: 10px;
+      transition: all 0.3s ease;
     }
 
-    /* Sélecteur de Thème Stylisé */
+    /* --- CONTENU MARKDOWN --- */
+    .markdown-section h1, .markdown-section h2, .markdown-section h3 {
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 2px 10px var(--theme-glow);
+    }
+    .markdown-section h1 { border-bottom: 2px solid var(--theme-color); padding-bottom: 10px; }
+    .markdown-section a {
+      color: var(--theme-color);
+      font-weight: 500;
+      text-decoration: none;
+      transition: text-shadow 0.3s;
+    }
+    .markdown-section a:hover { text-shadow: 0 0 10px var(--theme-color); }
+    
+    /* Sélection de texte */
+    ::selection { background: var(--theme-color); color: #fff; text-shadow: none; }
+
+    /* --- SÉLECTEUR DE THÈME (PENLIGHTS) --- */
     #theme-picker {
       position: fixed; top: 15px; right: 25px; z-index: 1000;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 8px 12px; border-radius: 30px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 15px; border-radius: 30px;
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      display: flex; gap: 10px; align-items: center;
+      border: 1px solid var(--theme-color);
+      box-shadow: 0 0 15px var(--theme-glow);
+      display: flex; gap: 12px; align-items: center;
+      transition: all 0.5s ease;
+    }
+    #theme-picker span {
+      color: white; font-size: 11px; font-weight: 800; letter-spacing: 1px;
     }
     .theme-dot {
-      width: 18px; height: 18px; border-radius: 50%;
+      width: 20px; height: 20px; border-radius: 50%;
       cursor: pointer; border: 2px solid #fff;
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 0 10px rgba(255,255,255,0.2);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    .theme-dot:hover { transform: scale(1.4); }
+    .theme-dot:hover { transform: scale(1.5); box-shadow: 0 0 15px currentColor; }
 
-    /* Scrollbar Look */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 10px; }
-    
-    /* Animation de chargement */
-    #app:empty {
-      display: flex; align-items: center; justify-content: center; height: 100vh;
-      color: var(--theme-color); font-family: sans-serif; font-size: 1.2rem;
+    /* --- SCROLLBAR --- */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { 
+      background: var(--theme-color); 
+      border-radius: 10px; 
+      box-shadow: 0 0 10px var(--theme-color);
     }
+
+    /* --- ANIMATION DE CHARGEMENT (RIDEAU) --- */
+    #app:empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;
+      background: #000; z-index: 9999; position: fixed; width: 100%;
+    }
+    .star-loader {
+      font-size: 5rem; color: var(--theme-color);
+      text-shadow: 0 0 20px var(--theme-color);
+      animation: spin 2s linear infinite, pulse 1s alternate infinite;
+    }
+    .text-loader {
+      margin-top: 20px; font-weight: 800; letter-spacing: 3px;
+      color: #fff; text-transform: uppercase;
+      animation: pulse 1s alternate infinite;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    @keyframes pulse { 0% { opacity: 0.5; text-shadow: 0 0 5px var(--theme-color); } 100% { opacity: 1; text-shadow: 0 0 25px var(--theme-color); } }
+
   </style>
 </head>
 <body>
+  
+  <!-- Conteneur pour les étoiles générées en JS -->
+  <div id="stars-container"></div>
+
+  <!-- SÉLECTEUR DE THÈMES -->
   <div id="theme-picker">
-    <span style="color:white; font-size: 12px; font-weight: bold; margin-right: 5px;">THEME</span>
-    <div class="theme-dot" style="background:#ff66b2" onclick="setTheme('ai')" title="Ai Hoshino"></div>
-    <div class="theme-dot" style="background:#e60045" onclick="setTheme('ruby')" title="Ruby Hoshino"></div>
-    <div class="theme-dot" style="background:#00d4ff" onclick="setTheme('aqua')" title="Aqua Hoshino"></div>
+    <span>OSHI (推し)</span>
+    <div class="theme-dot" style="background:#ff66b2; color:#ff66b2" onclick="setTheme('ai')" title="B-Komachi - Ai Hoshino"></div>
+    <div class="theme-dot" style="background:#ff0055; color:#ff0055" onclick="setTheme('ruby')" title="B-Komachi - Ruby Hoshino"></div>
+    <div class="theme-dot" style="background:#00e5ff; color:#00e5ff" onclick="setTheme('aqua')" title="Acteur - Aqua Hoshino"></div>
   </div>
 
-  <div id="app">Initialisation du spectacle...</div>
+  <!-- CHARGEMENT -->
+  <div id="app">
+    <div class="star-loader">★</div>
+    <div class="text-loader">Le spectacle commence...</div>
+  </div>
 
   <script>
-    // Theme Engine
+    // --- MOTEUR DE THÈMES ---
     function setTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('solus-wiki-theme', theme);
       if (window.$docsify) {
         window.$docsify.themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-color').trim();
       }
+      generateStars(); // Regénère les étoiles avec la nouvelle couleur
     }
 
     const saved = localStorage.getItem('solus-wiki-theme') || 'ai';
     setTheme(saved);
 
+    // --- GÉNÉRATEUR D'ÉTOILES (Ambiance Scène) ---
+    function generateStars() {
+      const container = document.getElementById('stars-container');
+      container.innerHTML = ''; // Reset
+      const starCount = 40; // Nombre d'étoiles
+      
+      for (let i = 0; i < starCount; i++) {
+        let star = document.createElement('div');
+        star.className = 'star';
+        star.innerHTML = '★';
+        
+        // Position aléatoire
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top = Math.random() * 100 + 'vh';
+        
+        // Taille et durée d'animation aléatoires
+        star.style.fontSize = (Math.random() * 15 + 5) + 'px';
+        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        star.style.animationDelay = (Math.random() * 5) + 's';
+        
+        container.appendChild(star);
+      }
+    }
+    // Lancer au chargement de la page
+    window.onload = generateStars;
+
+    // --- CONFIGURATION DOCSIFY ---
     window.$docsify = {
       name: 'Solus Wiki ★',
       repo: '',
       loadSidebar: true,
       subMaxLevel: 3,
-      sidebarDisplayLevel: 1, // Pour l'addon collapse
-      // Suppression de l'alias pour éviter les crashs
+      sidebarDisplayLevel: 1,
+      auto2top: true, // Remonte en haut de page à chaque clic
       search: {
         maxAge: 86400000,
-        placeholder: 'Rechercher...',
-        noData: 'Aucun résultat'
+        placeholder: 'Rechercher un secret...',
+        noData: 'Aucune rumeur trouvée'
       }
     }
   </script>
 
+  <!-- SCRIPTS DOCSIFY -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
