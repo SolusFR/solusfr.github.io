@@ -5,7 +5,7 @@
   <title>Solus Wiki ★ Oshi no Ko</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Police Poppins pour le style moderne -->
+  <!-- Police Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
@@ -49,7 +49,7 @@
     body { 
       font-family: 'Poppins', sans-serif !important;
       background-color: var(--bg-main) !important;
-      /* Dégradé Radial Fixe (Spotlight) : Plus de bandes moches */
+      /* Dégradé Radial Fixe (Spotlight) */
       background-image: radial-gradient(circle at 50% -20%, var(--bg-radial-center) 0%, var(--bg-main) 80%) !important;
       background-attachment: fixed;
       background-repeat: no-repeat;
@@ -74,7 +74,7 @@
 
     /* --- SIDEBAR (LOGE VIP) --- */
     .sidebar { 
-      background: rgba(5, 5, 8, 0.85) !important; 
+      background: rgba(5, 5, 8, 0.9) !important; 
       backdrop-filter: blur(10px);
       border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
       padding-top: 20px;
@@ -88,8 +88,6 @@
     }
 
     /* --- SYSTÈME DE DOSSIERS (OPEN/CLOSE) --- */
-    
-    /* Style général des liens */
     .sidebar ul li a {
       transition: all 0.3s ease;
       font-weight: 400;
@@ -99,7 +97,7 @@
     }
     .sidebar ul li a:hover { color: #fff; }
 
-    /* 1. Dossier DEPLIÉ (Open) - Le parent */
+    /* Dossier DEPLIÉ (Open) */
     .sidebar ul li.open > a {
       color: #fff !important;
       font-weight: 800 !important;
@@ -109,38 +107,78 @@
       border-left: 3px solid var(--theme-color);
     }
     
-    /* Petit indicateur visuel (pseudo-élément) pour dossier ouvert */
+    /* Icône tournante dossier ouvert */
     .sidebar ul li.open > a::after {
-      content: var(--folder-icon); /* Change selon le thème */
-      float: right;
-      margin-right: 10px;
+      content: var(--folder-icon);
+      float: right; margin-right: 10px;
       color: var(--theme-color);
       animation: spinIcon 10s linear infinite;
     }
 
-    /* 2. Sous-menu (L'intérieur du dossier) */
+    /* Sous-menu */
     .app-sub-sidebar {
       margin-left: 10px !important;
       border-left: 1px dashed rgba(255, 255, 255, 0.2);
     }
     
-    /* 3. Page ACTIVE (Le fichier qu'on lit) */
+    /* Page ACTIVE */
     .sidebar ul li.active > a {
       color: var(--theme-color) !important;
       font-weight: 600;
-      text-shadow: none; /* Pas de glow excessif sur le lien final, juste la couleur */
       background: transparent; 
     }
 
     @keyframes spinIcon { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* --- CONTENU --- */
+    /* --- CONTENU & TABLEAUX --- */
     .markdown-section h1, .markdown-section h2, .markdown-section h3 {
       color: #fff; text-shadow: 0 2px 15px var(--bg-radial-center);
     }
     .markdown-section a { color: var(--theme-color); font-weight: 600; text-decoration: none; }
     .markdown-section strong { color: var(--theme-color); text-shadow: 0 0 5px var(--theme-dim); }
     
+    /* --- TABLEAUX FIX (Anti-Fond Blanc) --- */
+    .markdown-section table {
+      display: table !important;
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(0, 0, 0, 0.2) !important; /* Fond sombre semi-transparent */
+      border: 1px solid var(--theme-dim) !important;
+      margin-bottom: 20px;
+    }
+
+    /* Entête du tableau */
+    .markdown-section table th {
+      background-color: var(--theme-dim) !important;
+      border: 1px solid var(--theme-color) !important;
+      color: #fff !important;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 12px !important;
+    }
+
+    /* Cellules normales */
+    .markdown-section table td {
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      color: #ddd !important; /* Texte gris clair lisible */
+      padding: 10px !important;
+    }
+
+    /* Lignes Alternées (Zebra) - LE FIX EST ICI */
+    /* On force une couleur sombre/transparente au lieu du blanc par défaut */
+    .markdown-section table tr:nth-child(2n) {
+      background-color: rgba(255, 255, 255, 0.03) !important;
+    }
+    .markdown-section table tr:nth-child(odd) {
+      background-color: transparent !important;
+    }
+
+    /* Survol d'une ligne */
+    .markdown-section table tr:hover {
+      background-color: var(--theme-dim) !important;
+      transition: background 0.3s;
+    }
+
     /* Code blocks style */
     .markdown-section pre { background: #0e0e0e !important; border: 1px solid #333; }
     code { background: var(--theme-dim) !important; color: #fff !important; }
@@ -194,7 +232,7 @@
       for (let i = 0; i < starCount; i++) {
         let star = document.createElement('div');
         star.className = 'star';
-        star.innerHTML = '✦'; // Forme différente
+        star.innerHTML = '✦'; 
         star.style.left = Math.random() * 100 + 'vw';
         star.style.top = Math.random() * 100 + 'vh';
         star.style.fontSize = (Math.random() * 10 + 2) + 'px';
@@ -206,11 +244,11 @@
     window.onload = generateStars;
 
     window.$docsify = {
-      name: 'Solus Wiki <span>★</span>', // Le span permet de colorer l'étoile via CSS si besoin
+      name: 'Solus Wiki <span>★</span>',
       repo: '',
       loadSidebar: true,
       subMaxLevel: 3,
-      sidebarDisplayLevel: 1, // Important pour le plugin collapse
+      sidebarDisplayLevel: 1, 
       auto2top: true,
       search: {
         placeholder: 'Rechercher...',
