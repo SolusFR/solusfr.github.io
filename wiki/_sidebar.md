@@ -1,5 +1,5 @@
 
 - Discord
-  - [RèGlement](Discord/Règlement.md)
+  - [Reglement](Discord/Reglement.md)
 
 - [README](README.md)
