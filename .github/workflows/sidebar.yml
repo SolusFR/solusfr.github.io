@@ -1,46 +1,52 @@
-name: Generate Docsify Sidebar
+name: Docsify Sidebar Generator
+
 on:
   push:
     branches:
-      - main  # ou master selon ton dépôt
+      - main  # Vérifie que ta branche principale s'appelle bien main
     paths:
-      - 'docs/**' # Ne se lance que si tu ajoutes/modifies un fichier dans /docs
+      - '**.md'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # Autorise GitHub à modifier ton sidebar.md
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
       - name: Generate Sidebar
         run: |
           echo "* [🏠 Accueil](README.md)" > _sidebar.md
-          echo "" >> _sidebar.md
           
-          # Parcourt chaque dossier dans /docs pour créer des catégories repliables
-          for dir in docs/*/; do
-            if [ -d "$dir" ]; then
-              dirname=$(basename "$dir")
-              # Titre de la section en gras pour l'addon sidebar-collapse
-              echo "* **${dirname^^}**" >> _sidebar.md
-              
-              # Ajoute les fichiers .md de ce dossier avec une indentation
-              for file in "${dir}"*.md; do
-                if [ -f "$file" ]; then
-                  filename=$(basename "$file" .md)
-                  echo "  * [${filename}](${file})" >> _sidebar.md
-                fi
-              done
-              echo "" >> _sidebar.md
+          # Scan des fichiers à la racine (sauf README et fichiers spéciaux)
+          find . -maxdepth 1 -name "*.md" ! -name "README.md" ! -name "_*" | sort | while read -r file; do
+            filename=$(basename "$file" .md)
+            # On transforme "mon-fichier" en "Mon Fichier"
+            title=$(echo "$filename" | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
+            echo "* [$title]($filename.md)" >> _sidebar.md
+          done
+
+          # Scan des sous-dossiers (Discord, Minecraft, etc.)
+          find . -mindepth 2 -name "*.md" ! -path "./.github/*" ! -name "README.md" ! -name "_*" | sort | while read -r file; do
+            folder=$(dirname "$file" | cut -d'/' -f2)
+            filename=$(basename "$file" .md)
+            
+            # Formater le nom du dossier pour le titre de section
+            folder_title=$(echo "$folder" | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g' | tr '[:lower:]' '[:upper:]')
+            
+            # Ajouter le titre du dossier s'il n'existe pas encore dans la sidebar
+            if ! grep -q "### $folder_title" _sidebar.md; then
+              echo -e "\n### $folder_title" >> _sidebar.md
             fi
+            
+            title=$(echo "$filename" | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
+            echo "  * [$title]($folder/$filename.md)" >> _sidebar.md
           done
 
       - name: Commit and Push
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --global user.name "Solus Bot"
+          git config --global user.email "bot@solus.wiki"
           git add _sidebar.md
-          git commit -m "docs: auto-update sidebar [skip ci]" || exit 0
+          git commit -m "Auto-update sidebar [skip ci]" || exit 0
           git push
