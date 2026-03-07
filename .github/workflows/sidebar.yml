@@ -1,26 +1,46 @@
-name: Auto Generate Sidebar
-on: [push]
+name: Generate Docsify Sidebar
+on:
+  push:
+    branches:
+      - main  # ou master selon ton dépôt
+    paths:
+      - 'docs/**' # Ne se lance que si tu ajoutes/modifies un fichier dans /docs
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Autorise GitHub à modifier ton sidebar.md
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
       - name: Generate Sidebar
         run: |
-          echo "* [Accueil](README.md)" > _sidebar.md
-          # On boucle sur les dossiers dans docs/
+          echo "* [🏠 Accueil](README.md)" > _sidebar.md
+          echo "" >> _sidebar.md
+          
+          # Parcourt chaque dossier dans /docs pour créer des catégories repliables
           for dir in docs/*/; do
-            dirname=$(basename "$dir")
-            echo "* **${dirname}**" >> _sidebar.md
-            for file in "$dir"*.md; do
-              filename=$(basename "$file" .md)
-              echo "  * [${filename}](${file})" >> _sidebar.md
-            done
+            if [ -d "$dir" ]; then
+              dirname=$(basename "$dir")
+              # Titre de la section en gras pour l'addon sidebar-collapse
+              echo "* **${dirname^^}**" >> _sidebar.md
+              
+              # Ajoute les fichiers .md de ce dossier avec une indentation
+              for file in "${dir}"*.md; do
+                if [ -f "$file" ]; then
+                  filename=$(basename "$file" .md)
+                  echo "  * [${filename}](${file})" >> _sidebar.md
+                fi
+              done
+              echo "" >> _sidebar.md
+            fi
           done
-      - name: Commit changes
+
+      - name: Commit and Push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add _sidebar.md
-          git commit -m "docs: auto-update sidebar" || exit 0
+          git commit -m "docs: auto-update sidebar [skip ci]" || exit 0
           git push
