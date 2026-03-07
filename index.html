@@ -2,181 +2,51 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Wiki Oshi no Ko</title>
+  <title>LifeSteal FR Wiki</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   
-  <!-- Polices Anime -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  
-  <!-- CSS Docsify + Plugin Dossiers -->
+  <!-- Thème Vue -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <!-- Plugin Sidebar Collapse pour l'effet "Dossier" -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
 
   <style>
-    /* ================= THÈME OSHI NO KO ================= */
-    :root {
-      --theme-color: #ff2a85;
-      --theme-glow: rgba(255, 42, 133, 0.5);
-      --bg-color: #0b0510;
-      --text-color: #fce8f8;
-      --sidebar-bg: rgba(15, 8, 25, 0.9);
-      --card-bg: rgba(25, 12, 35, 0.7);
-      --bg-image: url('https://images.unsplash.com/photo-1534796636918-9b4580518835?q=80&w=2000');
-    }
-
-    body {
-      background-color: var(--bg-color) !important;
-      background-image: var(--bg-image) !important;
-      background-size: cover !important; background-attachment: fixed !important;
-      color: var(--text-color) !important; font-family: 'Quicksand', sans-serif;
-    }
-    
-    /* Overlay sombre */
-    body::after {
-      content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle, transparent 40%, var(--bg-color) 100%);
-      pointer-events: none; z-index: -1;
-    }
-
-    /* Carte de contenu (Glassmorphism) */
-    .content { padding-top: 40px; }
-    .markdown-section {
-      background: var(--card-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-      border-radius: 15px; padding: 40px !important; margin: 0 auto 40px auto; max-width: 950px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    }
-    .markdown-section h1, .markdown-section h2 {
-      font-family: 'Poppins', sans-serif; color: var(--theme-color) !important;
-      text-shadow: 0 0 15px var(--theme-glow); border-bottom: 2px solid rgba(255,255,255,0.1);
-    }
-    .markdown-section a {
-      color: var(--theme-color); font-weight: bold; text-decoration: none;
-      border-bottom: 1px dashed var(--theme-color); transition: 0.3s;
-    }
-    .markdown-section a:hover {
-      background: var(--theme-glow); color: white !important;
-    }
-
-    /* Barre Latérale */
-    .sidebar {
-      background: var(--sidebar-bg) !important; backdrop-filter: blur(20px);
-      border-right: 1px solid rgba(255,255,255,0.05); width: 300px;
-    }
-    .app-name-link {
-      font-family: 'Poppins', sans-serif; font-weight: 900; color: var(--theme-color) !important;
-      text-shadow: 0 0 10px var(--theme-glow);
-    }
-    
-    /* Plugin Dossiers */
-    .sidebar-nav ul li a { color: #ddd !important; border: none !important; font-size: 15px; transition: 0.2s; }
-    .sidebar-nav ul li a:hover { color: var(--theme-color) !important; transform: translateX(5px); }
-    .sidebar-nav li.active > a {
-      color: white !important; font-weight: bold; border-left: 3px solid var(--theme-color);
-      background: linear-gradient(90deg, var(--theme-glow), transparent); padding-left: 10px;
-    }
-    .app-sub-sidebar li:before { display: none; } /* Cache les puces */
-    .folder { color: var(--text-color); font-weight: bold; cursor: pointer; }
-
-    /* Panneau Settings */
-    #theme-panel {
-      position: fixed; top: 20px; right: -320px; width: 280px;
-      background: rgba(10, 5, 15, 0.95); border: 1px solid var(--theme-color); 
-      border-radius: 15px; padding: 20px; z-index: 9999; color: white; transition: 0.4s;
-    }
-    #theme-panel.open { right: 20px; }
-    #theme-toggle-btn {
-      position: fixed; top: 20px; right: 20px; z-index: 10000; width: 50px; height: 50px; 
-      border-radius: 50%; border: none; background: var(--theme-color); color: white; 
-      font-size: 24px; cursor: pointer; box-shadow: 0 0 15px var(--theme-glow);
-    }
-    .theme-group { margin-bottom: 10px; }
-    .theme-group label { display:block; font-size:12px; color:#aaa; margin-bottom:5px; }
-    .theme-group input[type="color"] { width: 100%; border: none; background: transparent; cursor: pointer; height: 35px; }
-    .theme-group input[type="text"] { width: 100%; padding: 8px; background: rgba(255,255,255,0.1); border: 1px solid #444; color: white; border-radius:5px;}
-    .presets { display:flex; gap:5px; margin-top:10px; }
-    .preset-btn { flex:1; padding:8px; border:none; border-radius:5px; cursor:pointer; color:white; font-weight:bold; }
+    :root { --theme-color: #42b983; }
+    /* Petite icone de dossier devant les groupes */
+    .folder-icon { margin-right: 5px; }
   </style>
 </head>
 <body>
+  <div id="app">Chargement de l'arborescence...</div>
 
-  <!-- Menu Paramètres -->
-  <button id="theme-toggle-btn">✨</button>
-  <div id="theme-panel">
-    <h3 style="margin:0 0 15px 0; color:var(--theme-color); text-align:center;">Costume</h3>
-    
-    <div class="theme-group"><label>Thème</label><input type="color" id="color-theme"></div>
-    <div class="theme-group"><label>Texte</label><input type="color" id="color-text"></div>
-    <div class="theme-group"><label>Fond</label><input type="color" id="color-bg"></div>
-    <div class="theme-group"><label>Image URL</label><input type="text" id="url-bg"></div>
-    
-    <div class="presets">
-      <button class="preset-btn" style="background:#ff2a85" onclick="applyPreset('ai')">Ai</button>
-      <button class="preset-btn" style="background:#2a85ff" onclick="applyPreset('aqua')">Aqua</button>
-      <button class="preset-btn" style="background:#ff2a2a" onclick="applyPreset('ruby')">Ruby</button>
-    </div>
-    <button onclick="resetTheme()" style="width:100%; margin-top:15px; padding:8px; background:transparent; border:1px solid #666; color:#ccc; border-radius:5px; cursor:pointer;">Reset</button>
-  </div>
-
-  <div id="app">Chargement...</div>
-
-  <!-- CONFIGURATION DOCSIFY (RACINE) -->
   <script>
     window.$docsify = {
-      name: 'Wiki Oshi no Ko',
-      
-      // Configuration la plus simple possible : Tout est à la racine
+      name: 'LifeSteal FR Wiki',
+      repo: '',
       homepage: 'README.md',
-      loadSidebar: true, // Cherche _sidebar.md à la racine
-      
+      loadSidebar: true, // Obligatoire pour lire le fichier généré
       subMaxLevel: 2,
       auto2top: true,
       
-      // Plugin dossiers
-      sidebarDisplayLevel: 1, 
-
+      // Configuration de la recherche
       search: {
-        placeholder: 'Rechercher...',
+        placeholder: 'Rechercher un guide...',
         noData: 'Aucun résultat.',
         depth: 6
-      }
+      },
+
+      // Configuration du plugin d'arborescence (Sidebar Collapse)
+      sidebarDisplayLevel: 1, // 1 = Ferme tout sauf le niveau principal par défaut
     }
   </script>
 
-  <!-- Scripts -->
+  <!-- Scripts Docsify -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  
+  <!-- Plugin indispensable pour l'effet "Arborescence de dossier" -->
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
-
-  <!-- Script Gestion Thème (Cookies) -->
-  <script>
-    const root = document.documentElement, panel = document.getElementById('theme-panel');
-    document.getElementById('theme-toggle-btn').onclick = () => panel.classList.toggle('open');
-    const inputs = { theme: document.getElementById('color-theme'), text: document.getElementById('color-text'), bg: document.getElementById('color-bg'), bgUrl: document.getElementById('url-bg') };
-    
-    const presets = {
-      ai: { theme: '#ff2a85', text: '#fce8f8', bg: '#0b0510', bgUrl: 'https://images.unsplash.com/photo-1534796636918-9b4580518835?q=80&w=2000' },
-      aqua: { theme: '#2a85ff', text: '#e8f4fc', bg: '#050a10', bgUrl: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=2000' },
-      ruby: { theme: '#ff2a2a', text: '#fce8e8', bg: '#100505', bgUrl: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2000' }
-    };
-
-    function apply(c) {
-      root.style.setProperty('--theme-color', c.theme);
-      root.style.setProperty('--theme-glow', c.theme + '80');
-      root.style.setProperty('--text-color', c.text);
-      root.style.setProperty('--bg-color', c.bg);
-      root.style.setProperty('--bg-image', c.bgUrl ? `url('${c.bgUrl}')` : 'none');
-      inputs.theme.value = c.theme; inputs.text.value = c.text; inputs.bg.value = c.bg; inputs.bgUrl.value = c.bgUrl;
-    }
-    
-    function save(c) { localStorage.setItem('oshiTheme', JSON.stringify(c)); apply(c); }
-    Object.keys(inputs).forEach(k => inputs[k].addEventListener('input', () => save({ theme: inputs.theme.value, text: inputs.text.value, bg: inputs.bg.value, bgUrl: inputs.bgUrl.value })));
-    function applyPreset(n) { save(presets[n]); }
-    function resetTheme() { localStorage.removeItem('oshiTheme'); apply(presets.ai); }
-    
-    const saved = localStorage.getItem('oshiTheme');
-    apply(saved ? JSON.parse(saved) : presets.ai);
-  </script>
 </body>
 </html>
