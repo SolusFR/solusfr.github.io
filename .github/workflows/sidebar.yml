@@ -1,0 +1,26 @@
+name: Auto Generate Sidebar
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate Sidebar
+        run: |
+          echo "* [Accueil](README.md)" > _sidebar.md
+          # On boucle sur les dossiers dans docs/
+          for dir in docs/*/; do
+            dirname=$(basename "$dir")
+            echo "* **${dirname}**" >> _sidebar.md
+            for file in "$dir"*.md; do
+              filename=$(basename "$file" .md)
+              echo "  * [${filename}](${file})" >> _sidebar.md
+            done
+          done
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add _sidebar.md
+          git commit -m "docs: auto-update sidebar" || exit 0
+          git push
