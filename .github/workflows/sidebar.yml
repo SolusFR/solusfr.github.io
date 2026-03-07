@@ -1,9 +1,9 @@
-name: Docsify Sidebar Generator
+name: Python Sidebar Auto-Gen
 
 on:
   push:
     branches:
-      - main  # Vérifie que ta branche principale s'appelle bien main
+      - main
     paths:
       - '**.md'
 
@@ -14,39 +14,18 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Generate Sidebar
-        run: |
-          echo "* [🏠 Accueil](README.md)" > _sidebar.md
-          
-          # Scan des fichiers à la racine (sauf README et fichiers spéciaux)
-          find . -maxdepth 1 -name "*.md" ! -name "README.md" ! -name "_*" | sort | while read -r file; do
-            filename=$(basename "$file" .md)
-            # On transforme "mon-fichier" en "Mon Fichier"
-            title=$(echo "$filename" | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
-            echo "* [$title]($filename.md)" >> _sidebar.md
-          done
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-          # Scan des sous-dossiers (Discord, Minecraft, etc.)
-          find . -mindepth 2 -name "*.md" ! -path "./.github/*" ! -name "README.md" ! -name "_*" | sort | while read -r file; do
-            folder=$(dirname "$file" | cut -d'/' -f2)
-            filename=$(basename "$file" .md)
-            
-            # Formater le nom du dossier pour le titre de section
-            folder_title=$(echo "$folder" | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g' | tr '[:lower:]' '[:upper:]')
-            
-            # Ajouter le titre du dossier s'il n'existe pas encore dans la sidebar
-            if ! grep -q "### $folder_title" _sidebar.md; then
-              echo -e "\n### $folder_title" >> _sidebar.md
-            fi
-            
-            title=$(echo "$filename" | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
-            echo "  * [$title]($folder/$filename.md)" >> _sidebar.md
-          done
+      - name: Run Generator
+        run: python sidebar_gen.py
 
       - name: Commit and Push
         run: |
           git config --global user.name "Solus Bot"
           git config --global user.email "bot@solus.wiki"
           git add _sidebar.md
-          git commit -m "Auto-update sidebar [skip ci]" || exit 0
+          git commit -m "Auto-sidebar (Python) [skip ci]" || exit 0
           git push
