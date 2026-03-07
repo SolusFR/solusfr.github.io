@@ -1,3 +1,3 @@
 * [Accueil](README.md)
-* *****
-  * [*](docs/*/*.md)
+* **Discord**
+  * [Reglement](docs/Discord/Reglement.md)
