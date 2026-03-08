@@ -5,17 +5,18 @@
   <title>Solus Wiki ★ Oshi no Ko</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   
-  <!-- Police Premium -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,800;0,900;1,400&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,800;0,900;1,400&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.css" />
 
   <style>
     /* =========================================
-       ★ 1. MOTEUR DE THÈMES ULTIME ★
+       ★ 1. VARIABLES & THÈMES ★
        ========================================= */
     :root {
+      /* Largeur par défaut du menu (Modifiable via JS) */
+      --sidebar-width: 320px; 
+      
       --theme-color: #ff55aa; --theme-dim: #550022; --theme-glow: rgba(255, 85, 170, 0.4);
       --bg-radial-center: #2a0a1a; --bg-main: #0a0105; --theme-icon: "★";
     }
@@ -28,7 +29,7 @@
     [data-theme='memcho'] { --theme-color: #ffcc00; --theme-dim: #443300; --theme-glow: rgba(255,204,0,0.4); --bg-radial-center: #1a1400; --bg-main: #050400; --theme-icon: "♪"; }
 
     /* =========================================
-       ★ 2. FOND, SCROLL & SÉLECTION ★
+       ★ 2. FOND, SCROLL & PROGRESS BAR ★
        ========================================= */
     body { 
       font-family: 'Poppins', sans-serif !important;
@@ -39,7 +40,8 @@
 
     ::selection { background: var(--theme-color); color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
 
-    /* Effet d'étoiles Parallaxe */
+    #reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--theme-color); z-index: 9999; width: 0%; box-shadow: 0 0 15px var(--theme-color); transition: width 0.1s; pointer-events: none; }
+
     #stars-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -2; overflow: hidden; }
     .star { position: absolute; color: var(--theme-color); opacity: 0; animation: twinkle linear infinite; text-shadow: 0 0 8px var(--theme-color); }
     .star.small { font-size: 6px; animation-duration: 3s; }
@@ -47,53 +49,59 @@
     .star.large { font-size: 20px; animation-duration: 7s; filter: blur(2px); }
     @keyframes twinkle { 0% { opacity: 0; transform: scale(0.3) rotate(0deg); } 50% { opacity: 0.8; transform: scale(1.1) rotate(180deg); } 100% { opacity: 0; transform: scale(0.3) rotate(360deg); } }
 
-    /* Scrollbar Néon */
-    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: var(--bg-main); border-left: 1px solid rgba(255,255,255,0.05); }
-    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 20px; border: 2px solid var(--bg-main); }
+    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 10px; }
     ::-webkit-scrollbar-thumb:hover { background: #fff; box-shadow: 0 0 10px var(--theme-color); }
 
     /* =========================================
-       ★ 3. BARRE LATÉRALE (SIDEBAR VIP) ★
+       ★ 3. SIDEBAR (LARGEUR DYNAMIQUE + FIX TEXTE) ★
        ========================================= */
     .sidebar { 
+      width: var(--sidebar-width) !important; /* Largeur gérée par le JS */
       background: rgba(5, 5, 8, 0.6) !important; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
       border-right: 1px solid rgba(255, 255, 255, 0.05) !important; box-shadow: 10px 0 30px rgba(0,0,0,0.8);
+      padding-bottom: 50px;
     }
-    .sidebar h1 { font-weight: 900; letter-spacing: 3px; color: #fff; text-shadow: 0 0 20px var(--theme-color); border-bottom: 2px solid var(--theme-color); padding-bottom: 20px; text-transform: uppercase; text-align: center; margin-top: 10px; }
-    .sidebar h1 a { color: inherit; text-decoration: none; }
     
-    /* Barre de recherche Glassmorphism */
-    .search { margin-bottom: 30px; border: none !important; }
-    .search input {
-      background: rgba(0,0,0,0.3) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: #fff !important;
-      border-radius: 12px !important; padding: 12px 15px !important; font-family: 'Poppins'; font-weight: 600; text-align: center; transition: 0.4s !important;
+    /* Poignée de redimensionnement */
+    .sidebar-resizer {
+      position: absolute; top: 0; right: 0; width: 6px; height: 100%; cursor: col-resize; z-index: 100; transition: background 0.3s;
     }
-    .search input:focus { background: rgba(0,0,0,0.6) !important; border-color: var(--theme-color) !important; box-shadow: 0 0 25px var(--theme-dim) !important; outline: none; transform: scale(1.02); }
+    .sidebar-resizer:hover, .sidebar-resizer.active { background: var(--theme-color); box-shadow: 0 0 10px var(--theme-glow); }
 
-    /* Navigation et Dossiers */
-    .sidebar-nav ul li a { transition: 0.3s; font-weight: 500; color: #888; padding: 10px 15px; border-radius: 8px; margin: 2px 10px; }
-    .sidebar-nav ul li a:hover { color: #fff; background: rgba(255,255,255,0.05); transform: translateX(5px); }
-    .sidebar-nav li.collapse > a::before { content: "▶" !important; font-size: 10px; margin-right: 12px; color: #555; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    /* Le contenu s'ajuste à la barre latérale */
+    .content { left: var(--sidebar-width) !important; transition: none; }
+
+    .sidebar h1 { font-weight: 900; letter-spacing: 2px; color: #fff; text-shadow: 0 0 20px var(--theme-color); border-bottom: 2px solid var(--theme-color); padding-bottom: 15px; text-transform: uppercase; text-align: center; margin-top: 10px; }
     
-    /* Dossier Ouvert */
+    .search { margin-bottom: 20px; border: none !important; }
+    .search input { background: rgba(0,0,0,0.3) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: #fff !important; border-radius: 12px !important; padding: 12px 15px !important; font-family: 'Poppins'; font-weight: 600; text-align: center; transition: 0.4s !important; }
+    .search input:focus { background: rgba(0,0,0,0.6) !important; border-color: var(--theme-color) !important; box-shadow: 0 0 25px var(--theme-dim) !important; outline: none; }
+
+    /* FIX: Empêcher le texte coupé dans le menu */
+    .sidebar-nav ul li a { 
+      white-space: normal !important; /* Autorise le retour à la ligne */
+      word-wrap: break-word; line-height: 1.4;
+      transition: 0.3s; font-weight: 500; color: #888; padding: 10px 15px; border-radius: 8px; margin: 2px 10px; display: block;
+    }
+    .sidebar-nav ul li a:hover { color: #fff; background: rgba(255,255,255,0.05); transform: translateX(5px); }
+    .sidebar-nav li.collapse > a::before { content: "▶" !important; font-size: 10px; margin-right: 12px; color: #555; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: inline-block; }
+    
     .sidebar-nav li.collapse:not(.close) > a { color: #fff !important; font-weight: 800 !important; background: linear-gradient(90deg, var(--theme-dim), transparent); border-left: 4px solid var(--theme-color); border-radius: 0 8px 8px 0; }
     .sidebar-nav li.collapse:not(.close) > a::before { content: var(--theme-icon) !important; font-size: 14px; color: var(--theme-color) !important; text-shadow: 0 0 15px var(--theme-color); transform: scale(1.3) rotate(360deg); animation: floatIcon 2s infinite ease-in-out; }
     
-    /* Page Active */
     .sidebar-nav ul li.active > a { color: #fff !important; font-weight: 800; background: var(--theme-color); box-shadow: 0 0 15px var(--theme-glow); border-radius: 8px; transform: scale(1.02); }
-
     .app-sub-sidebar { margin-left: 20px !important; border-left: 2px solid rgba(255,255,255,0.05); }
     .sidebar-nav .app-sub-sidebar li::before { display: none !important; }
 
     @keyframes floatIcon { 0%, 100% { transform: translateY(0) scale(1.2); } 50% { transform: translateY(-3px) scale(1.2); } }
 
     /* =========================================
-       ★ 4. CONTENU MARKDOWN (LE SCRIPT) ★
+       ★ 4. MARKDOWN & BADGES ★
        ========================================= */
     .markdown-section { max-width: 900px; margin: 0 auto; padding: 40px 15px; }
     
-    /* Titres avec ligne lumineuse animée */
     .markdown-section h1, .markdown-section h2 { font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; position: relative; padding-bottom: 10px; margin-top: 50px; }
     .markdown-section h1 { font-size: 2.5em; text-shadow: 0 0 20px var(--theme-dim); }
     .markdown-section h1::after, .markdown-section h2::after { content: ''; position: absolute; bottom: 0; left: 0; width: 50px; height: 4px; background: var(--theme-color); border-radius: 2px; transition: width 0.4s ease; box-shadow: 0 0 10px var(--theme-color); }
@@ -102,122 +110,108 @@
     .markdown-section a { color: var(--theme-color); font-weight: 800; text-decoration: none; border-bottom: 1px dashed var(--theme-color); transition: 0.3s; }
     .markdown-section a:hover { text-shadow: 0 0 15px var(--theme-color); border-bottom: 1px solid #fff; color: #fff; }
     
-    /* Listes à puces (Icône Oshi) */
-    .markdown-section ul { list-style: none; padding-left: 20px; }
-    .markdown-section ul li { position: relative; margin-bottom: 8px; }
-    .markdown-section ul li::before { content: var(--theme-icon); position: absolute; left: -25px; top: 2px; color: var(--theme-color); font-size: 14px; text-shadow: 0 0 8px var(--theme-dim); }
+    /* Checkbox Stylisées (- [x] ou - [ ]) */
+    .markdown-section input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 2px solid #555; border-radius: 4px; vertical-align: middle; position: relative; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.5); margin-right: 8px; }
+    .markdown-section input[type="checkbox"]:checked { border-color: var(--theme-color); background: var(--theme-dim); box-shadow: 0 0 10px var(--theme-glow); }
+    .markdown-section input[type="checkbox"]:checked::after { content: var(--theme-icon); position: absolute; top: -4px; left: 1px; color: var(--theme-color); font-size: 14px; text-shadow: 0 0 5px var(--theme-color); }
 
-    /* Citations (Script Notes) */
-    .markdown-section blockquote {
-      border-left: 5px solid var(--theme-color); background: rgba(255,255,255,0.03); margin: 2em 0; padding: 20px;
-      border-radius: 0 15px 15px 0; font-style: italic; color: #bbb; position: relative; box-shadow: inset 40px 0 50px -40px var(--theme-dim);
-    }
-    .markdown-section blockquote::before { content: "❝"; font-size: 4em; position: absolute; top: -10px; right: 20px; color: rgba(255,255,255,0.05); font-style: normal; }
+    /* Badges Personnalisés (HTML dans Markdown: <span class="badge new">Nouveau</span>) */
+    .badge { padding: 3px 8px; border-radius: 12px; font-size: 0.75em; font-weight: 800; text-transform: uppercase; vertical-align: middle; margin-left: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+    .badge.new { background: var(--theme-color); color: #fff; text-shadow: none; }
+    .badge.wip { background: #ffcc00; color: #000; text-shadow: none; border: 1px solid #ffaa00; }
 
-    /* Touches Clavier <kbd> */
+    .markdown-section blockquote { border-left: 5px solid var(--theme-color); background: rgba(255,255,255,0.03); margin: 2em 0; padding: 20px; border-radius: 0 15px 15px 0; font-style: italic; color: #bbb; position: relative; box-shadow: inset 40px 0 50px -40px var(--theme-dim); }
     code, kbd { font-family: 'Fira Code', monospace; }
-    kbd { background: #1a1a1a; border: 1px solid #333; border-bottom: 3px solid #000; border-radius: 6px; padding: 4px 8px; font-weight: 600; font-size: 0.85em; box-shadow: 0 2px 0 rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1); color: #fff; }
+    kbd { background: #1a1a1a; border: 1px solid #333; border-bottom: 3px solid #000; border-radius: 6px; padding: 4px 8px; font-weight: 600; font-size: 0.85em; color: #fff; }
 
-    /* Blocs de Code Premium (Style Fenêtre Mac) */
-    .markdown-section pre { background: #0d0d12 !important; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding-top: 40px !important; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; }
+    .markdown-section pre { background: #0d0d12 !important; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding-top: 40px !important; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; margin: 20px 0; }
     .markdown-section pre::before { content: ''; position: absolute; top: 15px; left: 15px; width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f; }
-    .markdown-section pre>code { color: #e0e0e0 !important; font-size: 0.95em; }
+    .docsify-copy-code-button { background: rgba(255,255,255,0.1) !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 8px !important; padding: 5px 12px !important; font-family: 'Poppins'; font-size: 11px; top: 10px !important; right: 10px !important; transition: 0.3s; }
+    .docsify-copy-code-button:hover { background: var(--theme-color) !important; border-color: var(--theme-color) !important; box-shadow: 0 0 15px var(--theme-glow) !important; }
 
-    /* Bouton Copier le code */
-    .docsify-copy-code-button { background: var(--theme-dim) !important; color: #fff !important; border: 1px solid var(--theme-color) !important; border-radius: 8px !important; padding: 5px 10px !important; transition: 0.3s !important; font-family: 'Poppins'; font-weight: 600; font-size: 12px; top: 10px !important; right: 10px !important; }
-    .docsify-copy-code-button:hover { background: var(--theme-color) !important; box-shadow: 0 0 15px var(--theme-color) !important; transform: scale(1.05); }
-
-    /* Tableaux Fixés */
     .markdown-section table { width: 100%; border-collapse: separate; border-spacing: 0; background: rgba(0,0,0,0.3) !important; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); margin: 2em 0; }
     .markdown-section table th { background: var(--theme-dim) !important; color: #fff; font-weight: 800; padding: 15px; text-transform: uppercase; border-bottom: 2px solid var(--theme-color); }
     .markdown-section table td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.03); color: #ccc; }
-    .markdown-section table tr:hover td { background: rgba(255,255,255,0.05); color: #fff; transition: 0.3s; }
+    .markdown-section table tr:hover td { background: rgba(255,255,255,0.05); color: #fff; }
 
-    /* Boîtes d'alertes (!> Attention, ?> Info) */
-    .warn, .tip { padding: 20px !important; border-radius: 10px !important; position: relative !important; font-weight: 500 !important; }
+    .warn, .tip { padding: 20px !important; border-radius: 10px !important; position: relative !important; font-weight: 500 !important; margin: 20px 0; }
     .warn { background: rgba(255, 68, 68, 0.1) !important; border-left: 5px solid #ff4444 !important; }
-    .warn::before { content: '⚠️ ATTENTION'; display: block; font-weight: 900; color: #ff4444; margin-bottom: 5px; letter-spacing: 1px; }
+    .warn::before { content: '⚠️ ATTENTION'; display: block; font-weight: 900; color: #ff4444; margin-bottom: 5px; }
     .tip { background: rgba(0, 238, 255, 0.1) !important; border-left: 5px solid #00eeff !important; }
-    .tip::before { content: '💡 ASTUCE'; display: block; font-weight: 900; color: #00eeff; margin-bottom: 5px; letter-spacing: 1px; }
+    .tip::before { content: '💡 ASTUCE'; display: block; font-weight: 900; color: #00eeff; margin-bottom: 5px; }
 
     /* =========================================
-       ★ 5. PLUGINS UI (PAGINATION & TABS) ★
+       ★ 5. FIX PAGINATION (SUIVANT/PRECEDENT) ★
        ========================================= */
-    .docsify-pagination-container { margin-top: 50px !important; padding-top: 20px !important; border-top: 1px solid rgba(255,255,255,0.1) !important; }
-    .pagination-item { margin-top: 0 !important; }
-    .pagination-item a { border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 12px !important; padding: 15px 25px !important; background: rgba(0,0,0,0.3) !important; transition: 0.4s !important; text-decoration: none !important; }
-    .pagination-item a:hover { border-color: var(--theme-color) !important; background: var(--theme-dim) !important; box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 20px var(--theme-glow) !important; transform: translateY(-3px); }
-    .pagination-item-title { font-weight: 800 !important; font-size: 1.2em !important; color: #fff !important; }
-    .pagination-item-label { color: var(--theme-color) !important; font-size: 0.8em !important; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; }
+    /* On écrase totalement les styles moisis du plugin */
+    .docsify-pagination-container { 
+      display: flex !important; justify-content: space-between !important; gap: 20px !important;
+      margin-top: 60px !important; padding-top: 30px !important; border-top: 1px dashed rgba(255,255,255,0.1) !important;
+      flex-wrap: wrap; /* Pour les mobiles */
+    }
+    .pagination-item { margin: 0 !important; flex: 1; min-width: 250px; }
+    .pagination-item a { 
+      display: flex !important; flex-direction: column !important; justify-content: center !important;
+      align-items: center !important; text-align: center;
+      background: rgba(0,0,0,0.4) !important; border: 1px solid rgba(255,255,255,0.05) !important;
+      border-radius: 12px !important; padding: 25px 20px !important; transition: all 0.3s ease !important;
+      text-decoration: none !important; width: 100% !important; box-sizing: border-box !important;
+    }
+    .pagination-item a:hover { 
+      background: var(--theme-dim) !important; border-color: var(--theme-color) !important;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 20px var(--theme-glow) !important; transform: translateY(-3px) !important;
+    }
+    .pagination-item-title { font-weight: 800 !important; font-size: 1.2em !important; color: #fff !important; margin-top: 5px !important; }
+    .pagination-item-label { color: var(--theme-color) !important; font-size: 0.8em !important; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; opacity: 0.8; }
 
     /* =========================================
-       ★ 6. PANNEAU DE CONTRÔLE (THEMES) ★
+       ★ 6. PANNEAU DE CONTRÔLE ★
        ========================================= */
     #theme-picker {
       position: fixed; top: 15px; right: 25px; z-index: 1000;
       background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      padding: 10px 20px; border-radius: 50px;
-      border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.9), inset 0 0 0 1px rgba(255,255,255,0.05);
+      padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.9);
       display: flex; gap: 12px; align-items: center; transition: 0.4s;
     }
-    #theme-picker:hover { border-color: var(--theme-color); box-shadow: 0 15px 35px rgba(0,0,0,0.9), 0 0 20px var(--theme-glow); }
+    #theme-picker:hover { border-color: var(--theme-color); box-shadow: 0 0 20px var(--theme-glow); }
     #theme-picker span { color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 2px; margin-right: 8px; opacity: 0.6; text-transform: uppercase; }
-    
-    .theme-dot {
-      width: 18px; height: 18px; border-radius: 50%; cursor: pointer; position: relative;
-      border: 2px solid rgba(255,255,255,0.2); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .theme-dot:hover { transform: scale(1.6); border-color: #fff; box-shadow: 0 0 20px currentColor; z-index: 2; }
+    .theme-dot { width: 18px; height: 18px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.2); transition: 0.4s; }
+    .theme-dot:hover { transform: scale(1.6); border-color: #fff; box-shadow: 0 0 20px currentColor; }
     .dot-kana { border-color: #66001a; }
 
-    /* =========================================
-       ★ 7. ÉCRAN DE CHARGEMENT SCÉNIQUE ★
-       ========================================= */
-    #loading-screen {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: #000; z-index: 9999; display: flex; flex-direction: column;
-      justify-content: center; align-items: center; transition: opacity 0.8s ease-out, visibility 0.8s;
-    }
-    .loader-icon { font-size: 80px; color: var(--theme-color); text-shadow: 0 0 30px var(--theme-color); animation: spinLoader 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; }
+    #loading-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s, visibility 0.8s; }
+    .loader-icon { font-size: 80px; color: var(--theme-color); text-shadow: 0 0 30px var(--theme-color); animation: spinLoader 2s infinite; }
     .loader-text { margin-top: 20px; color: #fff; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; font-size: 14px; animation: pulseText 1.5s infinite alternate; }
     @keyframes spinLoader { 0% { transform: rotate(0deg) scale(0.8); } 50% { transform: rotate(180deg) scale(1.2); } 100% { transform: rotate(360deg) scale(0.8); } }
-    @keyframes pulseText { 0% { opacity: 0.3; text-shadow: 0 0 0 transparent; } 100% { opacity: 1; text-shadow: 0 0 15px var(--theme-color); color: var(--theme-color); } }
+    @keyframes pulseText { 0% { opacity: 0.3; } 100% { opacity: 1; text-shadow: 0 0 15px var(--theme-color); color: var(--theme-color); } }
     body.loaded #loading-screen { opacity: 0; visibility: hidden; }
-
   </style>
 </head>
 <body>
 
-  <!-- Écran de Chargement -->
-  <div id="loading-screen">
-    <div class="loader-icon" id="loader-star">★</div>
-    <div class="loader-text">Ouverture des rideaux...</div>
-  </div>
-  
+  <div id="reading-progress"></div>
+  <div id="loading-screen"><div class="loader-icon" id="loader-star">★</div><div class="loader-text">Ouverture des rideaux...</div></div>
   <div id="stars-container"></div>
 
-  <!-- Sélecteur de Thèmes (Panel VIP) -->
   <div id="theme-picker">
-    <span>推し OSHI</span>
-    <div class="theme-dot" style="background:#ff55aa; color:#ff55aa" onclick="setTheme('ai')" title="Ai Hoshino"></div>
-    <div class="theme-dot" style="background:#ff0044; color:#ff0044" onclick="setTheme('ruby')" title="Ruby Hoshino"></div>
-    <div class="theme-dot" style="background:#00eeff; color:#00eeff" onclick="setTheme('aqua')" title="Aqua Hoshino"></div>
-    <div class="theme-dot dot-kana" style="background:#ffffff; color:#ffffff" onclick="setTheme('kana')" title="Kana Arima"></div>
-    <div class="theme-dot" style="background:#5577ff; color:#5577ff" onclick="setTheme('akane')" title="Akane Kurokawa"></div>
+    <span>推し</span>
+    <div class="theme-dot" style="background:#ff55aa; color:#ff55aa" onclick="setTheme('ai')" title="Ai"></div>
+    <div class="theme-dot" style="background:#ff0044; color:#ff0044" onclick="setTheme('ruby')" title="Ruby"></div>
+    <div class="theme-dot" style="background:#00eeff; color:#00eeff" onclick="setTheme('aqua')" title="Aqua"></div>
+    <div class="theme-dot dot-kana" style="background:#ffffff; color:#ffffff" onclick="setTheme('kana')" title="Kana"></div>
+    <div class="theme-dot" style="background:#5577ff; color:#5577ff" onclick="setTheme('akane')" title="Akane"></div>
     <div class="theme-dot" style="background:#ffcc00; color:#ffcc00" onclick="setTheme('memcho')" title="Mem-cho"></div>
   </div>
 
   <div id="app"></div>
 
   <script>
-    // --- 1. GESTION DES THÈMES & ÉTOILES ---
+    // --- GESTION DU THÈME ---
     function setTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('solus-wiki-theme', theme);
-      
       const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-color').trim();
       const themeIcon = getComputedStyle(document.documentElement).getPropertyValue('--theme-icon').replace(/["']/g, '').trim();
-      
       if (window.$docsify) window.$docsify.themeColor = themeColor;
       document.getElementById('loader-star').innerText = themeIcon;
       generateStars(themeIcon);
@@ -227,98 +221,81 @@
       const container = document.getElementById('stars-container');
       container.innerHTML = '';
       const types = ['small', 'medium', 'large'];
-      
-      // Génère 60 particules avec effet de profondeur (Parallax)
       for (let i = 0; i < 60; i++) {
         let star = document.createElement('div');
-        let type = types[Math.floor(Math.random() * types.length)];
-        star.className = `star ${type}`;
-        
-        // 1 chance sur 5 d'afficher l'icône du personnage, sinon un losange
+        star.className = `star ${types[Math.floor(Math.random() * types.length)]}`;
         star.innerHTML = Math.random() > 0.8 ? icon : (Math.random() > 0.5 ? '✦' : '✧'); 
-        
         star.style.left = Math.random() * 100 + 'vw';
         star.style.top = Math.random() * 100 + 'vh';
         star.style.animationDelay = (Math.random() * 5) + 's';
         container.appendChild(star);
       }
     }
+    setTheme(localStorage.getItem('solus-wiki-theme') || 'ai');
 
-    // Initialisation du thème sauvegardé
-    const savedTheme = localStorage.getItem('solus-wiki-theme') || 'ai';
-    setTheme(savedTheme);
+    // --- BARRE DE LECTURE ---
+    window.addEventListener('scroll', () => {
+      let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('reading-progress').style.width = (winScroll / height) * 100 + "%";
+    });
 
-    // --- 2. CONFIGURATION DOCSIFY & PLUGINS ---
+    // --- DOCSIFY CONFIG ---
     window.$docsify = {
       name: 'Solus Wiki <span>★</span>',
-      repo: '',
-      loadSidebar: true,
-      subMaxLevel: 3,
-      sidebarDisplayLevel: 1, 
-      auto2top: true,
+      repo: '', loadSidebar: true, subMaxLevel: 3, sidebarDisplayLevel: 1, auto2top: true,
       
-      // Plugin Recherche
-      search: {
-        maxAge: 86400000,
-        placeholder: '🔎 Rechercher un script...',
-        noData: '❌ Aucune rumeur trouvée.',
-        depth: 3
-      },
+      search: { placeholder: '🔎 Rechercher un script...', noData: '❌ Rien trouvé.' },
+      copyCode: { buttonText: '📋 Copier', successText: '✨ Copié !' },
+      pagination: { previousText: 'Chapitre Précédent', nextText: 'Chapitre Suivant', crossChapter: true, crossChapterText: true },
+      tabs: { persist: true, sync: true, theme: 'classic' },
 
-      // Plugin Bouton Copier
-      copyCode: {
-        buttonText : '📋 Copier',
-        errorText  : 'Erreur',
-        successText: '✨ Copié !'
-      },
-
-      // Plugin Pagination (En bas de page)
-      pagination: {
-        previousText: 'Chapitre Précédent',
-        nextText: 'Chapitre Suivant',
-        crossChapter: true,
-        crossChapterText: true,
-      },
-
-      // Plugin Onglets
-      tabs: {
-        persist: true,
-        sync: true,
-        theme: 'classic',
-        tabComments: true,
-        tabHeadings: true
-      },
-
-      // Disparition du Loading Screen quand le Wiki est monté
       plugins: [
         function(hook, vm) {
           hook.mounted(function() {
             setTimeout(() => { document.body.classList.add('loaded'); }, 500);
+            
+            // --- SCRIPT POUR REDIMENSIONNER LA SIDEBAR ---
+            const sidebar = document.querySelector('.sidebar');
+            const resizer = document.createElement('div');
+            resizer.className = 'sidebar-resizer';
+            sidebar.appendChild(resizer);
+
+            let isResizing = false;
+            resizer.addEventListener('mousedown', (e) => {
+              isResizing = true; resizer.classList.add('active');
+              document.body.style.cursor = 'col-resize';
+              document.body.style.userSelect = 'none'; // Empêche de surligner le texte en glissant
+            });
+
+            document.addEventListener('mousemove', (e) => {
+              if (!isResizing) return;
+              // Ajuste la taille, max 600px, min 250px
+              let newWidth = Math.max(250, Math.min(e.clientX, 600)); 
+              document.documentElement.style.setProperty('--sidebar-width', newWidth + 'px');
+            });
+
+            document.addEventListener('mouseup', () => {
+              if(isResizing) {
+                isResizing = false; resizer.classList.remove('active');
+                document.body.style.cursor = 'default';
+                document.body.style.userSelect = 'auto';
+              }
+            });
           });
         }
       ]
     }
   </script>
 
-  <!-- --- 3. SCRIPTS CORE & PLUGINS --- -->
+  <!-- SCRIPTS REQUIS -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  
-  <!-- Dossiers cliquables -->
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
-  
-  <!-- Recherche -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  
-  <!-- Zoom sur images -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
-  
-  <!-- NOUVEAU : Bouton pour copier le code -->
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  
-  <!-- NOUVEAU : Pagination (Suivant / Précédent) -->
+  <!-- Le plugin de Pagination corrigé ! -->
   <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
-  
-  <!-- NOUVEAU : Création d'onglets pour le contenu -->
   <script src="//cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
   
 </body>
