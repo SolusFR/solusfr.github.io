@@ -1,0 +1,114 @@
+<style>
+  /* 1. PALETTE DIVINE (OSMANTHUS & INTEGRITY KNIGHTS) */
+  :root, [data-theme='ai'], [data-theme='ruby'], [data-theme='aqua'] {
+    --gold-knight: #f1c40f;
+    --gold-glow: #ffee00;
+    --divine-blue: #0044ff;
+    --bg-knight: #0a0c10;
+    
+    --theme-color: var(--gold-knight) !important;
+    --theme-dim: rgba(241, 196, 15, 0.1) !important;
+    --theme-glow: rgba(241, 196, 15, 0.6) !important;
+    --bg-main: var(--bg-knight) !important;
+    --bg-pattern: radial-gradient(circle at 50% 0%, #1a1500 0%, #0a0c10 100%) !important;
+    --font-headers: 'Playfair Display', serif !important;
+    --ui-radius: 0px !important;
+    --ui-border: 1px solid var(--gold-knight) !important;
+    --theme-icon: "⚔️" !important;
+  }
+
+  /* 2. SIDEBAR : CATHÉDRALE DE L'AXIOME */
+  .sidebar {
+    background: rgba(5, 7, 10, 0.9) !important;
+    border-right: 2px solid var(--gold-knight) !important;
+    box-shadow: 5px 0 20px rgba(241, 196, 15, 0.2);
+  }
+
+  .sidebar h1 {
+    color: var(--gold-knight) !important;
+    text-shadow: 0 0 15px var(--gold-glow) !important;
+    font-style: italic;
+    letter-spacing: 4px !important;
+  }
+
+  .sidebar-nav ul li a:hover, .sidebar-nav ul li.active > a {
+    color: #fff !important;
+    background: linear-gradient(90deg, rgba(241, 196, 15, 0.2), transparent) !important;
+    border-left: 3px solid var(--gold-knight);
+    text-shadow: 0 0 10px #fff;
+  }
+
+  /* 3. CONTENU : "ENHANCE ARMAMENT" */
+  .markdown-section h1 {
+    font-size: 3em !important;
+    background: linear-gradient(to bottom, #fff 0%, var(--gold-knight) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    border: none !important;
+  }
+
+  .markdown-section h1::after {
+    content: "SYSTEM CALL: ENHANCE ARMAMENT";
+    display: block;
+    font-size: 10px;
+    -webkit-text-fill-color: var(--gold-knight);
+    letter-spacing: 5px;
+    margin-top: 10px;
+    opacity: 0.7;
+  }
+
+  /* Blocs Partenaires (Embeds Premium) */
+  .markdown-section blockquote {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid var(--gold-knight) !important;
+    border-left: 10px solid var(--gold-knight) !important;
+    position: relative;
+    padding: 30px !important;
+  }
+
+  /* 4. EFFET DE PÉTALES D'OSMANTHUS */
+  .osmanthus-petal {
+    position: fixed;
+    color: var(--gold-knight);
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 999;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* 5. LOADING SCREEN PREMIUM */
+  #loader-star { color: var(--gold-knight) !important; text-shadow: 0 0 30px var(--gold-glow) !important; }
+  .loader-text { content: "COMMUNICATION AVEC L'UNITÉ CENTRALE..." !important; color: var(--gold-knight) !important; }
+</style>
+
+<div id="divine-particles"></div>
+
+<script>
+  (function() {
+    console.log("⚔️ Integrity Knight Protocol: Online.");
+    document.title = "PREMIUM // AXIS MUNDI";
+
+    // Générateur de pétales d'or (Osmanthus)
+    const container = document.getElementById('divine-particles');
+    setInterval(() => {
+      const petal = document.createElement('div');
+      petal.className = 'osmanthus-petal';
+      petal.innerHTML = '✨'; // Ou "🌸" en doré
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      petal.style.opacity = Math.random();
+      container.appendChild(petal);
+      setTimeout(() => petal.remove(), 5000);
+    }, 300);
+
+    // Override du loader
+    const loaderText = document.querySelector('.loader-text');
+    if(loaderText) loaderText.innerText = "GÉNÉRATION DU CONTRÔLE ULTIME...";
+  })();
+</script>
