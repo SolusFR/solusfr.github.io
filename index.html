@@ -23,36 +23,12 @@
       --text-color: #f0f0f0;
     }
 
-    /* B-Komachi - Ai (Rose Néon) */
-    [data-theme='ai'] { 
-      --theme-color: #ff55aa; --theme-dim: #440a22;
-      --bg-radial-center: #1f0510; --bg-main: #080103;
-    }
-    /* B-Komachi - Ruby (Rouge Intense) */
-    [data-theme='ruby'] { 
-      --theme-color: #ff0044; --theme-dim: #44000a;
-      --bg-radial-center: #200005; --bg-main: #050001;
-    }
-    /* Acteur - Aqua (Cyan Électrique) */
-    [data-theme='aqua'] { 
-      --theme-color: #00eeff; --theme-dim: #002233;
-      --bg-radial-center: #00111f; --bg-main: #000205;
-    }
-    /* B-Komachi - Kana (Blanc/Crimson - Baking Soda) */
-    [data-theme='kana'] { 
-      --theme-color: #ffffff; --theme-dim: #66001a;
-      --bg-radial-center: #220008; --bg-main: #050002;
-    }
-    /* Actrice - Akane (Bleu Profond/Violet) */
-    [data-theme='akane'] { 
-      --theme-color: #5577ff; --theme-dim: #0a0a33;
-      --bg-radial-center: #05051a; --bg-main: #010105;
-    }
-    /* B-Komachi - Mem-cho (Jaune/Or) */
-    [data-theme='memcho'] { 
-      --theme-color: #ffcc00; --theme-dim: #443300;
-      --bg-radial-center: #1a1400; --bg-main: #050400;
-    }
+    [data-theme='ai'] { --theme-color: #ff55aa; --theme-dim: #440a22; --bg-radial-center: #1f0510; --bg-main: #080103; }
+    [data-theme='ruby'] { --theme-color: #ff0044; --theme-dim: #44000a; --bg-radial-center: #200005; --bg-main: #050001; }
+    [data-theme='aqua'] { --theme-color: #00eeff; --theme-dim: #002233; --bg-radial-center: #00111f; --bg-main: #000205; }
+    [data-theme='kana'] { --theme-color: #ffffff; --theme-dim: #66001a; --bg-radial-center: #220008; --bg-main: #050002; }
+    [data-theme='akane'] { --theme-color: #5577ff; --theme-dim: #0a0a33; --bg-radial-center: #05051a; --bg-main: #010105; }
+    [data-theme='memcho'] { --theme-color: #ffcc00; --theme-dim: #443300; --bg-radial-center: #1a1400; --bg-main: #050400; }
 
     /* =========================================
        ★ FOND ET AMBIANCE SCÈNE ★
@@ -61,11 +37,9 @@
       font-family: 'Poppins', sans-serif !important;
       background-color: var(--bg-main) !important;
       background-image: radial-gradient(circle at 50% -10%, var(--bg-radial-center) 0%, var(--bg-main) 70%) !important;
-      background-attachment: fixed;
-      color: var(--text-color);
+      background-attachment: fixed; color: var(--text-color);
     }
 
-    /* Particules d'étoiles/lumières en fond */
     #stars-container {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: -1;
@@ -81,24 +55,18 @@
       100% { opacity: 0; transform: scale(0.5); }
     }
 
-    /* Scrollbar Style Idol */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #000; }
-    ::-webkit-scrollbar-thumb { 
-      background: var(--theme-color); 
-      border-radius: 10px; 
-      box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
-    }
+    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 10px; box-shadow: inset 0 0 5px rgba(0,0,0,0.5); }
 
     /* =========================================
-       ★ SIDEBAR (LOGE VIP & DOSSIERS) ★
+       ★ SIDEBAR (LOGE VIP) ★
        ========================================= */
     .sidebar { 
       background: rgba(5, 5, 8, 0.8) !important; 
-      backdrop-filter: blur(15px); /* Effet verre dépoli */
+      backdrop-filter: blur(15px);
       border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
-      padding-top: 15px;
-      box-shadow: 5px 0 25px rgba(0,0,0,0.5);
+      padding-top: 15px; box-shadow: 5px 0 25px rgba(0,0,0,0.5);
     }
     
     .sidebar h1 {
@@ -108,61 +76,70 @@
       padding-bottom: 15px; text-transform: uppercase;
     }
 
-    /* Search Bar améliorée */
+    /* Barre de recherche style verre */
     .search { border-bottom: none !important; margin-bottom: 20px; }
     .search input {
-      background: rgba(255,255,255,0.05) !important;
-      border: 1px solid rgba(255,255,255,0.1) !important;
+      background: rgba(255,255,255,0.05) !important; border: 1px solid rgba(255,255,255,0.1) !important;
       color: #fff !important; border-radius: 20px !important;
       padding: 10px 15px !important; transition: all 0.3s !important;
     }
-    .search input:focus {
-      border-color: var(--theme-color) !important;
-      box-shadow: 0 0 15px var(--theme-dim) !important;
-    }
+    .search input:focus { border-color: var(--theme-color) !important; box-shadow: 0 0 15px var(--theme-dim) !important; }
 
-    /* --- MAGIE DES DOSSIERS (OPEN/CLOSE) --- */
+    /* =========================================
+       ★ MAGIE DES DOSSIERS (LES FLÈCHES) ★
+       ========================================= */
     
-    /* Retire la flèche par défaut du plugin collapse */
-    .sidebar-nav li.collapse > a::before { display: none !important; }
-
-    /* Style de base des liens */
+    /* 1. Reset général des liens dans le menu */
     .sidebar-nav ul li a {
       transition: all 0.3s ease;
-      font-weight: 400; color: #aaa;
-      padding: 6px 10px; border-radius: 0 20px 20px 0;
-      margin-right: 15px; border-left: 2px solid transparent;
+      font-weight: 500; color: #aaa;
+      padding: 8px 10px; display: block;
+      border-left: 3px solid transparent;
     }
     .sidebar-nav ul li a:hover { color: #fff; background: rgba(255,255,255,0.05); }
 
-    /* 1. DOSSIER FERMÉ (Gris, flèche droite) */
-    .sidebar-nav li.collapse.close > a {
-      color: #888 !important; font-weight: 600;
-    }
-    .sidebar-nav li.collapse.close > a::after {
-      content: " ▷"; float: right; font-size: 10px; margin-top: 5px; opacity: 0.5;
+    /* 2. Création de la flèche DEVANT le texte pour les dossiers (.collapse) */
+    .sidebar-nav li.collapse > a::before {
+      content: "▶" !important;
+      display: inline-block;
+      margin-right: 10px;
+      font-size: 11px;
+      color: #666; /* Couleur grise quand fermé */
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
     }
 
-    /* 2. DOSSIER OUVERT (Illuminé, flèche bas) */
+    /* 3. ETAT FERMÉ (.close) */
+    .sidebar-nav li.collapse.close > a { color: #888 !important; }
+
+    /* 4. ETAT OUVERT (Le dossier est déplié) */
     .sidebar-nav li.collapse:not(.close) > a {
-      color: #fff !important; font-weight: 800 !important; letter-spacing: 1px;
-      text-shadow: 0 0 10px var(--theme-color);
-      background: linear-gradient(90deg, var(--theme-dim), transparent);
+      color: #fff !important; 
+      font-weight: 800 !important; 
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
+      border-left: 3px solid var(--theme-color);
+      box-shadow: inset 15px 0 25px -15px var(--theme-dim); /* Petit halo intérieur */
+    }
+
+    /* 5. Animation de la flèche qui tourne vers le bas quand ouvert */
+    .sidebar-nav li.collapse:not(.close) > a::before {
+      transform: rotate(90deg); /* Tourne la flèche vers le bas ▼ */
+      color: var(--theme-color) !important; /* Devient couleur néon */
+      text-shadow: 0 0 10px var(--theme-color); /* S'illumine */
+    }
+
+    /* 6. FICHIER ACTIF (Le texte qu'on est en train de lire) */
+    .sidebar-nav ul li.active > a {
+      color: var(--theme-color) !important; 
+      font-weight: 800;
+      background: rgba(255,255,255,0.05);
       border-left: 3px solid var(--theme-color);
     }
-    .sidebar-nav li.collapse:not(.close) > a::after {
-      content: " ▼"; float: right; font-size: 10px; margin-top: 5px;
-      color: var(--theme-color); text-shadow: 0 0 10px var(--theme-color);
-    }
 
-    /* 3. FICHIER ACTIF (Celui qu'on lit) */
-    .sidebar-nav ul li.active > a {
-      color: var(--theme-color) !important; font-weight: 800;
-      background: rgba(255,255,255,0.05);
-    }
-
-    /* Ligne pointillée pour les sous-dossiers */
-    .app-sub-sidebar { margin-left: 10px !important; border-left: 1px dashed rgba(255,255,255,0.1); }
+    /* Design du sous-menu (décalage à droite + ligne pointillée) */
+    .app-sub-sidebar { margin-left: 20px !important; border-left: 1px dashed rgba(255,255,255,0.1); }
+    /* Retirer l'étrange flèche par défaut du plugin si elle existe */
+    .sidebar-nav .app-sub-sidebar li::before { display: none !important; }
 
     /* =========================================
        ★ CONTENU & TABLEAUX ★
@@ -170,8 +147,7 @@
     .markdown-section h1 {
       font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 2px;
       text-shadow: 0 0 20px var(--theme-dim);
-      border-bottom: 2px solid var(--theme-color);
-      display: inline-block; padding-right: 50px;
+      border-bottom: 2px solid var(--theme-color); display: inline-block; padding-right: 50px;
     }
     .markdown-section h2, .markdown-section h3 { color: #fff; }
     .markdown-section a { color: var(--theme-color); font-weight: 800; text-decoration: none; }
@@ -180,32 +156,21 @@
     .markdown-section pre { background: rgba(0,0,0,0.5) !important; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(5px); }
     code { background: var(--theme-dim) !important; color: #fff !important; }
 
-    /* --- FIX TABLEAUX (Anti-Aveuglement) --- */
-    .markdown-section table {
-      width: 100%; border-collapse: collapse;
-      background: rgba(0, 0, 0, 0.4) !important; 
-      border: 1px solid var(--theme-dim) !important;
-    }
-    .markdown-section table th {
-      background-color: var(--theme-dim) !important; border: 1px solid var(--theme-color) !important;
-      color: #fff !important; font-weight: 800; text-transform: uppercase; padding: 15px !important;
-    }
-    .markdown-section table td {
-      border: 1px solid rgba(255, 255, 255, 0.1) !important; color: #ddd !important; padding: 12px !important;
-    }
+    .markdown-section table { width: 100%; border-collapse: collapse; background: rgba(0, 0, 0, 0.4) !important; border: 1px solid var(--theme-dim) !important; }
+    .markdown-section table th { background-color: var(--theme-dim) !important; border: 1px solid var(--theme-color) !important; color: #fff !important; font-weight: 800; text-transform: uppercase; padding: 15px !important; }
+    .markdown-section table td { border: 1px solid rgba(255, 255, 255, 0.1) !important; color: #ddd !important; padding: 12px !important; }
     .markdown-section table tr:nth-child(2n) { background-color: rgba(255, 255, 255, 0.02) !important; }
     .markdown-section table tr:nth-child(odd) { background-color: transparent !important; }
     .markdown-section table tr:hover { background-color: rgba(255, 255, 255, 0.05) !important; }
 
     /* =========================================
-       ★ THEME PICKER (PANNEAU DE CONTRÔLE) ★
+       ★ THEME PICKER ★
        ========================================= */
     #theme-picker {
       position: fixed; top: 15px; right: 25px; z-index: 1000;
       background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
       padding: 8px 15px; border-radius: 50px;
-      border: 1px solid var(--theme-color);
-      box-shadow: 0 0 15px var(--theme-dim);
+      border: 1px solid var(--theme-color); box-shadow: 0 0 15px var(--theme-dim);
       display: flex; gap: 8px; align-items: center;
     }
     .theme-dot {
@@ -213,8 +178,6 @@
       border: 2px solid transparent; transition: all 0.3s;
     }
     .theme-dot:hover { transform: scale(1.5); border-color: #fff; box-shadow: 0 0 12px currentColor; }
-    
-    /* Contour blanc pour la couleur de Kana pour qu'on la voie */
     .dot-kana { border: 1px solid #66001a; }
 
   </style>
@@ -223,7 +186,6 @@
   
   <div id="stars-container"></div>
 
-  <!-- LE SÉLECTEUR DE PERSONNAGES COMPLET -->
   <div id="theme-picker">
     <span style="color:#fff; font-size:10px; font-weight:900; letter-spacing:1px; margin-right:5px;">推し</span>
     <div class="theme-dot" style="background:#ff55aa; color:#ff55aa" onclick="setTheme('ai')" title="Ai Hoshino"></div>
@@ -237,7 +199,6 @@
   <div id="app">Chargement des coulisses...</div>
 
   <script>
-    // --- Système de Thèmes ---
     function setTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('solus-wiki-theme', theme);
@@ -247,15 +208,12 @@
     const saved = localStorage.getItem('solus-wiki-theme') || 'ai';
     setTheme(saved);
 
-    // --- Générateur d'ambiance (Lumières/Étoiles) ---
     function generateStars() {
       const container = document.getElementById('stars-container');
       container.innerHTML = '';
-      const starCount = 40;
-      for (let i = 0; i < starCount; i++) {
+      for (let i = 0; i < 40; i++) {
         let star = document.createElement('div');
         star.className = 'star';
-        // Alternance entre étoiles et losanges pour le style
         star.innerHTML = Math.random() > 0.5 ? '✦' : '✧'; 
         star.style.left = Math.random() * 100 + 'vw';
         star.style.top = Math.random() * 100 + 'vh';
@@ -267,7 +225,6 @@
     }
     window.onload = generateStars;
 
-    // --- Configuration Docsify ---
     window.$docsify = {
       name: 'Solus Wiki <span>★</span>',
       repo: '',
@@ -283,7 +240,7 @@
   </script>
 
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <!-- Le plugin Collapse indispensable pour les dossiers -->
+  <!-- Plugin Collapse nécessaire pour les dossiers -->
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
