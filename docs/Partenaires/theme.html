@@ -1,85 +1,89 @@
 <style>
-  /* --- 1. ÉRADICATION DU ROSE ET DES BUGS --- */
+  /* --- 1. DESTRUCTION DU ROSE (FORCE BRUTE) --- */
   :root {
-    --theme-color: #00ffaa !important; /* Force le vert spectral partout */
+    --theme-color: #00ffaa !important; /* Vert Morgul */
   }
 
-  /* Supprime le rose sur les soulignements, les puces et les barres */
-  .markdown-section a, .markdown-section em, .sidebar-nav li.active > a {
+  /* On cible tout ce qui pourrait être rose (bordures, puces, sélections) */
+  * {
+    outline-color: #00ffaa !important;
+    selection-background: rgba(0, 255, 170, 0.2) !important;
+  }
+
+  /* Écrasement des puces étoiles roses vues sur tes images */
+  .markdown-section ul li::before, 
+  .markdown-section ol li::before,
+  .markdown-section blockquote {
     color: #00ffaa !important;
-    border-bottom-color: #00ffaa !important;
+    border-color: #1a3a2a !important;
+    content: "⚔" !important; /* Icone d'épée au lieu des puces roses */
   }
 
-  /* Change la couleur des puces d'étoiles roses vues sur tes captures */
-  .markdown-section ul li::before {
-    color: #00ffaa !important;
-    content: "◈" !important; /* Remplace l'étoile par un losange spectral */
-  }
-
-  /* Nettoyage des barres et boutons de l'ancien thème */
-  .sidebar-toggle, #theme-picker, .app-nav, #stars-container {
-    display: none !important;
-  }
-
-  /* --- 2. NOUVELLE FORME DU SITE (LOOK ARMURE) --- */
+  /* --- 2. FORME DU SITE : ARMURE DE FER NOIR --- */
   html, body {
-    background: #050708 !important;
+    background: #020405 !important;
     overflow: hidden !important;
   }
 
-  /* Sidebar détachée façon menu VR Nazgûl */
+  /* Sidebar détachée et biseautée (Style Casque Nazgûl) */
   .sidebar {
-    left: 20px !important;
-    top: 20px !important;
-    height: calc(100vh - 40px) !important;
-    background: rgba(10, 15, 12, 0.9) !important;
+    left: 15px !important;
+    top: 15px !important;
+    height: calc(100vh - 30px) !important;
+    background: linear-gradient(135deg, #0a0f0d 0%, #050708 100%) !important;
     border: 1px solid #1a3a2a !important;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 95%, 85% 100%, 0% 100%) !important;
-    box-shadow: 10px 10px 30px rgba(0,0,0,0.8) !important;
+    box-shadow: 10px 0 40px rgba(0,0,0,1) !important;
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 70% 100%, 0 100%) !important;
     z-index: 100 !important;
   }
 
-  /* Zone de texte façon "Stèle de Fer" */
+  /* Contenu façon "Fragment de Lame de Morgul" */
   .content {
     left: 320px !important;
-    right: 20px !important;
-    top: 20px !important;
-    bottom: 20px !important;
+    right: 15px !important;
+    top: 15px !important;
+    bottom: 15px !important;
     width: auto !important;
-    height: auto !important;
     background: #080a0c !important;
-    border: 1px solid #1a3a2a !important;
-    border-top: 4px solid #00ffaa !important; /* Barre de titre spectrale */
+    border-left: 2px solid #1a3a2a !important;
+    clip-path: polygon(2% 0, 100% 0, 100% 100%, 0 100%, 0 5%) !important;
+    padding: 50px !important;
     overflow-y: auto !important;
-    padding: 40px !important;
-    box-shadow: 0 0 40px rgba(0, 255, 170, 0.05) !important;
   }
 
-  /* --- 3. LISIBILITÉ ET TYPO (ADIEU LE FLOU) --- */
+  /* --- 3. LISIBILITÉ & TITRES (ADIEU LE FLOU DES IMAGES) --- */
   .markdown-section {
-    color: #cbd5e0 !important; /* Gris acier très lisible */
+    color: #d1d5db !important; /* Gris clair tranchant */
     font-family: 'Cinzel', serif !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
   }
 
-  .markdown-section h1, .markdown-section h2 {
+  .markdown-section h1, .markdown-section h2, .markdown-section h3 {
     color: #00ffaa !important;
-    text-shadow: 0 0 10px rgba(0, 255, 170, 0.3) !important;
-    text-align: left !important;
-    border: none !important;
+    text-shadow: 0 0 15px rgba(0, 255, 170, 0.4) !important;
+    border-bottom: 1px solid #1a3a2a !important;
+    padding-bottom: 10px;
+    letter-spacing: 2px;
   }
 
-  /* Boutons du menu */
+  /* --- 4. NAVIGATION SPECTRALE --- */
   .sidebar-nav ul li a {
-    color: #667c71 !important;
-    padding: 12px !important;
-    border-radius: 4px !important;
-    transition: 0.3s !important;
+    color: #4a5d54 !important;
+    font-weight: bold !important;
+    transition: 0.4s !important;
+    padding: 15px !important;
   }
 
   .sidebar-nav ul li.active > a, .sidebar-nav ul li a:hover {
-    background: rgba(0, 255, 170, 0.1) !important;
-    color: #fff !important;
-    border-left: 4px solid #00ffaa !important;
+    color: #ffffff !important;
+    background: rgba(0, 255, 170, 0.05) !important;
+    border-right: 3px solid #00ffaa !important;
+    text-shadow: 0 0 10px #00ffaa !important;
+  }
+
+  /* Masquage des résidus Docsify vus sur les captures */
+  .sidebar-toggle, #theme-picker, .app-nav, .search, #stars-container {
+    display: none !important;
   }
 </style>
 
@@ -87,17 +91,29 @@
 
 <script>
   (function() {
-    const applyNazgul = () => {
-      // Supprime le bouton de menu en bas à gauche qui restait sur tes images
+    const nazgulOverride = () => {
+      // 1. On chasse le rose manuellement sur tous les éléments inline
+      document.querySelectorAll('*').forEach(el => {
+        const style = window.getComputedStyle(el);
+        if (style.color.includes('255, 51, 153') || style.color.includes('pink') || style.color.includes('255, 102, 204')) {
+          el.style.setProperty('color', '#00ffaa', 'important');
+        }
+        if (style.backgroundColor.includes('255, 51, 153')) {
+          el.style.setProperty('background-color', '#1a3a2a', 'important');
+        }
+      });
+
+      // 2. Suppression de la barre grise en bas à gauche
       const toggle = document.querySelector('.sidebar-toggle');
       if(toggle) toggle.remove();
-      
-      // Change le texte du titre
-      const title = document.querySelector('.sidebar h1 a');
-      if(title) title.innerText = "◈ NAZGÛL WIKI";
     };
 
-    applyNazgul();
-    setInterval(applyNazgul, 1000);
+    // Exécution immédiate et répétée pour contrer Docsify
+    nazgulOverride();
+    setInterval(nazgulOverride, 500);
+
+    // Changement du titre
+    const title = document.querySelector('.sidebar h1 a');
+    if(title) title.innerHTML = "◈ NAZGÛL // SOLUS";
   })();
 </script>
