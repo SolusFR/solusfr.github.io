@@ -1,22 +1,159 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&display=swap" rel="stylesheet">
+
 <style>
-  /* Tu peux réécrire les variables principales pour tout changer ! */
   :root {
-    --theme-color: #00ff00;
-    --theme-dim: rgba(0, 255, 0, 0.2);
-    --bg-main: #001100;
-    --bg-pattern: none;
+    /* Variables Matrix */
+    --theme-color: #00ff41; /* Le vert iconique de Matrix */
+    --theme-dim: rgba(0, 255, 65, 0.1);
+    --bg-main: #000800;
+    --base-font-size: 16px;
     --font-headers: 'Fira Code', monospace;
-    --ui-border: 1px solid #00ff00;
-    --theme-icon: "☠️"; /* Change l'icone des dossiers ! */
+    --sidebar-width: 300px;
+    
+    /* Variables Docsify Overrides */
+    --notice-important-border-color: var(--theme-color);
+    --code-theme-background: #001100;
   }
 
-  /* Tu peux même ajouter du CSS normal */
+  /* Fond Matrix Rain */
+  #matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.15; /* Ajuste la visibilité de la pluie ici */
+  }
+
+  /* Style Global */
+  body {
+    background-color: var(--bg-main) !important;
+    color: var(--theme-color) !important;
+    font-family: 'Fira Code', monospace !important;
+  }
+
+  /* Sidebar Hacker */
   .sidebar {
+    background-color: rgba(0, 5, 0, 0.95) !important;
+    border-right: 1px solid var(--theme-color) !important;
+    color: var(--theme-color) !important;
+  }
+  
+  .sidebar-nav li a {
+    color: var(--theme-color) !important;
+    transition: all 0.3s ease;
+  }
+
+  .sidebar-nav li a:hover {
+    text-shadow: 0 0 10px var(--theme-color);
+    background: var(--theme-dim) !important;
+    border-right: 3px solid var(--theme-color);
+  }
+
+  .sidebar-nav li strong {
+    color: #fff !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8em;
+    border-bottom: 1px solid var(--theme-dim);
+    display: block;
+    margin-top: 20px;
+  }
+
+  /* Contenu Principal */
+  .content {
+    background: transparent !important;
+  }
+
+  section.markdown-section {
+    background: transparent !important;
+    color: var(--theme-color) !important;
+  }
+
+  /* Titres Néon */
+  h1, h2, h3, h4 {
+    color: #fff !important;
+    font-family: var(--font-headers) !important;
+    text-shadow: 0 0 5px var(--theme-color), 0 0 10px var(--theme-color);
+    border-bottom: 1px solid var(--theme-dim) !important;
+  }
+
+  /* Liens et Texte */
+  a {
+    color: #fff !important;
+    text-decoration: underline;
+  }
+
+  code {
+    background-color: #001a00 !important;
+    color: #00ff41 !important;
+    border: 1px solid var(--theme-dim);
+  }
+
+  /* Scrollbar Matrix */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #000;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--theme-color);
+    box-shadow: 0 0 10px var(--theme-color);
+  }
+
+  /* Masquer le bouton de recherche moche par défaut pour en faire un custom plus tard */
+  .search input {
     background: #000 !important;
+    border: 1px solid var(--theme-color) !important;
+    color: var(--theme-color) !important;
   }
 </style>
 
-<!-- Tu peux aussi mettre du HTML pur, qui sera affiché en arrière plan du site ! -->
-<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.1; font-size: 200px;">
-  MATRIX
-</div>
+<canvas id="matrix-canvas"></canvas>
+
+<script>
+  // Script de la pluie Matrix
+  const canvas = document.getElementById('matrix-canvas');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]";
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
+  const drops = [];
+
+  for (let x = 0; x < columns; x++) {
+    drops[x] = 1;
+  }
+
+  function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 8, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ff41";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = characters.charAt(Math.floor(Math.random() * characters.length));
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  setInterval(drawMatrix, 35);
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
