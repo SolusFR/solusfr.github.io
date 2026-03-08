@@ -1,114 +1,120 @@
 <style>
-  /* 1. PALETTE DIVINE (OSMANTHUS & INTEGRITY KNIGHTS) */
-  :root, [data-theme='ai'], [data-theme='ruby'], [data-theme='aqua'] {
-    --gold-knight: #f1c40f;
-    --gold-glow: #ffee00;
-    --divine-blue: #0044ff;
-    --bg-knight: #0a0c10;
-    
-    --theme-color: var(--gold-knight) !important;
-    --theme-dim: rgba(241, 196, 15, 0.1) !important;
-    --theme-glow: rgba(241, 196, 15, 0.6) !important;
-    --bg-main: var(--bg-knight) !important;
-    --bg-pattern: radial-gradient(circle at 50% 0%, #1a1500 0%, #0a0c10 100%) !important;
-    --font-headers: 'Playfair Display', serif !important;
-    --ui-radius: 0px !important;
-    --ui-border: 1px solid var(--gold-knight) !important;
-    --theme-icon: "⚔️" !important;
+  /* 1. RÉINITIALISATION TOTALE DE LA STRUCTURE */
+  :root {
+    --gold: #f1c40f;
+    --divine-white: #f0f4f8;
+    --royal-blue: #0055ff;
+    --theme-color: var(--gold) !important;
   }
 
-  /* 2. SIDEBAR : CATHÉDRALE DE L'AXIOME */
+  body {
+    background: #050505 url('https://www.transparenttextures.com/patterns/dark-matter.png') !important;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* 2. DÉTACHEMENT ET FLOTTEMENT DE LA SIDEBAR */
   .sidebar {
-    background: rgba(5, 7, 10, 0.9) !important;
-    border-right: 2px solid var(--gold-knight) !important;
-    box-shadow: 5px 0 20px rgba(241, 196, 15, 0.2);
+    left: 20px !important;
+    top: 20px !important;
+    height: calc(100vh - 40px) !important;
+    width: 280px !important;
+    border-radius: 20px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(241, 196, 15, 0.3) !important;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(241, 196, 15, 0.1) !important;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
   }
 
-  .sidebar h1 {
-    color: var(--gold-knight) !important;
-    text-shadow: 0 0 15px var(--gold-glow) !important;
-    font-style: italic;
-    letter-spacing: 4px !important;
-  }
-
-  .sidebar-nav ul li a:hover, .sidebar-nav ul li.active > a {
-    color: #fff !important;
-    background: linear-gradient(90deg, rgba(241, 196, 15, 0.2), transparent) !important;
-    border-left: 3px solid var(--gold-knight);
-    text-shadow: 0 0 10px #fff;
-  }
-
-  /* 3. CONTENU : "ENHANCE ARMAMENT" */
-  .markdown-section h1 {
-    font-size: 3em !important;
-    background: linear-gradient(to bottom, #fff 0%, var(--gold-knight) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
-    border: none !important;
-  }
-
-  .markdown-section h1::after {
-    content: "SYSTEM CALL: ENHANCE ARMAMENT";
-    display: block;
-    font-size: 10px;
-    -webkit-text-fill-color: var(--gold-knight);
-    letter-spacing: 5px;
-    margin-top: 10px;
-    opacity: 0.7;
-  }
-
-  /* Blocs Partenaires (Embeds Premium) */
-  .markdown-section blockquote {
+  /* 3. LE CONTENU DEVIENT UNE "CARTE FLOTTANTE" CENTRÉE */
+  .content {
+    left: 320px !important; /* On décolle de la sidebar */
+    right: 40px !important;
+    top: 40px !important;
+    width: auto !important;
+    position: absolute !important;
     background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid var(--gold-knight) !important;
-    border-left: 10px solid var(--gold-knight) !important;
-    position: relative;
-    padding: 30px !important;
+    border-radius: 30px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 20px !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8) !important;
   }
 
-  /* 4. EFFET DE PÉTALES D'OSMANTHUS */
-  .osmanthus-petal {
+  section.content {
+      padding-top: 0 !important;
+  }
+
+  /* 4. DESIGN DES TITRES (STYLE STÈLE SACRÉE) */
+  .markdown-section h1 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    background-size: 100% 2px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    padding-bottom: 20px;
+    color: #fff !important;
+    text-shadow: 0 0 20px var(--gold);
+  }
+
+  /* 5. MASQUAGE DES ÉLÉMENTS INUTILES */
+  #theme-picker, .sidebar-nav li.collapse > a::before {
+    display: none !important;
+  }
+
+  /* 6. EFFET DE PARTICULES "FLOWERS" (OSMANTHUS) */
+  .osmanthus {
     position: fixed;
-    color: var(--gold-knight);
-    font-size: 20px;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50% 0 50% 0;
     pointer-events: none;
-    z-index: 999;
-    animation: fall linear forwards;
+    z-index: 10000;
+    filter: blur(1px);
+    animation: fall-complex 6s linear infinite;
   }
 
-  @keyframes fall {
-    0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  @keyframes fall-complex {
+    0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg) translateX(100px); opacity: 0; }
   }
 
-  /* 5. LOADING SCREEN PREMIUM */
-  #loader-star { color: var(--gold-knight) !important; text-shadow: 0 0 30px var(--gold-glow) !important; }
-  .loader-text { content: "COMMUNICATION AVEC L'UNITÉ CENTRALE..." !important; color: var(--gold-knight) !important; }
+  /* Bouton de copie divin */
+  .docsify-copy-code-button {
+      background: var(--gold) !important;
+      color: #000 !important;
+      font-weight: bold !important;
+      border-radius: 50px !important;
+      transform: translateY(-10px);
+  }
 </style>
 
-<div id="divine-particles"></div>
+<div id="divine-aura"></div>
 
 <script>
   (function() {
-    console.log("⚔️ Integrity Knight Protocol: Online.");
-    document.title = "PREMIUM // AXIS MUNDI";
+    console.log("⚔️ INTEGRITY KNIGHT MODE ACTIVATED");
+    
+    // Générateur de pétales
+    const createPetal = () => {
+      const p = document.createElement('div');
+      p.className = 'osmanthus';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 6000);
+    };
+    setInterval(createPetal, 200);
 
-    // Générateur de pétales d'or (Osmanthus)
-    const container = document.getElementById('divine-particles');
-    setInterval(() => {
-      const petal = document.createElement('div');
-      petal.className = 'osmanthus-petal';
-      petal.innerHTML = '✨'; // Ou "🌸" en doré
-      petal.style.left = Math.random() * 100 + 'vw';
-      petal.style.animationDuration = (Math.random() * 3 + 2) + 's';
-      petal.style.opacity = Math.random();
-      container.appendChild(petal);
-      setTimeout(() => petal.remove(), 5000);
-    }, 300);
-
-    // Override du loader
-    const loaderText = document.querySelector('.loader-text');
-    if(loaderText) loaderText.innerText = "GÉNÉRATION DU CONTRÔLE ULTIME...";
+    // Modification du Loader pour ce dossier
+    const loader = document.getElementById('loading-screen');
+    if(loader) {
+        loader.style.background = "radial-gradient(circle, #1a1a1a 0%, #000 100%)";
+        const txt = loader.querySelector('.loader-text');
+        if(txt) txt.innerHTML = "APPEL DU SYSTÈME : UNITÉ DE L'AXIOME...";
+    }
   })();
 </script>
