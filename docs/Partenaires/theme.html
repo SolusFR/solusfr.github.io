@@ -1,88 +1,65 @@
 <style>
-  /* --- 1. DESTRUCTION DU ROSE (FORCE BRUTE) --- */
+  /* --- 1. ÉLIMINATION RADICALE DU ROSE --- */
   :root {
-    --theme-color: #00ffaa !important; /* Vert Morgul */
+    --theme-color: #00ffaa !important;
   }
 
-  /* On cible tout ce qui pourrait être rose (bordures, puces, sélections) */
-  * {
-    outline-color: #00ffaa !important;
-    selection-background: rgba(0, 255, 170, 0.2) !important;
-  }
-
-  /* Écrasement des puces étoiles roses vues sur tes images */
-  .markdown-section ul li::before, 
-  .markdown-section ol li::before,
-  .markdown-section blockquote {
-    color: #00ffaa !important;
+  /* On tue le glow rose et les ombres des blocs markdown vus sur tes images */
+  .markdown-section p, .markdown-section code, .markdown-section pre, 
+  .markdown-section blockquote, .markdown-section img, .content {
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.1) !important; /* Glow vert discret */
     border-color: #1a3a2a !important;
-    content: "⚔" !important; /* Icone d'épée au lieu des puces roses */
   }
 
-  /* --- 2. FORME DU SITE : ARMURE DE FER NOIR --- */
-  html, body {
-    background: #020405 !important;
-    overflow: hidden !important;
-  }
-
-  /* Sidebar détachée et biseautée (Style Casque Nazgûl) */
-  .sidebar {
-    left: 15px !important;
-    top: 15px !important;
-    height: calc(100vh - 30px) !important;
-    background: linear-gradient(135deg, #0a0f0d 0%, #050708 100%) !important;
-    border: 1px solid #1a3a2a !important;
-    box-shadow: 10px 0 40px rgba(0,0,0,1) !important;
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 70% 100%, 0 100%) !important;
-    z-index: 100 !important;
-  }
-
-  /* Contenu façon "Fragment de Lame de Morgul" */
-  .content {
-    left: 320px !important;
-    right: 15px !important;
-    top: 15px !important;
-    bottom: 15px !important;
-    width: auto !important;
-    background: #080a0c !important;
-    border-left: 2px solid #1a3a2a !important;
-    clip-path: polygon(2% 0, 100% 0, 100% 100%, 0 100%, 0 5%) !important;
-    padding: 50px !important;
-    overflow-y: auto !important;
-  }
-
-  /* --- 3. LISIBILITÉ & TITRES (ADIEU LE FLOU DES IMAGES) --- */
-  .markdown-section {
-    color: #d1d5db !important; /* Gris clair tranchant */
-    font-family: 'Cinzel', serif !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
-  }
-
-  .markdown-section h1, .markdown-section h2, .markdown-section h3 {
+  /* Force le remplacement des textes roses résiduels */
+  .markdown-section strong, .markdown-section b, .markdown-section em, .markdown-section a {
     color: #00ffaa !important;
-    text-shadow: 0 0 15px rgba(0, 255, 170, 0.4) !important;
-    border-bottom: 1px solid #1a3a2a !important;
-    padding-bottom: 10px;
-    letter-spacing: 2px;
+    text-shadow: 0 0 5px rgba(0, 255, 170, 0.5) !important;
+    text-decoration: none !important;
   }
 
-  /* --- 4. NAVIGATION SPECTRALE --- */
-  .sidebar-nav ul li a {
-    color: #4a5d54 !important;
-    font-weight: bold !important;
-    transition: 0.4s !important;
-    padding: 15px !important;
+  /* --- 2. TRANSFORMATION DE LA SIDEBAR (ZÉRO GLOW ROSE) --- */
+  .sidebar {
+    background: #050708 !important;
+    border: none !important;
+    /* On remplace le glow rose par un halo d'acier noir */
+    box-shadow: 15px 0 35px rgba(0, 0, 0, 0.9) !important; 
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 75% 100%, 0 100%) !important;
   }
 
-  .sidebar-nav ul li.active > a, .sidebar-nav ul li a:hover {
-    color: #ffffff !important;
-    background: rgba(0, 255, 170, 0.05) !important;
-    border-right: 3px solid #00ffaa !important;
-    text-shadow: 0 0 10px #00ffaa !important;
+  /* L'effet glow de sélection passe au vert spectral */
+  .sidebar-nav li.active > a, .sidebar-nav li a:hover {
+    background: linear-gradient(90deg, rgba(0, 255, 170, 0.15) 0%, transparent 100%) !important;
+    box-shadow: -5px 0 15px rgba(0, 255, 170, 0.3) !important;
+    color: #fff !important;
+    border: none !important;
   }
 
-  /* Masquage des résidus Docsify vus sur les captures */
-  .sidebar-toggle, #theme-picker, .app-nav, .search, #stars-container {
+  /* --- 3. FORME DU SITE : FRAGMENT D'ARMURE --- */
+  html, body { background: #010203 !important; overflow: hidden !important; }
+
+  .content {
+    background: #080a0c !important;
+    border-top: 2px solid #00ffaa !important;
+    clip-path: polygon(3% 0, 100% 0, 100% 100%, 0 100%, 0 6%) !important;
+    margin-top: 10px !important;
+    padding: 60px !important;
+  }
+
+  /* --- 4. LISIBILITÉ D'ACIER --- */
+  .markdown-section {
+    color: #e2e8f0 !important; /* Gris blanc tranchant pour tes captures */
+    font-family: 'Cinzel', serif !important;
+  }
+
+  .markdown-section h1, .markdown-section h2 {
+    color: #00ffaa !important;
+    text-shadow: 0 0 12px rgba(0, 255, 170, 0.4) !important;
+    border-bottom: 1px double #1a3a2a !important;
+  }
+
+  /* Purge des boutons de menu et étoiles roses vus sur tes captures */
+  .sidebar-toggle, #theme-picker, .app-nav, #stars-container, .star {
     display: none !important;
   }
 </style>
@@ -91,29 +68,29 @@
 
 <script>
   (function() {
-    const nazgulOverride = () => {
-      // 1. On chasse le rose manuellement sur tous les éléments inline
+    const morgulPurge = () => {
+      // 1. On scanne tous les éléments pour supprimer le style "pink" ou "rose" injecté
       document.querySelectorAll('*').forEach(el => {
         const style = window.getComputedStyle(el);
-        if (style.color.includes('255, 51, 153') || style.color.includes('pink') || style.color.includes('255, 102, 204')) {
-          el.style.setProperty('color', '#00ffaa', 'important');
-        }
-        if (style.backgroundColor.includes('255, 51, 153')) {
-          el.style.setProperty('background-color', '#1a3a2a', 'important');
+        // Si l'ombre est rose/rouge (vu sur image_73f443.jpg)
+        if (style.boxShadow.includes('255,') || style.boxShadow.includes('rgb(')) {
+           if (!style.boxShadow.includes('0, 255, 170')) {
+             el.style.setProperty('box-shadow', 'none', 'important');
+           }
         }
       });
 
-      // 2. Suppression de la barre grise en bas à gauche
+      // 2. On vire la barre de menu grise en bas
       const toggle = document.querySelector('.sidebar-toggle');
       if(toggle) toggle.remove();
     };
 
-    // Exécution immédiate et répétée pour contrer Docsify
-    nazgulOverride();
-    setInterval(nazgulOverride, 500);
+    morgulPurge();
+    setInterval(morgulPurge, 400);
 
-    // Changement du titre
+    // Titre de la Sidebar
     const title = document.querySelector('.sidebar h1 a');
-    if(title) title.innerHTML = "◈ NAZGÛL // SOLUS";
+    if(title) title.innerHTML = "◈ SPECTRE // SOLUS";
   })();
 </script>
+
