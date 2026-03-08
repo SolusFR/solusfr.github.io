@@ -1,72 +1,75 @@
 <style>
-  /* --- 1. OVERRIDE GLOBAL DU MOTEUR (FINI LE ROSE) --- */
-  :root {
-    --theme-color: #00ffaa !important;
-    --docsifytabs-tab-highlight-color: #00ffaa !important;
+  /* --- 1. RÉACTIVATION DU SCROLL (FIX BLOQUAGE) --- */
+  html, body {
+    background: #020405 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important; /* Le body reste fixe */
   }
 
-  /* Tue le rose sur les fonds, bordures et lignes horizontales du MD */
-  .markdown-section hr, 
-  .markdown-section blockquote,
-  .markdown-section code,
-  .markdown-section p,
-  .markdown-section table,
-  .markdown-section tr:nth-child(2n) {
-    border-color: #1a3a2a !important;
-    background-color: rgba(0, 255, 170, 0.02) !important;
+  /* On force le scroll UNIQUEMENT ici pour que tu puisses lire tes docs */
+  .content {
+    position: absolute !important;
+    left: 320px !important;
+    right: 20px !important;
+    top: 20px !important;
+    bottom: 20px !important;
+    overflow-y: auto !important; /* RÉACTIVE LE DÉFILEMENT ICI */
+    -webkit-overflow-scrolling: touch;
+    background: #080a0c !important;
+    border-left: 3px solid #00ffaa !important;
+    clip-path: polygon(3% 0, 100% 0, 100% 100%, 0 100%, 0 6%) !important;
+    padding: 60px !important;
+    z-index: 5 !important;
   }
 
-  /* Cible spécifiquement les éléments roses vus sur tes captures */
-  .markdown-section a, 
-  .markdown-section strong, 
-  .markdown-section span.token,
-  .anchor span {
+  /* --- 2. NETTOYAGE RADICAL DU ROSE (SEARCH & GLOW) --- */
+  /* Force le Search en vert spectral */
+  .search input {
+    background: rgba(0, 255, 170, 0.05) !important;
+    border: 1px solid #1a3a2a !important;
     color: #00ffaa !important;
-    text-shadow: 0 0 8px rgba(0, 255, 170, 0.4) !important;
-    border-bottom-color: transparent !important;
   }
 
-  /* --- 2. LA STRUCTURE SPECTRE (FORME AMÉLIORÉE) --- */
-  html, body { background: #010203 !important; overflow: hidden !important; }
-
-  /* Sidebar : Effet glow vert pur (fini le halo rose) */
+  /* Écrase le glow rose de la sidebar vu sur tes images */
   .sidebar {
     background: #050708 !important;
+    box-shadow: 15px 0 35px rgba(0, 0, 0, 0.9), 5px 0 15px rgba(0, 255, 170, 0.1) !important;
     border: none !important;
-    box-shadow: 15px 0 35px rgba(0, 0, 0, 0.95), 5px 0 15px rgba(0, 255, 170, 0.05) !important;
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 80% 100%, 0 100%) !important;
+    z-index: 10 !important;
   }
 
-  /* Contenu : Stèle de Minas Morgul détachée */
-  .content {
-    background: #080a0c !important;
-    border: 1px solid #1a3a2a !important;
-    border-top: 3px solid #00ffaa !important;
-    border-left: 3px solid #00ffaa !important;
-    clip-path: polygon(4% 0, 100% 0, 100% 100%, 0 100%, 0 8%) !important;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 1) !important;
-    padding: 50px !important;
-    left: 320px !important;
-    margin-top: 15px !important;
-    height: calc(100vh - 30px) !important;
+  /* Supprime les résidus de l'image de fond et des étoiles roses */
+  #stars-container, .star, #theme-picker, .sidebar-toggle {
+    display: none !important;
+    visibility: hidden !important;
   }
 
-  /* --- 3. LISIBILITÉ D'ACIER (FIX IMAGE_73E959) --- */
+  /* --- 3. LISIBILITÉ SPECTRE (FIX IMAGE_73E959) --- */
   .markdown-section {
     color: #d1d5db !important;
     font-family: 'Cinzel', serif !important;
   }
 
-  .sidebar-nav li.active > a, .sidebar-nav li a:hover {
-    background: linear-gradient(90deg, rgba(0, 255, 170, 0.2) 0%, transparent 100%) !important;
-    color: #ffffff !important;
-    text-shadow: 0 0 10px #00ffaa !important;
+  .markdown-section h1, .markdown-section h2 {
+    color: #00ffaa !important;
+    text-shadow: 0 0 15px rgba(0, 255, 170, 0.4) !important;
   }
 
-  /* Masque les résidus vus sur image_73f443.jpg */
-  .sidebar-toggle, #theme-picker, .app-nav, #stars-container {
-    display: none !important;
-    visibility: hidden !important;
+  /* Remplacement des puces roses par des dagues d'acier */
+  .markdown-section ul li::before {
+    color: #00ffaa !important;
+    content: "🗡" !important;
+  }
+
+  /* --- 4. BARRE DE SCROLL STYLE MINAS MORGUL --- */
+  .content::-webkit-scrollbar { width: 6px; }
+  .content::-webkit-scrollbar-track { background: #020405; }
+  .content::-webkit-scrollbar-thumb { 
+    background: #1a3a2a; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00ffaa;
   }
 </style>
 
@@ -74,26 +77,29 @@
 
 <script>
   (function() {
-    const antiPinkForce = () => {
-      // On traque et on détruit toute couleur rose/magenta injectée dynamiquement
-      const allElements = document.querySelectorAll('*');
-      allElements.forEach(el => {
+    const finalExorcism = () => {
+      // 1. On traque toute injection de style rose (Search, Glow, etc)
+      document.querySelectorAll('*').forEach(el => {
         const style = window.getComputedStyle(el);
-        const pinkTerms = ['255, 51, 153', 'rgb(255, 0, 255)', 'pink', '#ff3399'];
-        
-        if (pinkTerms.some(term => style.color.includes(term) || style.borderColor.includes(term) || style.boxShadow.includes(term))) {
+        // Détecte le rose/magenta par ses valeurs RGB
+        if (style.color.includes('255, 51') || style.boxShadow.includes('255, 51')) {
           el.style.setProperty('color', '#00ffaa', 'important');
-          el.style.setProperty('border-color', '#1a3a2a', 'important');
-          el.style.setProperty('box-shadow', '0 0 5px #00ffaa', 'important');
+          el.style.setProperty('box-shadow', '0 0 10px rgba(0, 255, 170, 0.3)', 'important');
         }
       });
 
-      // Suppression de la barre grise en bas
-      const toggle = document.querySelector('.sidebar-toggle');
-      if(toggle) toggle.remove();
+      // 2. Supprime la barre de menu mobile grise
+      const bugBar = document.querySelector('.sidebar-toggle');
+      if(bugBar) bugBar.remove();
     };
 
-    antiPinkForce();
-    setInterval(antiPinkForce, 300); // Surveillance constante
+    finalExorcism();
+    setInterval(finalExorcism, 500);
+
+    // Force le focus scroll sur le bon élément
+    window.addEventListener('load', () => {
+      const content = document.querySelector('.content');
+      if(content) content.focus();
+    });
   })();
 </script>
