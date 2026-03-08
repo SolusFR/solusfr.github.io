@@ -1,128 +1,116 @@
 <style>
-  /* --- 1. ÉRADICATION TOTALE DU FOND ET DES ÉLÉMENTS OSHI/MEMCHO --- */
-  :root, [data-theme], html, body, main {
+  /* --- 1. DESTRUCTION TOTALE DES ÉLÉMENTS PAR DÉFAUT (BARRES, MENUS, FONDS) --- */
+  html, body, main, section.content, article#main {
     background: transparent !important;
-    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important; /* Tue le scroll du body qui crée le bug blanc */
   }
 
-  /* Cacher absolutely TOUT ce qui appartient au site de base et qui pourrait dépasser */
-  #theme-picker, #stars-container, .star, .cursor-glow, .background-overlay, 
-  .fx-star, .fx-heart, #fx-container, .fx-orb {
+  /* Cache la barre de menu mobile (en bas à gauche), le search, et les boutons Oshi */
+  .app-nav, .search, #theme-picker, .sidebar-toggle, .github-corner, 
+  #stars-container, .star, #fx-container, footer, .app-sub-sidebar {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
   }
 
-  /* --- 2. LE NOUVEAU FOND SANS BUG (UNDERWORLD DIVIN) --- */
-  /* On applique le fond divin sur l'élément html directement */
+  /* --- 2. LE VRAI FOND (L'UNDERWORLD) --- */
   html {
-    background: radial-gradient(circle at center, #002244 0%, #020408 100%) !important;
+    background: #020408 url('https://www.transparenttextures.com/patterns/dark-matter.png') !important;
+    background-attachment: fixed !important;
   }
 
-  /* --- 3. RESTRUCTURATION DE LA STÈLE (CORRECTION DU BUG) --- */
-  /* La carte de contenu (La Stèle) */
+  /* --- 3. LA STÈLE DE CRISTAL (FIXÉE ET PROPRE) --- */
   .content {
-    position: fixed !important; /* Reste fixe par rapport à la vue */
+    position: fixed !important;
     top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important; /* Recentrage parfait */
-    width: 850px !important;
-    height: 80vh !important;
-    max-height: 800px !important;
-    margin: 0 !important;
-    background: rgba(255, 255, 255, 0.03) !important;
-    backdrop-filter: blur(30px) !important;
-    border: 1px solid rgba(241, 196, 15, 0.4) !important;
-    box-shadow: 0 0 100px rgba(0, 0, 0, 1), 
-                inset 0 0 50px rgba(0, 136, 255, 0.1) !important;
-    overflow-y: auto !important; /* Le scroll est ICI maintenant */
-    padding: 60px !important;
-    z-index: 5 !important;
-    border-radius: 4px !important;
+    left: 45% !important; /* Décalée légèrement à gauche pour équilibrer avec la sidebar à droite */
+    transform: translate(-50%, -50%) !important;
+    width: 65vw !important;
+    height: 85vh !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    backdrop-filter: blur(30px) brightness(0.5) !important;
+    border: 2px solid #f1c40f !important;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(0, 85, 255, 0.2) !important;
+    z-index: 1000 !important;
+    overflow-y: auto !important;
+    padding: 50px !important;
+    border-radius: 5px !important;
   }
 
-  /* --- 4. LA SIDEBAR VR FLOTTANTE (CORRIGÉE ET DÉPLACÉE) --- */
-  /* La sidebar devient un panneau VR flottant à droite de la stèle */
+  /* --- 4. LA SIDEBAR VR (DROITE) --- */
   .sidebar {
     position: fixed !important;
     left: auto !important;
-    right: 5% !important; /* Reste sur la droite */
+    right: 30px !important;
+    top: 50% !important;
+    transform: translateY(-50%) rotateY(-20deg) !important;
     width: 280px !important;
     height: auto !important;
-    top: 50% !important;
-    transform: translateY(-50%) rotateY(-15deg) !important; /* Effet VR 3D */
     background: transparent !important;
     border: none !important;
-    z-index: 10 !important;
-    padding-bottom: 0 !important;
+    z-index: 2000 !important;
   }
 
-  /* Les items de la sidebar VR */
   .sidebar-nav ul li {
-    background: rgba(0, 0, 0, 0.6) !important;
+    background: rgba(0, 0, 0, 0.8) !important;
     border: 1px solid #f1c40f !important;
-    margin-bottom: 10px !important;
-    padding: 10px !important;
-    clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%) !important;
-    transition: 0.3s ease;
+    margin-bottom: 15px !important;
+    padding: 12px !important;
+    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%) !important;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   .sidebar-nav ul li a {
     color: #f1c40f !important;
     font-family: 'Cinzel', serif !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
     text-decoration: none !important;
-    text-align: center;
-    font-weight: bold;
-    letter-spacing: 1px;
-    padding: 0 !important;
   }
 
-  .sidebar-nav ul li.active > a, .sidebar-nav ul li:hover a {
-    color: #000 !important;
-    text-shadow: none !important;
-  }
-  
   .sidebar-nav ul li:hover, .sidebar-nav ul li.active {
     background: #f1c40f !important;
-    transform: translateX(-10px);
+    transform: scale(1.1) translateX(-20px) !important;
   }
 
-  /* Cache le titre et le logo de la sidebar par défaut */
-  .sidebar h1, .sidebar-resizer, .app-nav {
-      display: none !important;
+  .sidebar-nav ul li:hover a, .sidebar-nav ul li.active a {
+    color: #000 !important;
   }
 
-  /* --- 5. TEXTE ET EFFETS --- */
+  /* Cache les éléments internes de la sidebar qui polluent */
+  .sidebar h1, .sidebar-resizer { display: none !important; }
+
+  /* --- 5. TYPOGRAPHIE DIVINE --- */
   .markdown-section h1 {
     font-family: 'Cinzel', serif !important;
-    text-shadow: 0 0 20px #f1c40f, 0 0 40px rgba(0, 136, 255, 0.5) !important;
     color: #fff !important;
-    text-align: center;
-    border: none !important;
-    padding-bottom: 40px;
-    margin-top: 0 !important;
+    text-shadow: 0 0 20px #f1c40f !important;
+    text-align: center !important;
+    border-bottom: 3px double #f1c40f !important;
+    padding-bottom: 20px !important;
   }
 
-  /* Le badge Premium */
-  .markdown-section p img[src*="badge"] {
-      filter: drop-shadow(0 0 10px #f1c40f);
-  }
-
-  /* --- 6. PARTICULES DORÉES MASSIVES --- */
-  .divine-particle {
+  /* --- 6. PARTICULES D'OSMANTHUS --- */
+  .divine-leaf {
     position: fixed;
-    width: 15px; height: 15px;
+    width: 10px; height: 10px;
     background: #f1c40f;
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    filter: blur(1px) drop-shadow(0 0 8px #f1c40f);
-    z-index: 1 !important;
-    animation: flowDivinity 10s infinite linear;
+    box-shadow: 0 0 10px #f1c40f;
+    z-index: 500;
+    pointer-events: none;
+    animation: leafFall 8s linear infinite;
   }
 
-  @keyframes flowDivinity {
-    0% { transform: translateY(-10vh) rotate(0deg) scale(0.5); opacity: 0; }
-    50% { opacity: 0.8; }
-    100% { transform: translateY(110vh) rotate(720deg) scale(1.5); opacity: 0; }
+  @keyframes leafFall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg) translateX(100px); opacity: 0; }
   }
 </style>
 
@@ -130,32 +118,30 @@
 
 <script>
   (function() {
-    console.log("⚔️ Integrity Protocol v4.0: UNIFIED AXIOM STRUCTURE (Fix Background Bug)");
-    document.title = "AXIS MUNDI // UNITÉ DE L'INTÉGRITÉ";
-
-    // 1. On force le nettoyage complet
-    const cleanup = () => {
-      document.querySelectorAll('#theme-picker, .app-nav, .search').forEach(el => el.remove());
+    // 1. Force la suppression de la barre de menu mobile (le bug en bas à gauche)
+    const killBugs = () => {
+        const toggle = document.querySelector('.sidebar-toggle');
+        const nav = document.querySelector('.app-nav');
+        if(toggle) toggle.remove();
+        if(nav) nav.remove();
+        // Force le scroll en haut de la stèle
+        const stela = document.querySelector('.content');
+        if(stela) stela.scrollTop = 0;
     };
-    cleanup(); setInterval(cleanup, 500);
+    
+    killBugs();
+    setInterval(killBugs, 500);
 
-    // 2. Spawn des pétales d'Alice (Plus grands et plus massifs)
-    const spawnPetal = () => {
+    // 2. Générateur de pétales
+    setInterval(() => {
       const p = document.createElement('div');
-      p.className = 'divine-particle';
+      p.className = 'divine-leaf';
       p.style.left = Math.random() * 100 + 'vw';
-      p.style.animationDuration = (Math.random() * 3 + 6) + 's';
+      p.style.animationDuration = (Math.random() * 3 + 5) + 's';
       document.body.appendChild(p);
-      setTimeout(() => p.remove(), 10000);
-    };
-    setInterval(spawnPetal, 400);
+      setTimeout(() => p.remove(), 8000);
+    }, 400);
 
-    // 3. Effet de survol 3D sur la stèle (Le menu suit le curseur)
-    const stela = document.querySelector('.content');
-    document.addEventListener('mousemove', (e) => {
-      const x = (window.innerWidth / 2 - e.pageX) / 100;
-      const y = (window.innerHeight / 2 - e.pageY) / 100;
-      stela.style.transform = `translate(-50%, -50%) rotateY(${x}deg) rotateX(${y}deg)`;
-    });
+    console.log("🛡️ Cardinal System: Clean Overwrite Success.");
   })();
 </script>
