@@ -1,121 +1,99 @@
 <style>
-  /* --- 1. PURGE DES BUGS VISUELS (RÉF : TES CAPTURES) --- */
-  html, body, main, section.content {
-    background: #0f0905 !important; /* Fond terre brûlée/Mordor */
-    overflow: hidden !important;
-    height: 100vh !important;
+  /* --- 1. RESET COMPLET & NETTOYAGE DES BUGS --- */
+  html, body {
+    background: #1a0f05 !important; /* Fond sombre pour faire ressortir le parchemin */
+    overflow-x: hidden !important;
   }
 
-  /* On supprime la barre grise en bas à gauche et le sélecteur rose */
-  .sidebar-toggle, #theme-picker, .app-nav, .search, #stars-container {
+  /* Suppression chirurgicale des barres grises et boutons roses vus sur tes captures */
+  .sidebar-toggle, #theme-picker, .app-nav, .search, #stars-container, #fx-container {
     display: none !important;
+    opacity: 0 !important;
   }
 
-  /* --- 2. LA SIDEBAR : PARCHEMIN ANCIEN --- */
-  .sidebar {
-    position: fixed !important;
-    left: 20px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 300px !important;
-    height: 80vh !important;
-    background: #e3d5b8 !important; /* Couleur papier vieilli */
+  /* --- 2. LE PARCHEMIN GLOBAL (CONTENU) --- */
+  .content {
+    background: #e9dcc0 !important; /* Couleur papier vieilli plus riche */
     background-image: url('https://www.transparenttextures.com/patterns/paper.png') !important;
-    border: 15px solid transparent !important;
-    /* Bordure style fer forgé / Nanster */
-    border-image: url('https://i.imgur.com/8S9S8pX.png') 30 stretch !important; 
-    box-shadow: 20px 0 50px rgba(0,0,0,0.7), inset 0 0 100px rgba(139, 69, 19, 0.2) !important;
-    z-index: 1000 !important;
-    border-radius: 5px !important;
+    border: 20px solid transparent !important;
+    border-image: url('https://i.imgur.com/8S9S8pX.png') 40 round !important; /* Bordure ornementale */
+    box-shadow: 0 0 50px rgba(0,0,0,0.8) !important;
+    margin: 40px auto !important;
+    max-width: 900px !important;
+    min-height: 80vh !important;
+    position: relative !important;
+    z-index: 10 !important;
   }
 
-  /* Titre "DOCS" style Inscription de l'Anneau */
-  .sidebar h1 {
-    font-family: 'Papyrus', 'Palatino', serif !important;
-    color: #4b2c20 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 5px !important;
-    border-bottom: 2px solid #8b4513 !important;
-    margin-bottom: 20px !important;
-  }
-
-  /* Liens du menu (Minecraft, Sécurité...) */
-  .sidebar-nav ul li a {
-    color: #4b2c20 !important;
+  /* Correction Lisibilité : Texte en "Encre de Chine" */
+  .markdown-section {
+    color: #2a1b0a !important; /* Marron très foncé, presque noir pour la lecture */
     font-family: 'Crimson Text', serif !important;
-    font-size: 1.3em !important;
-    font-style: italic !important;
-    transition: 0.3s !important;
-    padding: 10px !important;
-    display: block !important;
+    line-height: 1.6 !important;
+  }
+
+  .markdown-section h1, .markdown-section h2 {
+    font-family: 'Cinzel', serif !important;
+    color: #5d3a1a !important;
+    text-align: center !important;
+    border-bottom: 2px solid rgba(139, 69, 19, 0.3) !important;
+  }
+
+  /* --- 3. LA SIDEBAR : MANUSCRIT ANCIEN --- */
+  .sidebar {
+    background: #dccba6 !important; /* Teinte légèrement différente pour séparer */
+    border-right: 3px double #8b4513 !important;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.3) !important;
+    z-index: 100 !important;
+  }
+
+  /* Titre de la sidebar style "Inscription de l'Anneau" */
+  .sidebar h1 a {
+    font-family: 'Papyrus', 'Palatino', serif !important;
+    color: #3d2419 !important;
+    text-shadow: 1px 1px 0px #fff !important;
+    font-weight: bold !important;
+  }
+
+  /* Liens (Minecraft, Partenaires...) : On force le contraste */
+  .sidebar-nav ul li a {
+    color: #4b2c20 !important; /* Marron foncé pour être lisible */
+    font-weight: 700 !important;
+    font-size: 1.1em !important;
     border: none !important;
   }
 
-  .sidebar-nav ul li a:hover, .sidebar-nav ul li.active > a {
-    color: #d4af37 !important; /* Or de l'Anneau */
-    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5) !important;
+  .sidebar-nav ul li.active > a, .sidebar-nav ul li a:hover {
+    color: #b30000 !important; /* Rouge sang/sacré pour la sélection */
     background: rgba(139, 69, 19, 0.1) !important;
-    transform: translateX(10px) rotate(-1deg) !important;
+    border-left: 4px solid #b30000 !important;
   }
 
-  /* --- 3. LE CONTENU : STÈLE DE GONDOR --- */
-  .content {
-    position: fixed !important;
-    left: 360px !important;
-    right: 40px !important;
-    top: 50px !important;
-    bottom: 50px !important;
-    width: auto !important;
-    height: auto !important;
-    background: #fdfbf7 !important;
-    border: 1px solid #d4af37 !important;
-    padding: 60px !important;
-    overflow-y: auto !important;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5) !important;
-  }
-
-  /* Titres style Eldamar */
-  .markdown-section h1 {
-    font-family: 'Cinzel', serif !important;
-    color: #2c3e50 !important;
-    text-align: center !important;
-    border-bottom: 2px solid #d4af37 !important;
-  }
-
-  /* --- 4. EFFET DE PARTICULES : CENDRES DU MORDOR --- */
-  .ash {
-    position: fixed;
-    background: rgba(255, 255, 255, 0.2);
-    width: 2px; height: 2px;
-    pointer-events: none;
-    z-index: 1;
-    animation: drift linear infinite;
-  }
-
-  @keyframes drift {
-    from { transform: translateY(-10vh) translateX(0); opacity: 1; }
-    to { transform: translateY(110vh) translateX(100px); opacity: 0; }
+  /* --- 4. EFFET DE LUMIÈRE (L'UNIQUE ANNEAU) --- */
+  .markdown-section strong, .markdown-section b {
+    color: #b30000 !important; /* On met les éléments importants en rouge "Anneau" */
+    text-shadow: 0 0 2px rgba(179, 0, 0, 0.2) !important;
   }
 </style>
 
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@1,600&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;700&family=Cinzel:wght@700&display=swap" rel="stylesheet">
 
 <script>
   (function() {
-    // Nettoyage des résidus visibles sur tes images
-    const cleanLOTR = () => {
-      document.querySelectorAll('.sidebar-toggle, #theme-picker, .app-nav').forEach(el => el.remove());
+    // Nettoyage agressif des éléments Docsify vus sur les captures
+    const cleanupLOTR = () => {
+        const bugs = ['.sidebar-toggle', '#theme-picker', '.app-nav', '.search'];
+        bugs.forEach(selector => {
+            const el = document.querySelector(selector);
+            if(el) el.remove();
+        });
+        
+        // On change le titre pour l'immersion
+        const title = document.querySelector('.sidebar h1 a');
+        if(title) title.innerText = "📜 LE LIVRE ROUGE";
     };
-    cleanLOTR(); setInterval(cleanLOTR, 500);
 
-    // Ajout de cendres flottantes (Ambiance Mount Doom)
-    for(let i=0; i<30; i++) {
-      const ash = document.createElement('div');
-      ash.className = 'ash';
-      ash.style.left = Math.random() * 100 + 'vw';
-      ash.style.animationDuration = (Math.random() * 5 + 5) + 's';
-      ash.style.delay = Math.random() * 5 + 's';
-      document.body.appendChild(ash);
-    }
+    cleanupLOTR();
+    setInterval(cleanupLOTR, 1000);
   })();
 </script>
