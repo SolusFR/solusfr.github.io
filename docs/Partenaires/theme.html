@@ -1,132 +1,121 @@
 <style>
-  /* --- 1. L'ANNIHILATEUR DE BUGS --- */
-  /* On force le fond à être noir absolu pour ne plus voir les décalages de Docsify */
-  html, body {
-    background: #020408 !important;
-    overflow: hidden !important; /* Interdit le scroll du site de base */
-    height: 100% !important;
+  /* --- 1. PURGE DES BUGS VISUELS (RÉF : TES CAPTURES) --- */
+  html, body, main, section.content {
+    background: #0f0905 !important; /* Fond terre brûlée/Mordor */
+    overflow: hidden !important;
+    height: 100vh !important;
   }
 
-  /* On fait disparaître tout le "bruit" de Docsify (boutons, barres, menus mobiles) */
-  #theme-picker, .sidebar-toggle, .app-nav, .search, #stars-container, 
-  #fx-container, .github-corner, .app-sub-sidebar {
+  /* On supprime la barre grise en bas à gauche et le sélecteur rose */
+  .sidebar-toggle, #theme-picker, .app-nav, .search, #stars-container {
     display: none !important;
-    visibility: hidden !important;
   }
 
-  /* --- 2. LA STRUCTURE "INTEGRITY KNIGHT" --- */
-  /* Le panneau central (Stèle d'Or) */
-  .content {
-    position: fixed !important;
-    top: 50% !important;
-    left: 45% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 60vw !important;
-    height: 80vh !important;
-    background: rgba(5, 10, 20, 0.9) !important;
-    backdrop-filter: blur(20px) !important;
-    border: 1px solid #f1c40f !important;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 1), 0 0 20px rgba(241, 196, 15, 0.2) !important;
-    z-index: 9999 !important;
-    overflow-y: auto !important; /* Le scroll ne se fait qu'ici */
-    padding: 60px !important;
-    border-radius: 2px !important;
-  }
-
-  /* La Sidebar (Menu Flottant) */
+  /* --- 2. LA SIDEBAR : PARCHEMIN ANCIEN --- */
   .sidebar {
     position: fixed !important;
-    left: auto !important;
-    right: 5% !important;
+    left: 20px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
-    width: 250px !important;
-    background: transparent !important;
-    border: none !important;
-    z-index: 10000 !important;
-    display: block !important;
+    width: 300px !important;
+    height: 80vh !important;
+    background: #e3d5b8 !important; /* Couleur papier vieilli */
+    background-image: url('https://www.transparenttextures.com/patterns/paper.png') !important;
+    border: 15px solid transparent !important;
+    /* Bordure style fer forgé / Nanster */
+    border-image: url('https://i.imgur.com/8S9S8pX.png') 30 stretch !important; 
+    box-shadow: 20px 0 50px rgba(0,0,0,0.7), inset 0 0 100px rgba(139, 69, 19, 0.2) !important;
+    z-index: 1000 !important;
+    border-radius: 5px !important;
   }
 
-  /* Transformation des liens en boutons SAO */
-  .sidebar-nav ul li {
-    background: linear-gradient(90deg, rgba(0, 136, 255, 0.1), transparent) !important;
-    border: 1px solid rgba(241, 196, 15, 0.5) !important;
-    margin-bottom: 12px !important;
-    padding: 15px !important;
-    clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%) !important;
-    transition: 0.3s ease !important;
-    list-style: none !important;
-  }
-
-  .sidebar-nav ul li a {
-    color: #f1c40f !important;
-    font-family: 'Cinzel', serif !important;
+  /* Titre "DOCS" style Inscription de l'Anneau */
+  .sidebar h1 {
+    font-family: 'Papyrus', 'Palatino', serif !important;
+    color: #4b2c20 !important;
     text-transform: uppercase !important;
-    font-size: 0.9em !important;
-    text-decoration: none !important;
-    letter-spacing: 2px !important;
+    letter-spacing: 5px !important;
+    border-bottom: 2px solid #8b4513 !important;
+    margin-bottom: 20px !important;
   }
 
-  .sidebar-nav ul li:hover, .sidebar-nav ul li.active {
-    background: #f1c40f !important;
-    transform: scale(1.05) !important;
+  /* Liens du menu (Minecraft, Sécurité...) */
+  .sidebar-nav ul li a {
+    color: #4b2c20 !important;
+    font-family: 'Crimson Text', serif !important;
+    font-size: 1.3em !important;
+    font-style: italic !important;
+    transition: 0.3s !important;
+    padding: 10px !important;
+    display: block !important;
+    border: none !important;
   }
 
-  .sidebar-nav ul li:hover a, .sidebar-nav ul li.active a {
-    color: #000 !important;
+  .sidebar-nav ul li a:hover, .sidebar-nav ul li.active > a {
+    color: #d4af37 !important; /* Or de l'Anneau */
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5) !important;
+    background: rgba(139, 69, 19, 0.1) !important;
+    transform: translateX(10px) rotate(-1deg) !important;
   }
 
-  /* --- 3. DÉCORATIONS DIVINES --- */
+  /* --- 3. LE CONTENU : STÈLE DE GONDOR --- */
+  .content {
+    position: fixed !important;
+    left: 360px !important;
+    right: 40px !important;
+    top: 50px !important;
+    bottom: 50px !important;
+    width: auto !important;
+    height: auto !important;
+    background: #fdfbf7 !important;
+    border: 1px solid #d4af37 !important;
+    padding: 60px !important;
+    overflow-y: auto !important;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5) !important;
+  }
+
+  /* Titres style Eldamar */
   .markdown-section h1 {
     font-family: 'Cinzel', serif !important;
-    color: #fff !important;
-    text-shadow: 0 0 15px #f1c40f !important;
+    color: #2c3e50 !important;
     text-align: center !important;
-    border-bottom: 2px solid #f1c40f !important;
-    padding-bottom: 20px !important;
+    border-bottom: 2px solid #d4af37 !important;
   }
 
-  /* Particules d'Osmanthus */
-  .divine-petal {
+  /* --- 4. EFFET DE PARTICULES : CENDRES DU MORDOR --- */
+  .ash {
     position: fixed;
-    width: 10px; height: 10px;
-    background: #f1c40f;
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    z-index: 999;
+    background: rgba(255, 255, 255, 0.2);
+    width: 2px; height: 2px;
     pointer-events: none;
-    animation: fall linear infinite;
+    z-index: 1;
+    animation: drift linear infinite;
   }
 
-  @keyframes fall {
-    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-    20% { opacity: 1; }
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  @keyframes drift {
+    from { transform: translateY(-10vh) translateX(0); opacity: 1; }
+    to { transform: translateY(110vh) translateX(100px); opacity: 0; }
   }
 </style>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@1,600&family=Cinzel:wght@700&display=swap" rel="stylesheet">
 
 <script>
   (function() {
-    // Force la suppression des résidus de Docsify
-    const forceCleanup = () => {
-      document.querySelectorAll('.sidebar-toggle, #theme-picker, .app-nav').forEach(el => {
-        el.style.display = 'none';
-        el.style.opacity = '0';
-      });
+    // Nettoyage des résidus visibles sur tes images
+    const cleanLOTR = () => {
+      document.querySelectorAll('.sidebar-toggle, #theme-picker, .app-nav').forEach(el => el.remove());
     };
-    setInterval(forceCleanup, 100);
+    cleanLOTR(); setInterval(cleanLOTR, 500);
 
-    // Pétales d'Alice
-    setInterval(() => {
-      const p = document.createElement('div');
-      p.className = 'divine-petal';
-      p.style.left = Math.random() * 100 + 'vw';
-      p.style.animationDuration = (Math.random() * 3 + 4) + 's';
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 7000);
-    }, 400);
-
-    console.log("🛡️ Integrity Mode: Protocol Axiom-10 loaded.");
+    // Ajout de cendres flottantes (Ambiance Mount Doom)
+    for(let i=0; i<30; i++) {
+      const ash = document.createElement('div');
+      ash.className = 'ash';
+      ash.style.left = Math.random() * 100 + 'vw';
+      ash.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      ash.style.delay = Math.random() * 5 + 's';
+      document.body.appendChild(ash);
+    }
   })();
 </script>
