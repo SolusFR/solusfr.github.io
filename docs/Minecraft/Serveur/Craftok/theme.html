@@ -1,0 +1,95 @@
+<style>
+  /* 1. PALETTE TIKTOK / CRAFTOK */
+  :root, [data-theme='ai'], [data-theme='ruby'], [data-theme='aqua'] {
+    --tk-cyan: #00f2ea;
+    --tk-magenta: #ff0050;
+    --theme-color: var(--tk-cyan) !important;
+    --bg-main: #121212 !important;
+    --font-headers: 'Fira Code', 'Minecraftia', monospace !important;
+    --theme-icon: "🎬" !important;
+    --ui-border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* 2. EFFET GLITCH SUR LE TITRE (LOGO STYLE) */
+  .markdown-section h1 {
+    position: relative;
+    color: #fff !important;
+    text-shadow: 2px 0 var(--tk-magenta), -2px 0 var(--tk-cyan) !important;
+    text-transform: uppercase !important;
+    letter-spacing: -1px !important;
+  }
+
+  /* 3. SIDEBAR & BOUTONS STYLE "FLUX" */
+  .sidebar {
+    background: #000 !important;
+    border-right: 2px solid var(--tk-magenta) !important;
+  }
+
+  .sidebar-nav ul li a:hover {
+    background: linear-gradient(90deg, var(--tk-cyan), var(--tk-magenta)) !important;
+    color: #fff !important;
+    transform: skewX(-5deg); /* Petit effet dynamique */
+  }
+
+  /* 4. BARRE DE LECTURE TIKTOK */
+  #reading-progress {
+    height: 4px !important;
+    background: linear-gradient(90deg, var(--tk-cyan) 0%, #fff 50%, var(--tk-magenta) 100%) !important;
+    box-shadow: 0 0 10px var(--tk-cyan) !important;
+  }
+
+  /* 5. BLOCS DE TEXTE (POUR LE PVP/KIT) */
+  .markdown-section blockquote {
+    border-left: 4px solid var(--tk-cyan) !important;
+    background: rgba(0, 242, 234, 0.05) !important;
+    box-shadow: -5px 0 0 var(--tk-magenta) !important; /* Double bordure Glitch */
+  }
+
+  /* Badge spécial Grade */
+  .badge.new {
+    background: var(--tk-magenta) !important;
+    color: #fff !important;
+    box-shadow: 2px 2px 0 var(--tk-cyan) !important;
+  }
+</style>
+
+<div class="glitch-line"></div>
+
+<style>
+  .glitch-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--tk-cyan);
+    z-index: 10001;
+    animation: glitchMove 4s infinite;
+    opacity: 0.5;
+  }
+  @keyframes glitchMove {
+    0% { top: 0; background: var(--tk-cyan); }
+    50% { top: 100%; background: var(--tk-magenta); }
+    100% { top: 0; background: var(--tk-cyan); }
+  }
+</style>
+
+<script>
+  (function() {
+    console.log("🎬 Mode Craftok (TikTok Style) Activé.");
+    
+    // Change le loader en logo tiktok/vibe
+    const loader = document.getElementById('loader-star');
+    if(loader) {
+      loader.innerHTML = "🎬";
+      loader.style.textShadow = "3px 0 #ff0050, -3px 0 #00f2ea";
+    }
+
+    // Animation discrète sur les liens
+    document.querySelectorAll('.markdown-section a').forEach(a => {
+      a.style.borderBottom = "2px solid var(--tk-cyan)";
+      a.onmouseover = () => a.style.color = "var(--tk-magenta)";
+      a.onmouseout = () => a.style.color = "var(--theme-color)";
+    });
+  })();
+</script>
