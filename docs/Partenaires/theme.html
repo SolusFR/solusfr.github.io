@@ -1,134 +1,136 @@
 <style>
-  /* 1. ÉRADICATION DU FOND OSHI NO KO & RESET */
-  :root, [data-theme] {
-    --bg-main: #0a0b10 !important;
-    --theme-color: #f1c40f !important;
+  /* --- 1. PURGE TOTALE ET RESET --- */
+  :root {
+    --knight-gold: #f1c40f;
+    --knight-blue: #0066ff;
+    --axiom-bg: #030508;
   }
 
-  /* On cache de force les éléments visuels par défaut du site */
-  #stars-container, .star, .cursor-glow, .background-overlay, #loader-star {
+  /* Cache absolument tout ce qui touche à Oshi no Ko */
+  #theme-picker, #stars-container, .star, .cursor-glow, .background-overlay, .fx-star, .fx-heart {
     display: none !important;
     opacity: 0 !important;
-    visibility: hidden !important;
   }
 
-  /* 2. LE NOUVEAU FOND DIVIN (CATHÉDRALE DE L'AXIOME) */
+  /* --- 2. LE FOND "DIVINE AURA" --- */
   body {
-    background: radial-gradient(circle at center, #1e2a4a 0%, #05070a 100%) !important;
+    background: var(--axiom-bg) !important;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(0, 102, 255, 0.15) 0%, transparent 70%),
+      linear-gradient(rgba(241, 196, 15, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(241, 196, 15, 0.02) 1px, transparent 1px) !important;
+    background-size: cover, 40px 40px, 40px 40px !important;
     overflow-x: hidden;
   }
 
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: url('https://www.transparenttextures.com/patterns/graphy-dark.png');
-    opacity: 0.2;
-    z-index: -1;
-  }
-
-  /* 3. STRUCTURE : LES PANNEAUX DE CRISTAL */
-  /* Sidebar style "Hologramme de l'Unité Centrale" */
+  /* --- 3. REPOSITIONNEMENT DE LA SIDEBAR (DROITE + FLOTTANTE) --- */
   .sidebar {
-    background: rgba(255, 255, 255, 0.02) !important;
-    backdrop-filter: blur(25px) !important;
-    border-right: 2px solid #f1c40f !important;
-    box-shadow: 10px 0 50px rgba(0, 85, 255, 0.2) !important;
-    color: #fff !important;
+    left: auto !important;
+    right: 20px !important; /* Déplacée à DROITE */
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    height: 70vh !important;
+    width: 260px !important;
+    background: rgba(10, 20, 40, 0.8) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 2px solid var(--knight-gold) !important;
+    border-radius: 15px 0 0 15px !important;
+    box-shadow: -10px 0 30px rgba(0, 102, 255, 0.3) !important;
+    z-index: 100 !important;
   }
 
-  .sidebar-nav ul li a {
-    color: rgba(255, 255, 255, 0.6) !important;
-    font-family: 'Cinzel', serif; /* Police type épée/noble */
-    letter-spacing: 1px;
-    border-bottom: 1px solid rgba(241, 196, 15, 0.1);
+  .sidebar-nav { padding: 20px !important; }
+  .sidebar h1 { 
+    font-family: 'Cinzel', serif; 
+    font-size: 1.2em !important; 
+    color: var(--knight-gold) !important;
+    text-align: right;
   }
 
-  .sidebar-nav ul li.active > a {
-    color: #f1c40f !important;
-    text-shadow: 0 0 15px #f1c40f;
-    background: linear-gradient(90deg, rgba(241, 196, 15, 0.1), transparent) !important;
-  }
-
-  /* Contenu principal comme un parchemin de lumière */
+  /* --- 4. ZONE DE CONTENU "HOLOGRAMME" --- */
   .content {
-    background: rgba(10, 15, 30, 0.7) !important;
-    border: 1px solid rgba(241, 196, 15, 0.3) !important;
-    box-shadow: 0 0 100px rgba(0, 0, 0, 1), inset 0 0 40px rgba(0, 85, 255, 0.1) !important;
-    border-radius: 0 !important; /* On reste sur du tranchant/noble */
-    margin-top: 50px !important;
+    left: 40px !important;
+    right: 320px !important; /* On laisse de la place pour la sidebar à droite */
+    top: 50px !important;
+    position: relative !important;
+    width: auto !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(241, 196, 15, 0.2) !important;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5) !important;
+    padding: 40px !important;
+    min-height: 80vh;
   }
 
-  /* 4. DESIGN DES TITRES : SYSTEM CALL */
+  /* --- 5. EFFETS VISUELS "RELEASE RECOLLECTION" --- */
+  /* Titre avec animation de flash doré */
   .markdown-section h1 {
     font-family: 'Cinzel', serif;
-    text-align: center;
     color: #fff !important;
-    text-shadow: 0 0 20px #f1c40f, 0 0 40px rgba(0, 85, 255, 0.5) !important;
-    border: none !important;
-    padding-bottom: 40px;
+    text-shadow: 0 0 15px var(--knight-gold) !important;
+    border-bottom: 2px solid var(--knight-gold) !important;
+    padding-bottom: 15px;
+    text-align: left;
   }
 
-  .markdown-section h1::before {
-    content: "« SYSTEM CALL »";
-    display: block;
-    font-size: 0.3em;
-    color: #00ddff;
-    letter-spacing: 8px;
-    margin-bottom: 10px;
-  }
-
-  /* 5. EFFET "RELEASE RECOLLECTION" (OSMANTHUS BLOSSOMS) */
-  .petal {
+  /* Pétales d'Osmanthus massifs */
+  .divine-petal {
     position: fixed;
-    background: #f1c40f;
-    width: 6px; height: 6px;
+    width: 12px; height: 12px;
+    background: var(--knight-gold);
     border-radius: 100% 0 100% 0;
-    z-index: 9999;
     pointer-events: none;
-    box-shadow: 0 0 10px #f1c40f;
-    animation: flow 7s infinite linear;
+    z-index: 9999;
+    filter: drop-shadow(0 0 5px var(--knight-gold));
+    animation: divineFall 8s infinite linear;
   }
 
-  @keyframes flow {
-    0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateY(110vh) rotate(1080deg) translateX(150px); opacity: 0; }
+  @keyframes divineFall {
+    0% { transform: translateY(-10vh) rotate(0deg) scale(0.5); opacity: 0; }
+    50% { opacity: 1; transform: translateY(50vh) rotate(180deg) scale(1.2) translateX(50px); }
+    100% { transform: translateY(110vh) rotate(360deg) scale(0.5) translateX(-50px); opacity: 0; }
   }
 
-  /* 6. BARRE DE NAVIGATION (RETOUR LOBBY) */
+  /* --- 6. BARRE DE NAVIGATION (TOP) --- */
   .app-nav {
-      background: rgba(0, 0, 0, 0.8) !important;
-      border-bottom: 1px solid #f1c40f !important;
+    left: 40px !important;
+    right: auto !important;
+    background: transparent !important;
+    border: 1px solid var(--knight-gold) !important;
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
   }
 </style>
 
-<div id="divine-overlay"></div>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
 
 <script>
   (function() {
-    console.log("⚔️ Integrity Knight Protocol v3.0 : TOTAL OVERWRITE");
-    document.title = "UNITÉ DE L'INTÉGRITÉ // PARTENAIRES";
+    // 1. On force la suppression des boutons de thèmes si le CSS ne suffit pas
+    const removeOshi = () => {
+      const picker = document.getElementById('theme-picker');
+      if (picker) picker.remove();
+    };
+    removeOshi();
+    setInterval(removeOshi, 1000); // Au cas où Docsify le recréerait
 
-    // Création des pétales d'Osmanthus dorés
-    const container = document.body;
-    for(let i=0; i<15; i++) {
-        setTimeout(() => {
-            setInterval(() => {
-                const p = document.createElement('div');
-                p.className = 'petal';
-                p.style.left = Math.random() * 100 + 'vw';
-                p.style.animationDuration = (Math.random() * 4 + 5) + 's';
-                container.appendChild(p);
-                setTimeout(() => p.remove(), 7000);
-            }, 800);
-        }, i * 200);
+    // 2. Générateur de particules Osmanthus (Alice's Sword)
+    const spawnPetal = () => {
+      const p = document.createElement('div');
+      p.className = 'divine-petal';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (Math.random() * 3 + 6) + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 8000);
+    };
+    setInterval(spawnPetal, 400);
+
+    // 3. Texte de chargement personnalisé
+    const loaderText = document.querySelector('.loader-text');
+    if (loaderText) {
+      loaderText.innerHTML = "SYSTEM CALL: GENERATE LUMINOSITY ELEMENT";
+      loaderText.style.color = "#f1c40f";
     }
 
-    // On force le titre de la sidebar
-    const sideTitle = document.querySelector('.sidebar h1 a');
-    if(sideTitle) sideTitle.innerHTML = "AXIOM CHURCH";
+    console.log("🛡️ Integrity Protocol: Axiom Overwrite Complete.");
   })();
 </script>
