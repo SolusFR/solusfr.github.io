@@ -1,116 +1,106 @@
 <style>
-  /* --- 1. DESTRUCTION TOTALE DES ÉLÉMENTS PAR DÉFAUT (BARRES, MENUS, FONDS) --- */
-  html, body, main, section.content, article#main {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important; /* Tue le scroll du body qui crée le bug blanc */
+  /* --- 1. L'ANNIHILATEUR DE BUGS --- */
+  /* On force le fond à être noir absolu pour ne plus voir les décalages de Docsify */
+  html, body {
+    background: #020408 !important;
+    overflow: hidden !important; /* Interdit le scroll du site de base */
+    height: 100% !important;
   }
 
-  /* Cache la barre de menu mobile (en bas à gauche), le search, et les boutons Oshi */
-  .app-nav, .search, #theme-picker, .sidebar-toggle, .github-corner, 
-  #stars-container, .star, #fx-container, footer, .app-sub-sidebar {
+  /* On fait disparaître tout le "bruit" de Docsify (boutons, barres, menus mobiles) */
+  #theme-picker, .sidebar-toggle, .app-nav, .search, #stars-container, 
+  #fx-container, .github-corner, .app-sub-sidebar {
     display: none !important;
-    opacity: 0 !important;
     visibility: hidden !important;
   }
 
-  /* --- 2. LE VRAI FOND (L'UNDERWORLD) --- */
-  html {
-    background: #020408 url('https://www.transparenttextures.com/patterns/dark-matter.png') !important;
-    background-attachment: fixed !important;
-  }
-
-  /* --- 3. LA STÈLE DE CRISTAL (FIXÉE ET PROPRE) --- */
+  /* --- 2. LA STRUCTURE "INTEGRITY KNIGHT" --- */
+  /* Le panneau central (Stèle d'Or) */
   .content {
     position: fixed !important;
     top: 50% !important;
-    left: 45% !important; /* Décalée légèrement à gauche pour équilibrer avec la sidebar à droite */
+    left: 45% !important;
     transform: translate(-50%, -50%) !important;
-    width: 65vw !important;
-    height: 85vh !important;
-    background: rgba(255, 255, 255, 0.02) !important;
-    backdrop-filter: blur(30px) brightness(0.5) !important;
-    border: 2px solid #f1c40f !important;
-    box-shadow: 0 0 100px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(0, 85, 255, 0.2) !important;
-    z-index: 1000 !important;
-    overflow-y: auto !important;
-    padding: 50px !important;
-    border-radius: 5px !important;
+    width: 60vw !important;
+    height: 80vh !important;
+    background: rgba(5, 10, 20, 0.9) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid #f1c40f !important;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 1), 0 0 20px rgba(241, 196, 15, 0.2) !important;
+    z-index: 9999 !important;
+    overflow-y: auto !important; /* Le scroll ne se fait qu'ici */
+    padding: 60px !important;
+    border-radius: 2px !important;
   }
 
-  /* --- 4. LA SIDEBAR VR (DROITE) --- */
+  /* La Sidebar (Menu Flottant) */
   .sidebar {
     position: fixed !important;
     left: auto !important;
-    right: 30px !important;
+    right: 5% !important;
     top: 50% !important;
-    transform: translateY(-50%) rotateY(-20deg) !important;
-    width: 280px !important;
-    height: auto !important;
+    transform: translateY(-50%) !important;
+    width: 250px !important;
     background: transparent !important;
     border: none !important;
-    z-index: 2000 !important;
+    z-index: 10000 !important;
+    display: block !important;
   }
 
+  /* Transformation des liens en boutons SAO */
   .sidebar-nav ul li {
-    background: rgba(0, 0, 0, 0.8) !important;
-    border: 1px solid #f1c40f !important;
-    margin-bottom: 15px !important;
-    padding: 12px !important;
-    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%) !important;
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: linear-gradient(90deg, rgba(0, 136, 255, 0.1), transparent) !important;
+    border: 1px solid rgba(241, 196, 15, 0.5) !important;
+    margin-bottom: 12px !important;
+    padding: 15px !important;
+    clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%) !important;
+    transition: 0.3s ease !important;
+    list-style: none !important;
   }
 
   .sidebar-nav ul li a {
     color: #f1c40f !important;
     font-family: 'Cinzel', serif !important;
-    font-weight: bold !important;
     text-transform: uppercase !important;
-    text-align: center !important;
+    font-size: 0.9em !important;
     text-decoration: none !important;
+    letter-spacing: 2px !important;
   }
 
   .sidebar-nav ul li:hover, .sidebar-nav ul li.active {
     background: #f1c40f !important;
-    transform: scale(1.1) translateX(-20px) !important;
+    transform: scale(1.05) !important;
   }
 
   .sidebar-nav ul li:hover a, .sidebar-nav ul li.active a {
     color: #000 !important;
   }
 
-  /* Cache les éléments internes de la sidebar qui polluent */
-  .sidebar h1, .sidebar-resizer { display: none !important; }
-
-  /* --- 5. TYPOGRAPHIE DIVINE --- */
+  /* --- 3. DÉCORATIONS DIVINES --- */
   .markdown-section h1 {
     font-family: 'Cinzel', serif !important;
     color: #fff !important;
-    text-shadow: 0 0 20px #f1c40f !important;
+    text-shadow: 0 0 15px #f1c40f !important;
     text-align: center !important;
-    border-bottom: 3px double #f1c40f !important;
+    border-bottom: 2px solid #f1c40f !important;
     padding-bottom: 20px !important;
   }
 
-  /* --- 6. PARTICULES D'OSMANTHUS --- */
-  .divine-leaf {
+  /* Particules d'Osmanthus */
+  .divine-petal {
     position: fixed;
     width: 10px; height: 10px;
     background: #f1c40f;
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    box-shadow: 0 0 10px #f1c40f;
-    z-index: 500;
+    z-index: 999;
     pointer-events: none;
-    animation: leafFall 8s linear infinite;
+    animation: fall linear infinite;
   }
 
-  @keyframes leafFall {
+  @keyframes fall {
     0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
     20% { opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg) translateX(100px); opacity: 0; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
   }
 </style>
 
@@ -118,30 +108,25 @@
 
 <script>
   (function() {
-    // 1. Force la suppression de la barre de menu mobile (le bug en bas à gauche)
-    const killBugs = () => {
-        const toggle = document.querySelector('.sidebar-toggle');
-        const nav = document.querySelector('.app-nav');
-        if(toggle) toggle.remove();
-        if(nav) nav.remove();
-        // Force le scroll en haut de la stèle
-        const stela = document.querySelector('.content');
-        if(stela) stela.scrollTop = 0;
+    // Force la suppression des résidus de Docsify
+    const forceCleanup = () => {
+      document.querySelectorAll('.sidebar-toggle, #theme-picker, .app-nav').forEach(el => {
+        el.style.display = 'none';
+        el.style.opacity = '0';
+      });
     };
-    
-    killBugs();
-    setInterval(killBugs, 500);
+    setInterval(forceCleanup, 100);
 
-    // 2. Générateur de pétales
+    // Pétales d'Alice
     setInterval(() => {
       const p = document.createElement('div');
-      p.className = 'divine-leaf';
+      p.className = 'divine-petal';
       p.style.left = Math.random() * 100 + 'vw';
-      p.style.animationDuration = (Math.random() * 3 + 5) + 's';
+      p.style.animationDuration = (Math.random() * 3 + 4) + 's';
       document.body.appendChild(p);
-      setTimeout(() => p.remove(), 8000);
+      setTimeout(() => p.remove(), 7000);
     }, 400);
 
-    console.log("🛡️ Cardinal System: Clean Overwrite Success.");
+    console.log("🛡️ Integrity Mode: Protocol Axiom-10 loaded.");
   })();
 </script>
