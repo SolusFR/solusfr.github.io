@@ -5,286 +5,283 @@
   <title>Solus Wiki ★ Oshi no Ko</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,800;0,900;1,400&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Polices : Poppins (Moderne), Fira Code (Code), Playfair (Élégant pour Kana) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.css" />
 
   <style>
     /* =========================================
-       ★ 1. VARIABLES & THÈMES ★
+       ★ VARIABLES GLOBALES DE BASE ★
        ========================================= */
     :root {
-      /* Largeur par défaut du menu (Modifiable via JS) */
-      --sidebar-width: 320px; 
-      
-      --theme-color: #ff55aa; --theme-dim: #550022; --theme-glow: rgba(255, 85, 170, 0.4);
-      --bg-radial-center: #2a0a1a; --bg-main: #0a0105; --theme-icon: "★";
+      --sidebar-width: 300px; 
+      --ui-radius: 12px;
+      --ui-border: 1px solid rgba(255,255,255,0.1);
+      --font-title: 'Poppins', sans-serif;
+      --bg-pattern: none;
     }
 
-    [data-theme='ai'] { --theme-color: #ff55aa; --theme-dim: #440a22; --theme-glow: rgba(255,85,170,0.5); --bg-radial-center: #1f0510; --bg-main: #080103; --theme-icon: "★"; }
-    [data-theme='ruby'] { --theme-color: #ff0044; --theme-dim: #44000a; --theme-glow: rgba(255,0,68,0.5); --bg-radial-center: #200005; --bg-main: #050001; --theme-icon: "♥"; }
-    [data-theme='aqua'] { --theme-color: #00eeff; --theme-dim: #002233; --theme-glow: rgba(0,238,255,0.5); --bg-radial-center: #00111f; --bg-main: #000205; --theme-icon: "✦"; }
-    [data-theme='kana'] { --theme-color: #ffffff; --theme-dim: #66001a; --theme-glow: rgba(255,255,255,0.3); --bg-radial-center: #220008; --bg-main: #050002; --theme-icon: "♔"; }
-    [data-theme='akane'] { --theme-color: #5577ff; --theme-dim: #0a0a33; --theme-glow: rgba(85,119,255,0.5); --bg-radial-center: #05051a; --bg-main: #010105; --theme-icon: "✿"; }
-    [data-theme='memcho'] { --theme-color: #ffcc00; --theme-dim: #443300; --theme-glow: rgba(255,204,0,0.4); --bg-radial-center: #1a1400; --bg-main: #050400; --theme-icon: "♪"; }
-
-    /* =========================================
-       ★ 2. FOND, SCROLL & PROGRESS BAR ★
-       ========================================= */
     body { 
-      font-family: 'Poppins', sans-serif !important;
+      font-family: 'Poppins', sans-serif !important; 
+      color: #f0f0f0; overflow-x: hidden; transition: background 0.5s ease;
       background-color: var(--bg-main) !important;
-      background-image: radial-gradient(circle at 50% 0%, var(--bg-radial-center) 0%, var(--bg-main) 80%) !important;
-      background-attachment: fixed; color: #f0f0f0; letter-spacing: 0.3px;
+      background-image: var(--bg-pattern) !important;
+      background-attachment: fixed;
     }
-
-    ::selection { background: var(--theme-color); color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
-
-    #reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--theme-color); z-index: 9999; width: 0%; box-shadow: 0 0 15px var(--theme-color); transition: width 0.1s; pointer-events: none; }
-
-    #stars-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -2; overflow: hidden; }
-    .star { position: absolute; color: var(--theme-color); opacity: 0; animation: twinkle linear infinite; text-shadow: 0 0 8px var(--theme-color); }
-    .star.small { font-size: 6px; animation-duration: 3s; }
-    .star.medium { font-size: 12px; animation-duration: 5s; filter: blur(1px); }
-    .star.large { font-size: 20px; animation-duration: 7s; filter: blur(2px); }
-    @keyframes twinkle { 0% { opacity: 0; transform: scale(0.3) rotate(0deg); } 50% { opacity: 0.8; transform: scale(1.1) rotate(180deg); } 100% { opacity: 0; transform: scale(0.3) rotate(360deg); } }
-
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-main); border-left: 1px solid rgba(255,255,255,0.05); }
-    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #fff; box-shadow: 0 0 10px var(--theme-color); }
 
     /* =========================================
-       ★ 3. SIDEBAR (LARGEUR DYNAMIQUE + FIX TEXTE) ★
+       ★ IDENTITÉS VISUELLES (LES THÈMES) ★
        ========================================= */
-    .sidebar { 
-      width: var(--sidebar-width) !important; /* Largeur gérée par le JS */
-      background: rgba(5, 5, 8, 0.6) !important; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-      border-right: 1px solid rgba(255, 255, 255, 0.05) !important; box-shadow: 10px 0 30px rgba(0,0,0,0.8);
-      padding-bottom: 50px;
-    }
-    
-    /* Poignée de redimensionnement */
-    .sidebar-resizer {
-      position: absolute; top: 0; right: 0; width: 6px; height: 100%; cursor: col-resize; z-index: 100; transition: background 0.3s;
-    }
-    .sidebar-resizer:hover, .sidebar-resizer.active { background: var(--theme-color); box-shadow: 0 0 10px var(--theme-glow); }
 
-    /* Le contenu s'ajuste à la barre latérale */
+    /* 1. ⭐ AI HOSHINO (Glassmorphism, Scène Pop) */
+    [data-theme='ai'] { 
+      --theme-color: #ff55aa; --theme-dim: rgba(255,85,170,0.2); 
+      --bg-main: #0a0105; --bg-pattern: radial-gradient(circle at 50% -20%, #2a0a1a 0%, #0a0105 80%);
+      --ui-radius: 20px; /* Très arrondi */
+      --ui-backdrop: blur(20px);
+      --sidebar-bg: rgba(10, 2, 5, 0.6);
+      --title-shadow: 0 0 20px var(--theme-color);
+    }
+
+    /* 2. 🎬 AQUA HOSHINO (Cinéma Sombre, Scanlines, Sharp) */
+    [data-theme='aqua'] { 
+      --theme-color: #00eeff; --theme-dim: rgba(0,238,255,0.1); 
+      --bg-main: #020202; 
+      /* Effet Scanline d'écran cathodique */
+      --bg-pattern: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,238,255,0.03) 2px, rgba(0,238,255,0.03) 4px);
+      --ui-radius: 0px; /* Brut, tranchant */
+      --ui-border: 1px solid var(--theme-color);
+      --ui-backdrop: none;
+      --sidebar-bg: #050505;
+      --title-shadow: none;
+    }
+    [data-theme='aqua'] .sidebar h1 { border-bottom: 3px double var(--theme-color); letter-spacing: 5px; }
+
+    /* 3. ❤️ RUBY HOSHINO (Énergie, Dégradés) */
+    [data-theme='ruby'] { 
+      --theme-color: #ff0055; --theme-dim: rgba(255,0,85,0.2); 
+      --bg-main: #0a0002; --bg-pattern: linear-gradient(135deg, #1a0005 0%, #000000 100%);
+      --ui-radius: 12px;
+      --sidebar-bg: linear-gradient(180deg, rgba(20,0,5,0.9) 0%, rgba(0,0,0,0.9) 100%);
+      --hover-transform: translateY(-5px) scale(1.02); /* Effet de rebond */
+      --title-shadow: 0 5px 15px rgba(255,0,85,0.5);
+    }
+
+    /* 4. 🎭 KANA ARIMA (Théâtre Classique, Élégance) */
+    [data-theme='kana'] { 
+      --theme-color: #ffffff; --theme-dim: rgba(255,255,255,0.1); 
+      --bg-main: #0f0305; --bg-pattern: radial-gradient(circle at 50% 50%, #1a0508 0%, #050102 100%);
+      --ui-radius: 4px;
+      --ui-border: 2px solid #331118;
+      --sidebar-bg: #0a0204;
+      --font-title: 'Playfair Display', serif; /* Police de théâtre/roman */
+      --title-shadow: 2px 2px 0px #880022;
+    }
+    [data-theme='kana'] .markdown-section h1, [data-theme='kana'] .sidebar h1 { font-family: var(--font-title); text-transform: none; font-style: italic; }
+
+    /* 5. 🌊 AKANE KUROKAWA (Abysses Psychologiques) */
+    [data-theme='akane'] { 
+      --theme-color: #5577ff; --theme-dim: rgba(85,119,255,0.15); 
+      --bg-main: #01010a; 
+      --bg-pattern: radial-gradient(circle at 20% 30%, rgba(30,40,100,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(20,20,80,0.4) 0%, transparent 50%);
+      --ui-radius: 16px;
+      --sidebar-bg: rgba(2, 2, 10, 0.7);
+      --ui-backdrop: blur(10px);
+      --title-shadow: 0 0 30px #5577ff;
+    }
+
+    /* 6. 📱 MEM-CHO (Pop Art Internet, Néo-Brutalisme) */
+    [data-theme='memcho'] { 
+      --theme-color: #ffcc00; --theme-dim: rgba(255,204,0,0.2); 
+      --bg-main: #111100; 
+      /* Fond Polka Dots (Petits points) */
+      --bg-pattern: radial-gradient(rgba(255,204,0,0.15) 2px, transparent 2px);
+      background-size: 20px 20px !important;
+      --ui-radius: 8px;
+      --ui-border: 3px solid #ffcc00; /* Bordures épaisses */
+      --sidebar-bg: #0a0a00;
+      --title-shadow: 4px 4px 0px #554400; /* Ombre décalée Pop-Art */
+    }
+    /* Menu décalé pour Mem-cho */
+    [data-theme='memcho'] .sidebar { box-shadow: 8px 0px 0px #ffcc00; }
+    [data-theme='memcho'] .markdown-section pre { box-shadow: 8px 8px 0px var(--theme-color) !important; }
+
+    /* =========================================
+       ★ STRUCTURE UI DYNAMIQUE ★
+       ========================================= */
+    ::selection { background: var(--theme-color); color: #000; }
+
+    #reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--theme-color); z-index: 9999; width: 0%; box-shadow: 0 0 15px var(--theme-color); }
+
+    /* Conteneur d'effets de fond générés en JS */
+    #fx-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -2; overflow: hidden; }
+
+    /* SIDEBAR ADAPTATIVE */
+    .sidebar { 
+      width: var(--sidebar-width) !important;
+      background: var(--sidebar-bg) !important; 
+      backdrop-filter: var(--ui-backdrop); -webkit-backdrop-filter: var(--ui-backdrop);
+      border-right: var(--ui-border) !important;
+      border-radius: 0 var(--ui-radius) var(--ui-radius) 0;
+      transition: width 0.3s, background 0.5s, border 0.5s, border-radius 0.5s;
+    }
     .content { left: var(--sidebar-width) !important; transition: none; }
 
-    .sidebar h1 { font-weight: 900; letter-spacing: 2px; color: #fff; text-shadow: 0 0 20px var(--theme-color); border-bottom: 2px solid var(--theme-color); padding-bottom: 15px; text-transform: uppercase; text-align: center; margin-top: 10px; }
+    .sidebar h1 { font-family: var(--font-title); font-weight: 900; color: #fff; text-shadow: var(--title-shadow); border-bottom: 2px solid var(--theme-color); padding-bottom: 15px; text-align: center; margin-top: 10px; }
     
-    .search { margin-bottom: 20px; border: none !important; }
-    .search input { background: rgba(0,0,0,0.3) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: #fff !important; border-radius: 12px !important; padding: 12px 15px !important; font-family: 'Poppins'; font-weight: 600; text-align: center; transition: 0.4s !important; }
-    .search input:focus { background: rgba(0,0,0,0.6) !important; border-color: var(--theme-color) !important; box-shadow: 0 0 25px var(--theme-dim) !important; outline: none; }
+    .search input { 
+      background: rgba(0,0,0,0.5) !important; border: var(--ui-border) !important; color: #fff !important; 
+      border-radius: var(--ui-radius) !important; padding: 12px 15px !important; transition: 0.3s !important; 
+    }
+    .search input:focus { border-color: var(--theme-color) !important; box-shadow: 0 0 15px var(--theme-dim) !important; }
 
-    /* FIX: Empêcher le texte coupé dans le menu */
+    /* NAVIGATION DU MENU */
     .sidebar-nav ul li a { 
-      white-space: normal !important; /* Autorise le retour à la ligne */
-      word-wrap: break-word; line-height: 1.4;
-      transition: 0.3s; font-weight: 500; color: #888; padding: 10px 15px; border-radius: 8px; margin: 2px 10px; display: block;
+      white-space: normal !important; word-wrap: break-word; line-height: 1.4;
+      transition: all 0.3s; font-weight: 500; color: #aaa; padding: 10px 15px; border-radius: var(--ui-radius); margin: 2px 10px; display: block; 
     }
-    .sidebar-nav ul li a:hover { color: #fff; background: rgba(255,255,255,0.05); transform: translateX(5px); }
-    .sidebar-nav li.collapse > a::before { content: "▶" !important; font-size: 10px; margin-right: 12px; color: #555; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: inline-block; }
+    .sidebar-nav ul li a:hover { color: #fff; background: rgba(255,255,255,0.05); transform: var(--hover-transform, translateX(5px)); }
     
-    .sidebar-nav li.collapse:not(.close) > a { color: #fff !important; font-weight: 800 !important; background: linear-gradient(90deg, var(--theme-dim), transparent); border-left: 4px solid var(--theme-color); border-radius: 0 8px 8px 0; }
-    .sidebar-nav li.collapse:not(.close) > a::before { content: var(--theme-icon) !important; font-size: 14px; color: var(--theme-color) !important; text-shadow: 0 0 15px var(--theme-color); transform: scale(1.3) rotate(360deg); animation: floatIcon 2s infinite ease-in-out; }
+    .sidebar-nav li.collapse > a::before { content: "▶" !important; font-size: 10px; margin-right: 12px; transition: 0.4s; display: inline-block; }
+    .sidebar-nav li.collapse:not(.close) > a { color: #fff !important; font-weight: 800 !important; background: linear-gradient(90deg, var(--theme-dim), transparent); border-left: 4px solid var(--theme-color); }
+    .sidebar-nav li.collapse:not(.close) > a::before { transform: rotate(90deg); color: var(--theme-color) !important; text-shadow: var(--title-shadow); }
     
-    .sidebar-nav ul li.active > a { color: #fff !important; font-weight: 800; background: var(--theme-color); box-shadow: 0 0 15px var(--theme-glow); border-radius: 8px; transform: scale(1.02); }
-    .app-sub-sidebar { margin-left: 20px !important; border-left: 2px solid rgba(255,255,255,0.05); }
-    .sidebar-nav .app-sub-sidebar li::before { display: none !important; }
+    .sidebar-nav ul li.active > a { color: #000 !important; font-weight: 800; background: var(--theme-color); transform: scale(1.02); }
 
-    @keyframes floatIcon { 0%, 100% { transform: translateY(0) scale(1.2); } 50% { transform: translateY(-3px) scale(1.2); } }
+    /* CONTENU MARKDOWN ADAPTATIF */
+    .markdown-section h1, .markdown-section h2 { font-family: var(--font-title); font-weight: 900; color: #fff; text-shadow: var(--title-shadow); margin-top: 50px; }
+    .markdown-section a { color: var(--theme-color); font-weight: 800; text-decoration: none; border-bottom: 1px dashed var(--theme-color); }
+    
+    .markdown-section pre { background: #080808 !important; border: var(--ui-border); border-radius: var(--ui-radius); padding-top: 40px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
+    .markdown-section pre::before { content: '/// CODE'; position: absolute; top: 10px; left: 15px; color: #555; font-size: 12px; font-weight: 900; letter-spacing: 2px; }
+    
+    .docsify-copy-code-button { background: #111 !important; color: #fff !important; border: var(--ui-border) !important; border-radius: var(--ui-radius) !important; padding: 5px 12px !important; top: 10px !important; right: 10px !important; }
+    
+    .markdown-section blockquote { border-left: 5px solid var(--theme-color); background: var(--theme-dim); padding: 20px; border-radius: 0 var(--ui-radius) var(--ui-radius) 0; font-style: italic; }
+
+    /* PAGINATION */
+    .docsify-pagination-container { display: flex !important; justify-content: space-between !important; gap: 20px !important; margin-top: 60px !important; padding-top: 30px !important; border-top: var(--ui-border) !important; flex-wrap: wrap; }
+    .pagination-item a { display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center; background: rgba(0,0,0,0.4) !important; border: var(--ui-border) !important; border-radius: var(--ui-radius) !important; padding: 25px 20px !important; transition: all 0.3s ease !important; width: 100% !important; }
+    .pagination-item a:hover { background: var(--theme-dim) !important; border-color: var(--theme-color) !important; transform: var(--hover-transform, translateY(-3px)) !important; }
+    .pagination-item-title { font-weight: 800 !important; color: #fff !important; }
+    .pagination-item-label { color: var(--theme-color) !important; font-weight: 800; text-transform: uppercase; }
 
     /* =========================================
-       ★ 4. MARKDOWN & BADGES ★
-       ========================================= */
-    .markdown-section { max-width: 900px; margin: 0 auto; padding: 40px 15px; }
-    
-    .markdown-section h1, .markdown-section h2 { font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; position: relative; padding-bottom: 10px; margin-top: 50px; }
-    .markdown-section h1 { font-size: 2.5em; text-shadow: 0 0 20px var(--theme-dim); }
-    .markdown-section h1::after, .markdown-section h2::after { content: ''; position: absolute; bottom: 0; left: 0; width: 50px; height: 4px; background: var(--theme-color); border-radius: 2px; transition: width 0.4s ease; box-shadow: 0 0 10px var(--theme-color); }
-    .markdown-section h1:hover::after, .markdown-section h2:hover::after { width: 100%; }
-
-    .markdown-section a { color: var(--theme-color); font-weight: 800; text-decoration: none; border-bottom: 1px dashed var(--theme-color); transition: 0.3s; }
-    .markdown-section a:hover { text-shadow: 0 0 15px var(--theme-color); border-bottom: 1px solid #fff; color: #fff; }
-    
-    /* Checkbox Stylisées (- [x] ou - [ ]) */
-    .markdown-section input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: 2px solid #555; border-radius: 4px; vertical-align: middle; position: relative; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.5); margin-right: 8px; }
-    .markdown-section input[type="checkbox"]:checked { border-color: var(--theme-color); background: var(--theme-dim); box-shadow: 0 0 10px var(--theme-glow); }
-    .markdown-section input[type="checkbox"]:checked::after { content: var(--theme-icon); position: absolute; top: -4px; left: 1px; color: var(--theme-color); font-size: 14px; text-shadow: 0 0 5px var(--theme-color); }
-
-    /* Badges Personnalisés (HTML dans Markdown: <span class="badge new">Nouveau</span>) */
-    .badge { padding: 3px 8px; border-radius: 12px; font-size: 0.75em; font-weight: 800; text-transform: uppercase; vertical-align: middle; margin-left: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
-    .badge.new { background: var(--theme-color); color: #fff; text-shadow: none; }
-    .badge.wip { background: #ffcc00; color: #000; text-shadow: none; border: 1px solid #ffaa00; }
-
-    .markdown-section blockquote { border-left: 5px solid var(--theme-color); background: rgba(255,255,255,0.03); margin: 2em 0; padding: 20px; border-radius: 0 15px 15px 0; font-style: italic; color: #bbb; position: relative; box-shadow: inset 40px 0 50px -40px var(--theme-dim); }
-    code, kbd { font-family: 'Fira Code', monospace; }
-    kbd { background: #1a1a1a; border: 1px solid #333; border-bottom: 3px solid #000; border-radius: 6px; padding: 4px 8px; font-weight: 600; font-size: 0.85em; color: #fff; }
-
-    .markdown-section pre { background: #0d0d12 !important; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding-top: 40px !important; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; margin: 20px 0; }
-    .markdown-section pre::before { content: ''; position: absolute; top: 15px; left: 15px; width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f; }
-    .docsify-copy-code-button { background: rgba(255,255,255,0.1) !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 8px !important; padding: 5px 12px !important; font-family: 'Poppins'; font-size: 11px; top: 10px !important; right: 10px !important; transition: 0.3s; }
-    .docsify-copy-code-button:hover { background: var(--theme-color) !important; border-color: var(--theme-color) !important; box-shadow: 0 0 15px var(--theme-glow) !important; }
-
-    .markdown-section table { width: 100%; border-collapse: separate; border-spacing: 0; background: rgba(0,0,0,0.3) !important; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); margin: 2em 0; }
-    .markdown-section table th { background: var(--theme-dim) !important; color: #fff; font-weight: 800; padding: 15px; text-transform: uppercase; border-bottom: 2px solid var(--theme-color); }
-    .markdown-section table td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.03); color: #ccc; }
-    .markdown-section table tr:hover td { background: rgba(255,255,255,0.05); color: #fff; }
-
-    .warn, .tip { padding: 20px !important; border-radius: 10px !important; position: relative !important; font-weight: 500 !important; margin: 20px 0; }
-    .warn { background: rgba(255, 68, 68, 0.1) !important; border-left: 5px solid #ff4444 !important; }
-    .warn::before { content: '⚠️ ATTENTION'; display: block; font-weight: 900; color: #ff4444; margin-bottom: 5px; }
-    .tip { background: rgba(0, 238, 255, 0.1) !important; border-left: 5px solid #00eeff !important; }
-    .tip::before { content: '💡 ASTUCE'; display: block; font-weight: 900; color: #00eeff; margin-bottom: 5px; }
-
-    /* =========================================
-       ★ 5. FIX PAGINATION (SUIVANT/PRECEDENT) ★
-       ========================================= */
-    /* On écrase totalement les styles moisis du plugin */
-    .docsify-pagination-container { 
-      display: flex !important; justify-content: space-between !important; gap: 20px !important;
-      margin-top: 60px !important; padding-top: 30px !important; border-top: 1px dashed rgba(255,255,255,0.1) !important;
-      flex-wrap: wrap; /* Pour les mobiles */
-    }
-    .pagination-item { margin: 0 !important; flex: 1; min-width: 250px; }
-    .pagination-item a { 
-      display: flex !important; flex-direction: column !important; justify-content: center !important;
-      align-items: center !important; text-align: center;
-      background: rgba(0,0,0,0.4) !important; border: 1px solid rgba(255,255,255,0.05) !important;
-      border-radius: 12px !important; padding: 25px 20px !important; transition: all 0.3s ease !important;
-      text-decoration: none !important; width: 100% !important; box-sizing: border-box !important;
-    }
-    .pagination-item a:hover { 
-      background: var(--theme-dim) !important; border-color: var(--theme-color) !important;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.5), 0 0 20px var(--theme-glow) !important; transform: translateY(-3px) !important;
-    }
-    .pagination-item-title { font-weight: 800 !important; font-size: 1.2em !important; color: #fff !important; margin-top: 5px !important; }
-    .pagination-item-label { color: var(--theme-color) !important; font-size: 0.8em !important; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; opacity: 0.8; }
-
-    /* =========================================
-       ★ 6. PANNEAU DE CONTRÔLE ★
+       ★ THEME PICKER ★
        ========================================= */
     #theme-picker {
       position: fixed; top: 15px; right: 25px; z-index: 1000;
-      background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.9);
-      display: flex; gap: 12px; align-items: center; transition: 0.4s;
+      background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
+      padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2);
+      display: flex; gap: 12px; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.9);
     }
-    #theme-picker:hover { border-color: var(--theme-color); box-shadow: 0 0 20px var(--theme-glow); }
-    #theme-picker span { color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 2px; margin-right: 8px; opacity: 0.6; text-transform: uppercase; }
-    .theme-dot { width: 18px; height: 18px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.2); transition: 0.4s; }
-    .theme-dot:hover { transform: scale(1.6); border-color: #fff; box-shadow: 0 0 20px currentColor; }
+    #theme-picker span { color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 2px; margin-right: 8px; opacity: 0.6; }
+    .theme-dot { width: 18px; height: 18px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.3); transition: 0.3s; }
+    .theme-dot:hover { transform: scale(1.5); border-color: #fff; box-shadow: 0 0 15px currentColor; }
     .dot-kana { border-color: #66001a; }
 
-    #loading-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s, visibility 0.8s; }
-    .loader-icon { font-size: 80px; color: var(--theme-color); text-shadow: 0 0 30px var(--theme-color); animation: spinLoader 2s infinite; }
-    .loader-text { margin-top: 20px; color: #fff; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; font-size: 14px; animation: pulseText 1.5s infinite alternate; }
-    @keyframes spinLoader { 0% { transform: rotate(0deg) scale(0.8); } 50% { transform: rotate(180deg) scale(1.2); } 100% { transform: rotate(360deg) scale(0.8); } }
-    @keyframes pulseText { 0% { opacity: 0.3; } 100% { opacity: 1; text-shadow: 0 0 15px var(--theme-color); color: var(--theme-color); } }
-    body.loaded #loading-screen { opacity: 0; visibility: hidden; }
+    /* CLASSES D'ANIMATIONS (Gérées par JS) */
+    .fx-star { position: absolute; opacity: 0; animation: twinkle linear infinite; }
+    .fx-heart { position: absolute; opacity: 0; animation: floatUp linear infinite; }
+    .fx-orb { position: absolute; border-radius: 50%; opacity: 0; animation: pulseOrb ease-in-out infinite alternate; filter: blur(8px); }
+    .fx-pixel { position: absolute; opacity: 0; font-family: 'Fira Code'; font-weight: bold; animation: glitch linear infinite; }
+
+    @keyframes twinkle { 0% { opacity: 0; transform: scale(0.5); } 50% { opacity: 0.8; transform: scale(1.2); } 100% { opacity: 0; transform: scale(0.5); } }
+    @keyframes floatUp { 0% { opacity: 0; transform: translateY(20px) scale(0.8); } 50% { opacity: 0.6; } 100% { opacity: 0; transform: translateY(-50px) scale(1.2); } }
+    @keyframes pulseOrb { 0% { opacity: 0.1; transform: scale(1); } 100% { opacity: 0.4; transform: scale(2); } }
+    @keyframes glitch { 0%, 100% { opacity: 0; } 5% { opacity: 1; transform: translateX(-2px); } 10% { opacity: 0; transform: translateX(2px); } }
+
   </style>
 </head>
 <body>
 
   <div id="reading-progress"></div>
-  <div id="loading-screen"><div class="loader-icon" id="loader-star">★</div><div class="loader-text">Ouverture des rideaux...</div></div>
-  <div id="stars-container"></div>
+  <div id="fx-container"></div>
 
   <div id="theme-picker">
     <span>推し</span>
-    <div class="theme-dot" style="background:#ff55aa; color:#ff55aa" onclick="setTheme('ai')" title="Ai"></div>
-    <div class="theme-dot" style="background:#ff0044; color:#ff0044" onclick="setTheme('ruby')" title="Ruby"></div>
-    <div class="theme-dot" style="background:#00eeff; color:#00eeff" onclick="setTheme('aqua')" title="Aqua"></div>
-    <div class="theme-dot dot-kana" style="background:#ffffff; color:#ffffff" onclick="setTheme('kana')" title="Kana"></div>
-    <div class="theme-dot" style="background:#5577ff; color:#5577ff" onclick="setTheme('akane')" title="Akane"></div>
-    <div class="theme-dot" style="background:#ffcc00; color:#ffcc00" onclick="setTheme('memcho')" title="Mem-cho"></div>
+    <div class="theme-dot" style="background:#ff55aa; color:#ff55aa" onclick="setTheme('ai')" title="Ai (Glass & Pop)"></div>
+    <div class="theme-dot" style="background:#ff0044; color:#ff0044" onclick="setTheme('ruby')" title="Ruby (Énergie)"></div>
+    <div class="theme-dot" style="background:#00eeff; color:#00eeff" onclick="setTheme('aqua')" title="Aqua (Cinéma Sombre)"></div>
+    <div class="theme-dot dot-kana" style="background:#ffffff; color:#ffffff" onclick="setTheme('kana')" title="Kana (Théâtre Élégant)"></div>
+    <div class="theme-dot" style="background:#5577ff; color:#5577ff" onclick="setTheme('akane')" title="Akane (Abysses)"></div>
+    <div class="theme-dot" style="background:#ffcc00; color:#ffcc00" onclick="setTheme('memcho')" title="Mem-cho (Pop Brutalisme)"></div>
   </div>
 
-  <div id="app"></div>
+  <div id="app">Chargement...</div>
 
   <script>
-    // --- GESTION DU THÈME ---
+    // --- MOTEUR DE THÈMES DYNAMIQUE ---
     function setTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('solus-wiki-theme', theme);
+      
       const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-color').trim();
-      const themeIcon = getComputedStyle(document.documentElement).getPropertyValue('--theme-icon').replace(/["']/g, '').trim();
       if (window.$docsify) window.$docsify.themeColor = themeColor;
-      document.getElementById('loader-star').innerText = themeIcon;
-      generateStars(themeIcon);
+      
+      generateEffects(theme, themeColor);
     }
 
-    function generateStars(icon) {
-      const container = document.getElementById('stars-container');
-      container.innerHTML = '';
-      const types = ['small', 'medium', 'large'];
-      for (let i = 0; i < 60; i++) {
-        let star = document.createElement('div');
-        star.className = `star ${types[Math.floor(Math.random() * types.length)]}`;
-        star.innerHTML = Math.random() > 0.8 ? icon : (Math.random() > 0.5 ? '✦' : '✧'); 
-        star.style.left = Math.random() * 100 + 'vw';
-        star.style.top = Math.random() * 100 + 'vh';
-        star.style.animationDelay = (Math.random() * 5) + 's';
-        container.appendChild(star);
+    // Génère des effets visuels en fonction de l'aura du personnage
+    function generateEffects(theme, color) {
+      const container = document.getElementById('fx-container');
+      container.innerHTML = ''; // Reset
+      
+      let count = 40;
+      let types = [];
+      let charArray = [];
+
+      // Définition du style selon le thème
+      if (theme === 'ai') { charArray = ['★', '✧']; types = ['fx-star']; }
+      else if (theme === 'ruby') { charArray = ['♥', '♡']; types = ['fx-heart']; }
+      else if (theme === 'aqua') { charArray = ['/', '\\', '[', ']']; types = ['fx-pixel']; count = 60; }
+      else if (theme === 'kana') { charArray = ['✨', '✦']; types = ['fx-star']; count = 30; }
+      else if (theme === 'akane') { charArray = ['']; types = ['fx-orb']; count = 15; }
+      else if (theme === 'memcho') { charArray = ['▲', '●', '■']; types = ['fx-star']; count = 25; }
+
+      for (let i = 0; i < count; i++) {
+        let fx = document.createElement('div');
+        fx.className = types[Math.floor(Math.random() * types.length)];
+        
+        if (theme === 'akane') {
+          // Création d'orbes floues pour Akane
+          fx.style.width = (Math.random() * 100 + 50) + 'px';
+          fx.style.height = fx.style.width;
+          fx.style.background = color;
+        } else {
+          fx.innerHTML = charArray[Math.floor(Math.random() * charArray.length)];
+          fx.style.color = color;
+          fx.style.fontSize = (Math.random() * 15 + 8) + 'px';
+          fx.style.textShadow = `0 0 10px ${color}`;
+        }
+        
+        fx.style.left = Math.random() * 100 + 'vw';
+        fx.style.top = Math.random() * 100 + 'vh';
+        fx.style.animationDuration = (Math.random() * 6 + 3) + 's';
+        fx.style.animationDelay = (Math.random() * 5) + 's';
+        container.appendChild(fx);
       }
     }
+
     setTheme(localStorage.getItem('solus-wiki-theme') || 'ai');
 
-    // --- BARRE DE LECTURE ---
+    // Barre de progression
     window.addEventListener('scroll', () => {
       let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
       let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       document.getElementById('reading-progress').style.width = (winScroll / height) * 100 + "%";
     });
 
-    // --- DOCSIFY CONFIG ---
+    // Configuration Docsify
     window.$docsify = {
-      name: 'Solus Wiki <span>★</span>',
+      name: 'Solus Wiki',
       repo: '', loadSidebar: true, subMaxLevel: 3, sidebarDisplayLevel: 1, auto2top: true,
-      
-      search: { placeholder: '🔎 Rechercher un script...', noData: '❌ Rien trouvé.' },
+      search: { placeholder: '🔎 Rechercher...', noData: '❌ Rien trouvé.' },
       copyCode: { buttonText: '📋 Copier', successText: '✨ Copié !' },
-      pagination: { previousText: 'Chapitre Précédent', nextText: 'Chapitre Suivant', crossChapter: true, crossChapterText: true },
-      tabs: { persist: true, sync: true, theme: 'classic' },
-
-      plugins: [
-        function(hook, vm) {
-          hook.mounted(function() {
-            setTimeout(() => { document.body.classList.add('loaded'); }, 500);
-            
-            // --- SCRIPT POUR REDIMENSIONNER LA SIDEBAR ---
-            const sidebar = document.querySelector('.sidebar');
-            const resizer = document.createElement('div');
-            resizer.className = 'sidebar-resizer';
-            sidebar.appendChild(resizer);
-
-            let isResizing = false;
-            resizer.addEventListener('mousedown', (e) => {
-              isResizing = true; resizer.classList.add('active');
-              document.body.style.cursor = 'col-resize';
-              document.body.style.userSelect = 'none'; // Empêche de surligner le texte en glissant
-            });
-
-            document.addEventListener('mousemove', (e) => {
-              if (!isResizing) return;
-              // Ajuste la taille, max 600px, min 250px
-              let newWidth = Math.max(250, Math.min(e.clientX, 600)); 
-              document.documentElement.style.setProperty('--sidebar-width', newWidth + 'px');
-            });
-
-            document.addEventListener('mouseup', () => {
-              if(isResizing) {
-                isResizing = false; resizer.classList.remove('active');
-                document.body.style.cursor = 'default';
-                document.body.style.userSelect = 'auto';
-              }
-            });
-          });
-        }
-      ]
+      pagination: { previousText: 'Chapitre Précédent', nextText: 'Chapitre Suivant', crossChapter: true },
+      tabs: { persist: true, sync: true, theme: 'classic' }
     }
   </script>
 
@@ -294,7 +291,6 @@
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  <!-- Le plugin de Pagination corrigé ! -->
   <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
   
