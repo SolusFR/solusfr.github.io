@@ -1,67 +1,26 @@
-name: Auto Sidebar (Oshi Style) ★
+name: UPDATE CARDINAL MENU
 
 on:
   push:
     paths:
-      - '**/*.md'        # Se déclenche si un fichier Markdown change
-      - '!_sidebar.md'   # Ignore le fichier sidebar lui-même pour éviter les boucles
-      - '!README.md'
-
-permissions:
-  contents: write
+      - '**.md' # Le robot s'active UNIQUEMENT quand tu touches à un Markdown
+      - 'scan.py'
 
 jobs:
-  update-sidebar:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Autorise le robot à écrire le menu
+
     steps:
-      - name: 📥 Récupération du code
-        uses: actions/checkout@v3
-
-      - name: 🐍 Génération du menu (Script Python)
-        run: |
-          python3 -c "
-          import os
-
-          def generate_sidebar(startpath):
-              with open('_sidebar.md', 'w', encoding='utf-8') as f:
-                  # Lien Accueil
-                  f.write('* [<b>ACCUEIL</b>](/)\n')
-                  
-                  # On trie les dossiers pour qu'ils soient toujours dans le même ordre
-                  for root, dirs, files in os.walk(startpath):
-                      dirs.sort()
-                      files.sort()
-                      
-                      # Ignorer les dossiers cachés et spéciaux
-                      dirs[:] = [d for d in dirs if not d.startswith('.') and not d.startswith('_') and d != 'vendor']
-                      
-                      level = root.replace(startpath, '').count(os.sep)
-                      indent = '  ' * level
-                      
-                      # Titre du dossier (sauf racine)
-                      if root != startpath:
-                          folder_name = os.path.basename(root).replace('-', ' ').upper()
-                          f.write(f'{indent}* **{folder_name}**\n')
-                      
-                      subindent = '  ' * (level + 1)
-                      
-                      for file in files:
-                          if file.endswith('.md') and file not in ['_sidebar.md', '_navbar.md', 'README.md']:
-                              name = os.path.splitext(file)[0].replace('-', ' ').title()
-                              # Création du chemin relatif
-                              path = os.path.join(root, file)
-                              rel_path = os.path.relpath(path, startpath).replace('\\', '/')
-                              
-                              # Écriture de la ligne
-                              f.write(f'{subindent}* [{name}]({rel_path})\n')
-
-          if __name__ == '__main__':
-              generate_sidebar('.')
-              print('✅ Sidebar générée avec succès !')
-          "
-
-      - name: 💾 Sauvegarde et Push
-        uses: stefanzweifel/git-auto-commit-action@v4
+      - name: 📥 Clonage des données
+        uses: actions/checkout@v4
+        
+      - name: ⚙️ Lancement du Cardinal Script
+        run: python scan.py
+        
+      - name: 💾 Sauvegarde du nouveau Menu
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "★ Mise à jour du menu Oshi no Ko"
+          commit_message: "[SYS] Auto-update Menu Navigation"
           file_pattern: _sidebar.md
