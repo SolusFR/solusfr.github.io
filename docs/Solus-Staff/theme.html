@@ -1,159 +1,93 @@
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&display=swap" rel="stylesheet">
-
 <style>
-  :root {
-    /* Variables Matrix */
-    --theme-color: #00ff41; /* Le vert iconique de Matrix */
-    --theme-dim: rgba(0, 255, 65, 0.1);
-    --bg-main: #000800;
-    --base-font-size: 16px;
-    --font-headers: 'Fira Code', monospace;
-    --sidebar-width: 300px;
-    
-    /* Variables Docsify Overrides */
-    --notice-important-border-color: var(--theme-color);
-    --code-theme-background: #001100;
+  /* 1. OVERRIDE COMPLET DES THEMES OSHI NO KO */
+  /* On force ces variables pour TOUS les thèmes (Ai, Ruby, etc.) quand on est ici */
+  :root, [data-theme='ai'], [data-theme='ruby'], [data-theme='aqua'], [data-theme='kana'] {
+    --theme-color: #007bff !important; /* Bleu Autorité / Staff */
+    --theme-dim: rgba(0, 123, 255, 0.1) !important;
+    --theme-glow: rgba(0, 123, 255, 0.5) !important;
+    --bg-main: #050a0f !important;
+    --bg-pattern: linear-gradient(rgba(0, 123, 255, 0.05) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(0, 123, 255, 0.05) 1px, transparent 1px) !important;
+    background-size: 30px 30px !important;
+    --ui-radius: 4px !important;
+    --ui-border: 1px solid #007bff !important;
+    --theme-icon: "🛡️" !important;
+    --font-headers: 'Fira Code', monospace !important;
   }
 
-  /* Fond Matrix Rain */
-  #matrix-canvas {
+  /* 2. NETTOYAGE DE L'INTERFACE PUBLIQUE */
+  #theme-picker, .fx-star, .fx-heart, .fx-orb { 
+    display: none !important; /* On vire le sélecteur et les particules mignonnes */
+  }
+
+  /* 3. TRANSFORMATION DU LOADER */
+  #loader-star { content: "🕵️" !important; animation: pulseStaff 1s infinite !important; }
+  .loader-text { content: "VÉRIFICATION DES ACCRÉDITATIONS..." !important; color: #007bff !important; letter-spacing: 2px !important; }
+
+  @keyframes pulseStaff { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+
+  /* 4. STYLE "RESTRICTED AREA" POUR LE CONTENU */
+  .markdown-section h1::before {
+    content: "UNCLASSIFIED // INTERNAL ONLY";
+    display: block;
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+
+  /* Sidebar plus rigide */
+  .sidebar {
+    background: #020508 !important;
+    border-right: 2px solid #007bff !important;
+  }
+
+  /* Tableaux plus pro/industriels */
+  .markdown-section table {
+    border: 1px solid #007bff !important;
+    background: rgba(0,0,0,0.8) !important;
+  }
+
+  /* Bouton de copie façon "Archive" */
+  .docsify-copy-code-button {
+    border-radius: 0px !important;
+    text-transform: uppercase !important;
+  }
+</style>
+
+<div class="staff-overlay"></div>
+
+<style>
+  .staff-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
-    opacity: 0.15; /* Ajuste la visibilité de la pluie ici */
-  }
-
-  /* Style Global */
-  body {
-    background-color: var(--bg-main) !important;
-    color: var(--theme-color) !important;
-    font-family: 'Fira Code', monospace !important;
-  }
-
-  /* Sidebar Hacker */
-  .sidebar {
-    background-color: rgba(0, 5, 0, 0.95) !important;
-    border-right: 1px solid var(--theme-color) !important;
-    color: var(--theme-color) !important;
-  }
-  
-  .sidebar-nav li a {
-    color: var(--theme-color) !important;
-    transition: all 0.3s ease;
-  }
-
-  .sidebar-nav li a:hover {
-    text-shadow: 0 0 10px var(--theme-color);
-    background: var(--theme-dim) !important;
-    border-right: 3px solid var(--theme-color);
-  }
-
-  .sidebar-nav li strong {
-    color: #fff !important;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.8em;
-    border-bottom: 1px solid var(--theme-dim);
-    display: block;
-    margin-top: 20px;
-  }
-
-  /* Contenu Principal */
-  .content {
-    background: transparent !important;
-  }
-
-  section.markdown-section {
-    background: transparent !important;
-    color: var(--theme-color) !important;
-  }
-
-  /* Titres Néon */
-  h1, h2, h3, h4 {
-    color: #fff !important;
-    font-family: var(--font-headers) !important;
-    text-shadow: 0 0 5px var(--theme-color), 0 0 10px var(--theme-color);
-    border-bottom: 1px solid var(--theme-dim) !important;
-  }
-
-  /* Liens et Texte */
-  a {
-    color: #fff !important;
-    text-decoration: underline;
-  }
-
-  code {
-    background-color: #001a00 !important;
-    color: #00ff41 !important;
-    border: 1px solid var(--theme-dim);
-  }
-
-  /* Scrollbar Matrix */
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #000;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--theme-color);
-    box-shadow: 0 0 10px var(--theme-color);
-  }
-
-  /* Masquer le bouton de recherche moche par défaut pour en faire un custom plus tard */
-  .search input {
-    background: #000 !important;
-    border: 1px solid var(--theme-color) !important;
-    color: var(--theme-color) !important;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+    pointer-events: none;
+    z-index: 9999; /* Par-dessus tout pour l'effet vieux moniteur */
+    opacity: 0.3;
   }
 </style>
 
-<canvas id="matrix-canvas"></canvas>
-
 <script>
-  // Script de la pluie Matrix
-  const canvas = document.getElementById('matrix-canvas');
-  const ctx = canvas.getContext('2d');
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]";
-  const fontSize = 16;
-  const columns = canvas.width / fontSize;
-  const drops = [];
-
-  for (let x = 0; x < columns; x++) {
-    drops[x] = 1;
-  }
-
-  function drawMatrix() {
-    ctx.fillStyle = "rgba(0, 8, 0, 0.05)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#00ff41";
-    ctx.font = fontSize + "px monospace";
-
-    for (let i = 0; i < drops.length; i++) {
-      const text = characters.charAt(Math.floor(Math.random() * characters.length));
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-        drops[i] = 0;
-      }
-      drops[i]++;
+  (function() {
+    console.log("🛡️ Mode Staff Activé : Accès restreint.");
+    // On peut même changer le titre de l'onglet dynamiquement
+    document.title = "SOLUS // STAFF PANEL";
+    
+    // Petite animation de "Typewriter" sur le titre principal
+    const h1 = document.querySelector('h1');
+    if (h1) {
+      h1.style.borderLeft = "4px solid #007bff";
+      h1.style.paddingLeft = "15px";
     }
-  }
-
-  setInterval(drawMatrix, 35);
-
-  window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
+  })();
 </script>
