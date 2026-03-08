@@ -1,120 +1,110 @@
 <style>
-  /* --- 1. RESET & FOND PROFOND --- */
+  /* =========================================
+     🌑 THÈME : NAZGÛL // MINAS MORGUL
+     ========================================= */
   :root {
-    --theme-color: #00ffaa !important; /* Vert Émeraude Spectral */
+    /* Couleurs de base */
+    --theme-color: #00ffaa;           /* Vert spectral Morgul */
+    --theme-dim: rgba(0, 255, 170, 0.1);
+    --theme-glow: rgba(0, 255, 170, 0.6);
+    --bg-main: #05080a;               /* Noir profond acier */
+    
+    /* Typographie */
+    --font-headers: 'Cinzel', serif;
+    --font-body: 'Poppins', sans-serif;
+    
+    /* Interface */
+    --ui-radius: 0px;                 /* Angles vifs pour l'armure */
+    --ui-border: 1px solid #1a3a2a;
+    --theme-icon: "⚔️";               /* Épée des spectres */
+    
+    /* Variables additionnelles pour le pattern */
+    --bg-pattern: radial-gradient(circle at 50% 50%, #0a1f16 0%, #05080a 100%);
   }
 
-  html, body {
-    background: #0a0c10 !important;
-    margin: 0 !important;
-    height: 100% !important;
-    overflow: hidden !important;
+  /* --- 1. STRUCTURE & DÉFILEMENT (FIX) --- */
+  body {
+    background-color: var(--bg-main) !important;
+    background-image: var(--bg-pattern) !important;
   }
 
-  /* --- 2. LA STÈLE DE DONNÉES (CONTENU SCROLLABLE) --- */
+  /* On s'assure que le scroll fonctionne dans la zone principale */
   .content {
-    position: absolute !important;
-    top: 20px !important;
-    left: 320px !important;
-    right: 20px !important;
-    bottom: 20px !important;
-    background: rgba(13, 17, 23, 0.95) !important;
-    border: 1px solid #1f2937 !important;
-    border-left: 4px solid #00ffaa !important; /* Ligne de flux énergétique */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
-    padding: 50px !important;
-    overflow-y: auto !important; /* RÉACTIVE LE SCROLL SANS BUG */
-    z-index: 1 !important;
-    border-radius: 8px !important;
+    background: rgba(8, 10, 12, 0.9) !important;
+    border-left: 2px solid var(--theme-color) !important;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5) !important;
+    /* Coupe en biseau pour le look armure */
+    clip-path: polygon(2% 0, 100% 0, 100% 100%, 0 100%, 0 5%) !important;
   }
 
-  /* --- 3. SIDEBAR : INTERFACE DE COMMANDEMENT --- */
+  /* --- 2. SIDEBAR SPECTRAL --- */
   .sidebar {
-    background: transparent !important;
-    border: none !important;
-    width: 280px !important;
-    padding-top: 40px !important;
+    background: rgba(5, 8, 10, 0.8) !important;
+    backdrop-filter: blur(15px) !important;
+    border-right: 1px solid #1a3a2a !important;
   }
 
-  /* Titre du Wiki */
-  .sidebar h1 a {
-    font-family: 'Orbitron', sans-serif !important;
-    color: #fff !important;
-    text-shadow: 0 0 10px #00ffaa !important;
-    letter-spacing: 2px !important;
-  }
-
-  /* Liens du menu (Supprime le rose et le glow inutile) */
   .sidebar-nav ul li a {
-    color: #8b949e !important;
-    font-family: 'Inter', sans-serif !important;
-    transition: 0.2s ease !important;
-    border: none !important;
+    color: #667c71 !important;
+    font-family: var(--font-headers) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
-  .sidebar-nav li.active > a, .sidebar-nav li a:hover {
-    color: #00ffaa !important;
-    background: rgba(0, 255, 170, 0.05) !important;
-    border-right: 3px solid #00ffaa !important;
+  .sidebar-nav li.collapse:not(.close) > a {
+    color: var(--theme-color) !important;
+    text-shadow: 0 0 10px var(--theme-glow);
   }
 
-  /* --- 4. LISIBILITÉ & TYPOGRAPHIE (FINI LE ROSE) --- */
-  .markdown-section {
-    color: #c9d1d9 !important; /* Gris clair texturé pour lecture parfaite */
-    font-family: 'Inter', sans-serif !important;
-    line-height: 1.8 !important;
+  /* --- 3. ÉRADICATION DU ROSE --- */
+  /* On force toutes les couleurs dynamiques de Docsify */
+  .search input {
+    border: 1px solid #1a3a2a !important;
+    color: var(--theme-color) !important;
   }
 
-  .markdown-section h1, .markdown-section h2 {
-    color: #f0f6fc !important;
-    border-bottom: 1px solid #30363d !important;
-    padding-bottom: 10px !important;
+  .markdown-section a, .markdown-section strong {
+    color: var(--theme-color) !important;
+    text-shadow: 0 0 5px var(--theme-dim);
   }
 
-  /* Écrase les résidus roses des captures (puces, liens, b) */
-  .markdown-section strong, .markdown-section b, .markdown-section a {
-    color: #00ffaa !important;
-    text-decoration: none !important;
-  }
-
-  /* Transforme les puces roses en indicateurs Cyber */
+  /* Correction des puces et check-boxes */
   .markdown-section ul li::before {
-    color: #00ffaa !important;
-    content: "↪" !important;
+    color: var(--theme-color) !important;
   }
 
-  /* --- 5. NETTOYAGE DES ÉLÉMENTS GRIS/ROSES BUGGÉS --- */
-  .sidebar-toggle, #theme-picker, .app-nav, .search input::placeholder {
-    display: none !important;
-    visibility: hidden !important;
+  /* --- 4. TITRES & LISIBILITÉ --- */
+  .markdown-section h1, .markdown-section h2 {
+    font-family: var(--font-headers) !important;
+    color: var(--theme-color) !important;
+    text-shadow: 0 0 15px rgba(0, 255, 170, 0.3) !important;
   }
-
-  /* Scrollbar Custom */
-  .content::-webkit-scrollbar { width: 5px; }
-  .content::-webkit-scrollbar-thumb { background: #30363d; border-radius: 10px; }
-  .content::-webkit-scrollbar-thumb:hover { background: #00ffaa; }
 </style>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden;">
+    <div style="position: absolute; bottom: 10%; right: 5%; opacity: 0.03; font-family: 'Cinzel', serif; font-size: 150px; color: #00ffaa; transform: rotate(-10deg);">
+        MORDOR
+    </div>
+    
+    <div style="position: absolute; top: -10%; left: -10%; width: 50%; height: 50%; background: radial-gradient(circle, rgba(0, 255, 170, 0.08) 0%, transparent 70%); filter: blur(50px);"></div>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
 
 <script>
+  // Script spécifique au dossier pour nettoyer les résidus roses
   (function() {
-    const cyberPurge = () => {
-      // Supprime la barre de menu mobile grise vue sur image_73f443.jpg
-      const bug = document.querySelector('.sidebar-toggle');
-      if(bug) bug.remove();
+    const nazgulCleanup = () => {
+      // Supprime la barre rose ou grise de toggle qui revient parfois
+      const toggle = document.querySelector('.sidebar-toggle');
+      if (toggle) toggle.style.display = 'none';
 
-      // Nettoyage manuel des couleurs roses injectées par Docsify
-      document.querySelectorAll('*').forEach(el => {
-        const style = window.getComputedStyle(el);
-        if (style.color.includes('255, 51') || style.borderColor.includes('255, 51')) {
-          el.style.setProperty('color', '#00ffaa', 'important');
-          el.style.setProperty('border-color', '#1f2937', 'important');
-        }
-      });
+      // On s'assure que le scroll de la sidebar ne bloque pas
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar) sidebar.style.overflowY = 'auto';
     };
 
-    cyberPurge();
-    setInterval(cyberPurge, 500);
+    nazgulCleanup();
+    setInterval(nazgulCleanup, 1000);
   })();
 </script>
