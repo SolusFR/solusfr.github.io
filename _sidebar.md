@@ -4,6 +4,8 @@
         * **Craftok**
           * [Règlement Kitpvp](docs/Minecraft/Serveur/Craftok/Règlement-KITPVP.md)
           * [Règlement](docs/Minecraft/Serveur/Craftok/Règlement.md)
+    * **Solus Staff**
+      * [Staff](docs/Solus Staff/staff.md)
     * **Sécurité**
       * [Anti Phishing](docs/Sécurité/Anti-Phishing.md)
     * **Discord**
