@@ -1,103 +1,127 @@
 <style>
-  /* --- 1. PURGE TOTALE ET RESET --- */
+  /* --- 1. DESTRUCTION TOTALE DU LAYOUT --- */
   :root {
     --knight-gold: #f1c40f;
-    --knight-blue: #0066ff;
-    --axiom-bg: #030508;
+    --divine-blue: #0088ff;
+    --axiom-dark: #020408;
+    --glass: rgba(255, 255, 255, 0.03);
   }
 
-  /* Cache absolument tout ce qui touche à Oshi no Ko */
-  #theme-picker, #stars-container, .star, .cursor-glow, .background-overlay, .fx-star, .fx-heart {
+  /* Cache absolument TOUT ce qui appartient au site de base */
+  #theme-picker, #stars-container, .star, .cursor-glow, .background-overlay, 
+  .fx-star, .fx-heart, .docsify-tabs__tab, .search, .app-nav {
     display: none !important;
-    opacity: 0 !important;
   }
 
-  /* --- 2. LE FOND "DIVINE AURA" --- */
+  /* --- 2. LE FOND : L'UNDERWORLD --- */
   body {
-    background: var(--axiom-bg) !important;
+    background: var(--axiom-dark) !important;
     background-image: 
-      radial-gradient(circle at 50% 50%, rgba(0, 102, 255, 0.15) 0%, transparent 70%),
-      linear-gradient(rgba(241, 196, 15, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(241, 196, 15, 0.02) 1px, transparent 1px) !important;
-    background-size: cover, 40px 40px, 40px 40px !important;
-    overflow-x: hidden;
+      radial-gradient(circle at 50% 50%, #002244 0%, #020408 100%) !important;
+    height: 100vh;
+    overflow: hidden !important; /* On bloque le scroll du body pour le gérer dans la stèle */
   }
 
-  /* --- 3. REPOSITIONNEMENT DE LA SIDEBAR (DROITE + FLOTTANTE) --- */
+  /* --- 3. LA STRUCTURE : LA STÈLE DE CRISTAL --- */
+  main {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+  }
+
+  /* Le panneau de contenu (La Stèle) */
+  .content {
+    position: relative !important;
+    width: 850px !important;
+    height: 85vh !important;
+    margin: 0 !important;
+    background: var(--glass) !important;
+    backdrop-filter: blur(30px) !important;
+    border: 1px solid rgba(241, 196, 15, 0.4) !important;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 
+                inset 0 0 30px rgba(0, 136, 255, 0.1) !important;
+    overflow-y: auto !important; /* Le scroll est ICI maintenant */
+    padding: 60px !important;
+    z-index: 5;
+    border-radius: 4px;
+  }
+
+  /* --- 4. LA SIDEBAR : MENU VR (SAO STYLE) --- */
   .sidebar {
     left: auto !important;
-    right: 20px !important; /* Déplacée à DROITE */
+    right: 50px !important;
+    width: 280px !important;
+    height: auto !important;
+    max-height: 60vh;
     top: 50% !important;
-    transform: translateY(-50%) !important;
-    height: 70vh !important;
-    width: 260px !important;
-    background: rgba(10, 20, 40, 0.8) !important;
-    backdrop-filter: blur(20px) !important;
-    border: 2px solid var(--knight-gold) !important;
-    border-radius: 15px 0 0 15px !important;
-    box-shadow: -10px 0 30px rgba(0, 102, 255, 0.3) !important;
-    z-index: 100 !important;
+    transform: translateY(-50%) rotateY(-15deg) !important; /* Effet 3D flottant */
+    background: transparent !important;
+    border: none !important;
+    z-index: 10 !important;
   }
 
-  .sidebar-nav { padding: 20px !important; }
-  .sidebar h1 { 
-    font-family: 'Cinzel', serif; 
-    font-size: 1.2em !important; 
+  .sidebar-nav > ul > li {
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 1px solid var(--knight-gold) !important;
+    margin-bottom: 10px !important;
+    padding: 10px !important;
+    clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%); /* Forme géométrique */
+    transition: 0.3s;
+  }
+
+  .sidebar-nav ul li a {
     color: var(--knight-gold) !important;
-    text-align: right;
+    font-family: 'Cinzel', serif;
+    text-decoration: none !important;
+    text-align: center;
+    font-weight: bold;
   }
 
-  /* --- 4. ZONE DE CONTENU "HOLOGRAMME" --- */
-  .content {
-    left: 40px !important;
-    right: 320px !important; /* On laisse de la place pour la sidebar à droite */
-    top: 50px !important;
-    position: relative !important;
-    width: auto !important;
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(241, 196, 15, 0.2) !important;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5) !important;
-    padding: 40px !important;
-    min-height: 80vh;
+  .sidebar-nav ul li:hover {
+    background: var(--knight-gold) !important;
+    transform: translateX(-10px);
   }
 
-  /* --- 5. EFFETS VISUELS "RELEASE RECOLLECTION" --- */
-  /* Titre avec animation de flash doré */
+  .sidebar-nav ul li:hover a { color: #000 !important; }
+
+  /* --- 5. DÉCORATIONS ET EFFETS "ENHANCE ARMAMENT" --- */
   .markdown-section h1 {
     font-family: 'Cinzel', serif;
+    font-size: 3em !important;
+    text-shadow: 0 0 20px var(--knight-gold);
     color: #fff !important;
-    text-shadow: 0 0 15px var(--knight-gold) !important;
-    border-bottom: 2px solid var(--knight-gold) !important;
-    padding-bottom: 15px;
-    text-align: left;
+    border-bottom: 4px double var(--knight-gold) !important;
+    margin-bottom: 50px !important;
   }
 
-  /* Pétales d'Osmanthus massifs */
-  .divine-petal {
-    position: fixed;
-    width: 12px; height: 12px;
-    background: var(--knight-gold);
-    border-radius: 100% 0 100% 0;
+  /* Les bordures de coin divines */
+  .content::before, .content::after {
+    content: "";
+    position: absolute;
+    width: 100px; height: 100px;
+    border: 2px solid var(--knight-gold);
     pointer-events: none;
-    z-index: 9999;
-    filter: drop-shadow(0 0 5px var(--knight-gold));
-    animation: divineFall 8s infinite linear;
+  }
+  .content::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+  .content::after { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+
+  /* Pétales dorées massives */
+  .osmanthus-v3 {
+    position: fixed;
+    width: 20px; height: 20px;
+    background: var(--knight-gold);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    filter: blur(1px) drop-shadow(0 0 8px var(--knight-gold));
+    z-index: 1;
+    animation: divineRotate 10s infinite linear;
   }
 
-  @keyframes divineFall {
+  @keyframes divineRotate {
     0% { transform: translateY(-10vh) rotate(0deg) scale(0.5); opacity: 0; }
-    50% { opacity: 1; transform: translateY(50vh) rotate(180deg) scale(1.2) translateX(50px); }
-    100% { transform: translateY(110vh) rotate(360deg) scale(0.5) translateX(-50px); opacity: 0; }
-  }
-
-  /* --- 6. BARRE DE NAVIGATION (TOP) --- */
-  .app-nav {
-    left: 40px !important;
-    right: auto !important;
-    background: transparent !important;
-    border: 1px solid var(--knight-gold) !important;
-    padding: 10px 20px !important;
-    border-radius: 5px !important;
+    50% { opacity: 0.8; }
+    100% { transform: translateY(110vh) rotate(720deg) scale(1.5); opacity: 0; }
   }
 </style>
 
@@ -105,32 +129,29 @@
 
 <script>
   (function() {
-    // 1. On force la suppression des boutons de thèmes si le CSS ne suffit pas
-    const removeOshi = () => {
-      const picker = document.getElementById('theme-picker');
-      if (picker) picker.remove();
+    // 1. On force le nettoyage complet
+    const cleanup = () => {
+      document.querySelectorAll('#theme-picker, .app-nav').forEach(el => el.remove());
     };
-    removeOshi();
-    setInterval(removeOshi, 1000); // Au cas où Docsify le recréerait
+    cleanup(); setInterval(cleanup, 500);
 
-    // 2. Générateur de particules Osmanthus (Alice's Sword)
-    const spawnPetal = () => {
+    // 2. Spawn des pétales d'Alice
+    const spawn = () => {
       const p = document.createElement('div');
-      p.className = 'divine-petal';
+      p.className = 'osmanthus-v3';
       p.style.left = Math.random() * 100 + 'vw';
-      p.style.animationDuration = (Math.random() * 3 + 6) + 's';
+      p.style.animationDuration = (Math.random() * 5 + 5) + 's';
       document.body.appendChild(p);
-      setTimeout(() => p.remove(), 8000);
+      setTimeout(() => p.remove(), 10000);
     };
-    setInterval(spawnPetal, 400);
+    setInterval(spawn, 500);
 
-    // 3. Texte de chargement personnalisé
-    const loaderText = document.querySelector('.loader-text');
-    if (loaderText) {
-      loaderText.innerHTML = "SYSTEM CALL: GENERATE LUMINOSITY ELEMENT";
-      loaderText.style.color = "#f1c40f";
-    }
-
-    console.log("🛡️ Integrity Protocol: Axiom Overwrite Complete.");
+    // 3. Effet de survol 3D sur la stèle
+    const content = document.querySelector('.content');
+    document.addEventListener('mousemove', (e) => {
+      const x = (window.innerWidth / 2 - e.pageX) / 50;
+      const y = (window.innerHeight / 2 - e.pageY) / 50;
+      content.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+    });
   })();
 </script>
