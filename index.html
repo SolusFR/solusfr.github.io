@@ -5,256 +5,328 @@
   <title>Solus Wiki ★ Oshi no Ko</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   
-  <!-- Polices : Poppins (Moderne), Fira Code (Code), Playfair (Élégant pour Kana) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Polices : Poppins (Moderne/Pop), Playfair (Théâtre/Kana), Fira Code (Hacker/Aqua) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Fira+Code:wght@400;600;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.css" />
 
   <style>
     /* =========================================
-       ★ VARIABLES GLOBALES DE BASE ★
+       ★ 1. LE MOTEUR DE THÈMES ULTIME ★
        ========================================= */
     :root {
-      --sidebar-width: 300px; 
-      --ui-radius: 12px;
-      --ui-border: 1px solid rgba(255,255,255,0.1);
-      --font-title: 'Poppins', sans-serif;
-      --bg-pattern: none;
+      /* Variables Systèmes */
+      --sidebar-width: 320px;
+      
+      /* Variables par défaut (Ai) */
+      --theme-color: #ff55aa; --theme-dim: rgba(255,85,170,0.15); --theme-glow: rgba(255,85,170,0.5);
+      --bg-main: #0a0105; --bg-pattern: radial-gradient(circle at 50% 0%, #2a0a1a 0%, #0a0105 80%);
+      --ui-radius: 16px; --ui-border: 1px solid rgba(255,255,255,0.1);
+      --font-headers: 'Poppins', sans-serif; --font-body: 'Poppins', sans-serif;
+      --shadow-style: 0 10px 30px rgba(0,0,0,0.5);
+      --table-bg: rgba(255,85,170,0.05);
+      --theme-icon: "★";
     }
 
-    body { 
-      font-family: 'Poppins', sans-serif !important; 
-      color: #f0f0f0; overflow-x: hidden; transition: background 0.5s ease;
-      background-color: var(--bg-main) !important;
-      background-image: var(--bg-pattern) !important;
-      background-attachment: fixed;
-    }
-
-    /* =========================================
-       ★ IDENTITÉS VISUELLES (LES THÈMES) ★
-       ========================================= */
-
-    /* 1. ⭐ AI HOSHINO (Glassmorphism, Scène Pop) */
+    /* ⭐ AI HOSHINO (Idole Parfaite, Glassmorphism, Pop) */
     [data-theme='ai'] { 
-      --theme-color: #ff55aa; --theme-dim: rgba(255,85,170,0.2); 
+      --theme-color: #ff55aa; --theme-dim: rgba(255,85,170,0.15); --theme-glow: rgba(255,85,170,0.6);
       --bg-main: #0a0105; --bg-pattern: radial-gradient(circle at 50% -20%, #2a0a1a 0%, #0a0105 80%);
-      --ui-radius: 20px; /* Très arrondi */
-      --ui-backdrop: blur(20px);
-      --sidebar-bg: rgba(10, 2, 5, 0.6);
-      --title-shadow: 0 0 20px var(--theme-color);
+      --ui-radius: 20px; --ui-border: 1px solid rgba(255,85,170,0.3);
+      --shadow-style: 0 0 25px rgba(255,85,170,0.2);
+      --font-headers: 'Poppins', sans-serif; --theme-icon: "★";
     }
 
-    /* 2. 🎬 AQUA HOSHINO (Cinéma Sombre, Scanlines, Sharp) */
+    /* 🎬 AQUA HOSHINO (Hacker, Cinéma Noir, Scanlines, Bords Tranchants) */
     [data-theme='aqua'] { 
-      --theme-color: #00eeff; --theme-dim: rgba(0,238,255,0.1); 
-      --bg-main: #020202; 
-      /* Effet Scanline d'écran cathodique */
+      --theme-color: #00eeff; --theme-dim: rgba(0,238,255,0.1); --theme-glow: rgba(0,238,255,0.8);
+      --bg-main: #020304; 
       --bg-pattern: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,238,255,0.03) 2px, rgba(0,238,255,0.03) 4px);
-      --ui-radius: 0px; /* Brut, tranchant */
-      --ui-border: 1px solid var(--theme-color);
-      --ui-backdrop: none;
-      --sidebar-bg: #050505;
-      --title-shadow: none;
+      --ui-radius: 0px; --ui-border: 1px solid var(--theme-color);
+      --shadow-style: 0 0 10px rgba(0,238,255,0.3);
+      --font-headers: 'Fira Code', monospace; --theme-icon: "✦";
     }
-    [data-theme='aqua'] .sidebar h1 { border-bottom: 3px double var(--theme-color); letter-spacing: 5px; }
 
-    /* 3. ❤️ RUBY HOSHINO (Énergie, Dégradés) */
+    /* ❤️ RUBY HOSHINO (Énergie, Sang, Passion) */
     [data-theme='ruby'] { 
-      --theme-color: #ff0055; --theme-dim: rgba(255,0,85,0.2); 
-      --bg-main: #0a0002; --bg-pattern: linear-gradient(135deg, #1a0005 0%, #000000 100%);
-      --ui-radius: 12px;
-      --sidebar-bg: linear-gradient(180deg, rgba(20,0,5,0.9) 0%, rgba(0,0,0,0.9) 100%);
-      --hover-transform: translateY(-5px) scale(1.02); /* Effet de rebond */
-      --title-shadow: 0 5px 15px rgba(255,0,85,0.5);
+      --theme-color: #ff0044; --theme-dim: rgba(255,0,68,0.15); --theme-glow: rgba(255,0,68,0.7);
+      --bg-main: #050001; --bg-pattern: linear-gradient(135deg, #200005 0%, #000000 100%);
+      --ui-radius: 12px; --ui-border: 1px solid rgba(255,0,68,0.4);
+      --shadow-style: 0 10px 20px rgba(255,0,68,0.2);
+      --font-headers: 'Poppins', sans-serif; --theme-icon: "♥";
     }
 
-    /* 4. 🎭 KANA ARIMA (Théâtre Classique, Élégance) */
+    /* 🎭 KANA ARIMA (Théâtre Classique, Élégance, Roman) */
     [data-theme='kana'] { 
-      --theme-color: #ffffff; --theme-dim: rgba(255,255,255,0.1); 
-      --bg-main: #0f0305; --bg-pattern: radial-gradient(circle at 50% 50%, #1a0508 0%, #050102 100%);
-      --ui-radius: 4px;
-      --ui-border: 2px solid #331118;
-      --sidebar-bg: #0a0204;
-      --font-title: 'Playfair Display', serif; /* Police de théâtre/roman */
-      --title-shadow: 2px 2px 0px #880022;
+      --theme-color: #ffffff; --theme-dim: rgba(255,255,255,0.1); --theme-glow: rgba(255,255,255,0.4);
+      --bg-main: #0a0204; --bg-pattern: radial-gradient(circle at 50% 50%, #1a0508 0%, #050102 100%);
+      --ui-radius: 4px; --ui-border: 2px solid #551122; /* Bordure Théâtre */
+      --shadow-style: 5px 5px 0px #330011;
+      --font-headers: 'Playfair Display', serif; --theme-icon: "♔";
     }
-    [data-theme='kana'] .markdown-section h1, [data-theme='kana'] .sidebar h1 { font-family: var(--font-title); text-transform: none; font-style: italic; }
 
-    /* 5. 🌊 AKANE KUROKAWA (Abysses Psychologiques) */
+    /* 🌊 AKANE KUROKAWA (Abysses Psychologiques, Flou Intense) */
     [data-theme='akane'] { 
-      --theme-color: #5577ff; --theme-dim: rgba(85,119,255,0.15); 
-      --bg-main: #01010a; 
-      --bg-pattern: radial-gradient(circle at 20% 30%, rgba(30,40,100,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(20,20,80,0.4) 0%, transparent 50%);
-      --ui-radius: 16px;
-      --sidebar-bg: rgba(2, 2, 10, 0.7);
-      --ui-backdrop: blur(10px);
-      --title-shadow: 0 0 30px #5577ff;
+      --theme-color: #5577ff; --theme-dim: rgba(85,119,255,0.15); --theme-glow: rgba(85,119,255,0.8);
+      --bg-main: #01010a; --bg-pattern: none; /* Remplacé par les orbes JS */
+      --ui-radius: 16px; --ui-border: 1px solid rgba(85,119,255,0.2);
+      --shadow-style: 0 0 30px rgba(85,119,255,0.1);
+      --font-headers: 'Poppins', sans-serif; --theme-icon: "✿";
     }
 
-    /* 6. 📱 MEM-CHO (Pop Art Internet, Néo-Brutalisme) */
+    /* 📱 MEM-CHO (Neo-Brutalisme, Pop-Art, Internet) */
     [data-theme='memcho'] { 
-      --theme-color: #ffcc00; --theme-dim: rgba(255,204,0,0.2); 
-      --bg-main: #111100; 
-      /* Fond Polka Dots (Petits points) */
-      --bg-pattern: radial-gradient(rgba(255,204,0,0.15) 2px, transparent 2px);
-      background-size: 20px 20px !important;
-      --ui-radius: 8px;
-      --ui-border: 3px solid #ffcc00; /* Bordures épaisses */
-      --sidebar-bg: #0a0a00;
-      --title-shadow: 4px 4px 0px #554400; /* Ombre décalée Pop-Art */
+      --theme-color: #ffcc00; --theme-dim: rgba(255,204,0,0.2); --theme-glow: rgba(255,204,0,0.6);
+      --bg-main: #0f0f00; 
+      --bg-pattern: radial-gradient(rgba(255,204,0,0.15) 2px, transparent 2px); background-size: 20px 20px !important;
+      --ui-radius: 6px; --ui-border: 3px solid #ffcc00; /* Bordure XXL */
+      --shadow-style: 8px 8px 0px #aa8800; /* Ombre Hardcore Pop Art */
+      --font-headers: 'Poppins', sans-serif; --theme-icon: "♪";
     }
-    /* Menu décalé pour Mem-cho */
-    [data-theme='memcho'] .sidebar { box-shadow: 8px 0px 0px #ffcc00; }
-    [data-theme='memcho'] .markdown-section pre { box-shadow: 8px 8px 0px var(--theme-color) !important; }
 
     /* =========================================
-       ★ STRUCTURE UI DYNAMIQUE ★
+       ★ 2. FOND, SCROLL ET PROGRESSION ★
        ========================================= */
-    ::selection { background: var(--theme-color); color: #000; }
+    body { 
+      font-family: var(--font-body) !important; color: #f0f0f0; letter-spacing: 0.3px;
+      background-color: var(--bg-main) !important; background-image: var(--bg-pattern) !important;
+      background-attachment: fixed; transition: background 0.5s ease; overflow-x: hidden;
+    }
+    ::selection { background: var(--theme-color); color: #000; text-shadow: none; }
 
-    #reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--theme-color); z-index: 9999; width: 0%; box-shadow: 0 0 15px var(--theme-color); }
-
-    /* Conteneur d'effets de fond générés en JS */
+    #reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--theme-color); z-index: 9999; width: 0%; box-shadow: 0 0 15px var(--theme-glow); transition: width 0.1s; pointer-events: none; }
+    
+    /* Conteneur pour le moteur de particules JS */
     #fx-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -2; overflow: hidden; }
 
-    /* SIDEBAR ADAPTATIVE */
-    .sidebar { 
-      width: var(--sidebar-width) !important;
-      background: var(--sidebar-bg) !important; 
-      backdrop-filter: var(--ui-backdrop); -webkit-backdrop-filter: var(--ui-backdrop);
-      border-right: var(--ui-border) !important;
-      border-radius: 0 var(--ui-radius) var(--ui-radius) 0;
-      transition: width 0.3s, background 0.5s, border 0.5s, border-radius 0.5s;
-    }
-    .content { left: var(--sidebar-width) !important; transition: none; }
-
-    .sidebar h1 { font-family: var(--font-title); font-weight: 900; color: #fff; text-shadow: var(--title-shadow); border-bottom: 2px solid var(--theme-color); padding-bottom: 15px; text-align: center; margin-top: 10px; }
-    
-    .search input { 
-      background: rgba(0,0,0,0.5) !important; border: var(--ui-border) !important; color: #fff !important; 
-      border-radius: var(--ui-radius) !important; padding: 12px 15px !important; transition: 0.3s !important; 
-    }
-    .search input:focus { border-color: var(--theme-color) !important; box-shadow: 0 0 15px var(--theme-dim) !important; }
-
-    /* NAVIGATION DU MENU */
-    .sidebar-nav ul li a { 
-      white-space: normal !important; word-wrap: break-word; line-height: 1.4;
-      transition: all 0.3s; font-weight: 500; color: #aaa; padding: 10px 15px; border-radius: var(--ui-radius); margin: 2px 10px; display: block; 
-    }
-    .sidebar-nav ul li a:hover { color: #fff; background: rgba(255,255,255,0.05); transform: var(--hover-transform, translateX(5px)); }
-    
-    .sidebar-nav li.collapse > a::before { content: "▶" !important; font-size: 10px; margin-right: 12px; transition: 0.4s; display: inline-block; }
-    .sidebar-nav li.collapse:not(.close) > a { color: #fff !important; font-weight: 800 !important; background: linear-gradient(90deg, var(--theme-dim), transparent); border-left: 4px solid var(--theme-color); }
-    .sidebar-nav li.collapse:not(.close) > a::before { transform: rotate(90deg); color: var(--theme-color) !important; text-shadow: var(--title-shadow); }
-    
-    .sidebar-nav ul li.active > a { color: #000 !important; font-weight: 800; background: var(--theme-color); transform: scale(1.02); }
-
-    /* CONTENU MARKDOWN ADAPTATIF */
-    .markdown-section h1, .markdown-section h2 { font-family: var(--font-title); font-weight: 900; color: #fff; text-shadow: var(--title-shadow); margin-top: 50px; }
-    .markdown-section a { color: var(--theme-color); font-weight: 800; text-decoration: none; border-bottom: 1px dashed var(--theme-color); }
-    
-    .markdown-section pre { background: #080808 !important; border: var(--ui-border); border-radius: var(--ui-radius); padding-top: 40px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; }
-    .markdown-section pre::before { content: '/// CODE'; position: absolute; top: 10px; left: 15px; color: #555; font-size: 12px; font-weight: 900; letter-spacing: 2px; }
-    
-    .docsify-copy-code-button { background: #111 !important; color: #fff !important; border: var(--ui-border) !important; border-radius: var(--ui-radius) !important; padding: 5px 12px !important; top: 10px !important; right: 10px !important; }
-    
-    .markdown-section blockquote { border-left: 5px solid var(--theme-color); background: var(--theme-dim); padding: 20px; border-radius: 0 var(--ui-radius) var(--ui-radius) 0; font-style: italic; }
-
-    /* PAGINATION */
-    .docsify-pagination-container { display: flex !important; justify-content: space-between !important; gap: 20px !important; margin-top: 60px !important; padding-top: 30px !important; border-top: var(--ui-border) !important; flex-wrap: wrap; }
-    .pagination-item a { display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center; background: rgba(0,0,0,0.4) !important; border: var(--ui-border) !important; border-radius: var(--ui-radius) !important; padding: 25px 20px !important; transition: all 0.3s ease !important; width: 100% !important; }
-    .pagination-item a:hover { background: var(--theme-dim) !important; border-color: var(--theme-color) !important; transform: var(--hover-transform, translateY(-3px)) !important; }
-    .pagination-item-title { font-weight: 800 !important; color: #fff !important; }
-    .pagination-item-label { color: var(--theme-color) !important; font-weight: 800; text-transform: uppercase; }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg-main); border-left: 1px solid rgba(255,255,255,0.05); }
+    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: var(--ui-radius); border: 2px solid var(--bg-main); }
+    ::-webkit-scrollbar-thumb:hover { background: #fff; box-shadow: 0 0 15px var(--theme-glow); }
 
     /* =========================================
-       ★ THEME PICKER ★
+       ★ 3. SIDEBAR (REDIMENSIONNABLE & STYLISÉE) ★
+       ========================================= */
+    .sidebar { 
+      width: var(--sidebar-width) !important; 
+      background: rgba(5,5,8, 0.7) !important; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-right: var(--ui-border) !important; box-shadow: var(--shadow-style);
+      padding-bottom: 50px; transition: background 0.5s, border 0.5s, border-radius 0.5s, box-shadow 0.5s;
+    }
+    .content { left: var(--sidebar-width) !important; transition: left 0.1s; } /* S'adapte au resizer */
+
+    /* Le Redimensionneur (La Poignée) */
+    .sidebar-resizer {
+      position: absolute; top: 0; right: 0; width: 6px; height: 100%; cursor: col-resize; z-index: 100; transition: background 0.3s;
+    }
+    .sidebar-resizer:hover, .sidebar-resizer.active { background: var(--theme-color); box-shadow: 0 0 10px var(--theme-glow); }
+
+    /* Titre du Wiki */
+    .sidebar h1 { 
+      font-family: var(--font-headers); font-weight: 900; letter-spacing: 2px; color: #fff; 
+      text-shadow: 0 0 15px var(--theme-glow); border-bottom: 2px solid var(--theme-color); 
+      padding-bottom: 15px; text-transform: uppercase; text-align: center; margin-top: 10px; 
+    }
+    [data-theme='kana'] .sidebar h1 { text-transform: none; font-style: italic; }
+
+    /* Barre de recherche */
+    .search { margin-bottom: 20px; border: none !important; }
+    .search input { 
+      background: rgba(0,0,0,0.4) !important; border: var(--ui-border) !important; color: #fff !important; 
+      border-radius: var(--ui-radius) !important; padding: 12px 15px !important; 
+      font-family: var(--font-body); font-weight: 600; text-align: center; transition: 0.3s !important; 
+    }
+    .search input:focus { border-color: var(--theme-color) !important; box-shadow: 0 0 20px var(--theme-dim) !important; outline: none; }
+
+    /* Menu (Anti-Coupure de texte) */
+    .sidebar-nav ul li a { 
+      white-space: normal !important; word-wrap: break-word; line-height: 1.4;
+      transition: 0.3s; font-weight: 500; color: #aaa; padding: 10px 15px; border-radius: var(--ui-radius); margin: 2px 10px; display: block;
+    }
+    .sidebar-nav ul li a:hover { color: #fff; background: rgba(255,255,255,0.05); transform: translateX(5px); }
+    
+    /* Animation Dossiers */
+    .sidebar-nav li.collapse > a::before { content: "▶" !important; font-size: 10px; margin-right: 12px; color: #555; transition: 0.4s; display: inline-block; }
+    .sidebar-nav li.collapse:not(.close) > a { color: #fff !important; font-weight: 800 !important; background: linear-gradient(90deg, var(--theme-dim), transparent); border-left: 4px solid var(--theme-color); border-radius: 0 var(--ui-radius) var(--ui-radius) 0; }
+    .sidebar-nav li.collapse:not(.close) > a::before { content: var(--theme-icon) !important; font-size: 14px; color: var(--theme-color) !important; text-shadow: 0 0 15px var(--theme-glow); transform: scale(1.3) rotate(360deg); animation: floatIcon 2s infinite ease-in-out; }
+    
+    .sidebar-nav ul li.active > a { color: #fff !important; font-weight: 800; background: var(--theme-color); box-shadow: 0 0 15px var(--theme-glow); border-radius: var(--ui-radius); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+    .app-sub-sidebar { margin-left: 20px !important; border-left: 2px solid rgba(255,255,255,0.05); }
+    .sidebar-nav .app-sub-sidebar li::before { display: none !important; }
+
+    @keyframes floatIcon { 0%, 100% { transform: translateY(0) scale(1.2); } 50% { transform: translateY(-3px) scale(1.2); } }
+
+    /* =========================================
+       ★ 4. MARKDOWN 100% ADAPTATIF ★
+       ========================================= */
+    .markdown-section { max-width: 900px; margin: 0 auto; padding: 40px 15px; }
+    
+    /* Titres avec police et style dynamique */
+    .markdown-section h1, .markdown-section h2 { 
+      font-family: var(--font-headers); font-weight: 900; color: #fff; 
+      text-transform: uppercase; letter-spacing: 1px; position: relative; padding-bottom: 10px; margin-top: 50px; 
+    }
+    [data-theme='kana'] .markdown-section h1 { text-transform: none; font-style: italic; }
+    .markdown-section h1 { font-size: 2.5em; text-shadow: 0 0 20px var(--theme-dim); }
+    .markdown-section h1::after, .markdown-section h2::after { content: ''; position: absolute; bottom: 0; left: 0; width: 50px; height: 4px; background: var(--theme-color); transition: width 0.4s ease; box-shadow: 0 0 10px var(--theme-glow); }
+    .markdown-section h1:hover::after, .markdown-section h2:hover::after { width: 100%; }
+
+    .markdown-section a { color: var(--theme-color); font-weight: 800; text-decoration: none; border-bottom: 1px dashed var(--theme-color); transition: 0.3s; }
+    .markdown-section a:hover { text-shadow: 0 0 15px var(--theme-glow); border-bottom: 1px solid #fff; color: #fff; }
+    .markdown-section strong { color: var(--theme-color); text-shadow: 0 0 10px var(--theme-dim); }
+
+    /* Listes à puces avec Icône du thème */
+    .markdown-section ul { list-style: none; padding-left: 20px; }
+    .markdown-section ul li { position: relative; margin-bottom: 8px; }
+    .markdown-section ul li::before { content: var(--theme-icon); position: absolute; left: -25px; top: 2px; color: var(--theme-color); font-size: 14px; text-shadow: 0 0 8px var(--theme-glow); }
+
+    /* Checkbox Stylisées */
+    .markdown-section input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: var(--ui-border); border-radius: 4px; vertical-align: middle; position: relative; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.5); margin-right: 8px; }
+    .markdown-section input[type="checkbox"]:checked { border-color: var(--theme-color); background: var(--theme-dim); box-shadow: 0 0 10px var(--theme-glow); }
+    .markdown-section input[type="checkbox"]:checked::after { content: var(--theme-icon); position: absolute; top: -3px; left: 2px; color: var(--theme-color); font-size: 14px; text-shadow: 0 0 5px var(--theme-color); }
+
+    /* Badges Personnalisés */
+    .badge { padding: 3px 8px; border-radius: var(--ui-radius); font-size: 0.75em; font-weight: 800; text-transform: uppercase; vertical-align: middle; margin-left: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+    .badge.new { background: var(--theme-color); color: #000; }
+    .badge.wip { background: transparent; color: var(--theme-color); border: var(--ui-border); }
+
+    /* Citations / Script Notes */
+    .markdown-section blockquote { border-left: 5px solid var(--theme-color); background: var(--theme-dim); margin: 2em 0; padding: 20px; border-radius: 0 var(--ui-radius) var(--ui-radius) 0; font-style: italic; color: #bbb; position: relative; box-shadow: inset 40px 0 50px -40px rgba(0,0,0,0.5); }
+    code, kbd { font-family: 'Fira Code', monospace; }
+    kbd { background: #1a1a1a; border: var(--ui-border); border-bottom: 3px solid #000; border-radius: 6px; padding: 4px 8px; font-weight: 600; font-size: 0.85em; color: var(--theme-color); }
+
+    /* Blocs de Code Adaptatifs */
+    .markdown-section pre { background: rgba(0,0,0,0.6) !important; border: var(--ui-border); border-radius: var(--ui-radius); padding-top: 40px !important; position: relative; box-shadow: var(--shadow-style); overflow: hidden; margin: 20px 0; backdrop-filter: blur(5px); }
+    .markdown-section pre::before { content: ''; position: absolute; top: 15px; left: 15px; width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f; }
+    [data-theme='aqua'] .markdown-section pre::before { display: none; } /* Hacker style: no Mac buttons */
+    
+    .docsify-copy-code-button { background: rgba(0,0,0,0.8) !important; color: #fff !important; border: var(--ui-border) !important; border-radius: var(--ui-radius) !important; padding: 5px 12px !important; font-family: var(--font-body); font-size: 11px; top: 10px !important; right: 10px !important; transition: 0.3s; }
+    .docsify-copy-code-button:hover { background: var(--theme-color) !important; border-color: var(--theme-color) !important; box-shadow: 0 0 15px var(--theme-glow) !important; color: #000 !important;}
+
+    /* Tableaux Fixés & Adaptatifs (Fond sombre, pas de blanc) */
+    .markdown-section table { width: 100%; border-collapse: separate; border-spacing: 0; background: rgba(0,0,0,0.4) !important; border-radius: var(--ui-radius); overflow: hidden; border: var(--ui-border); margin: 2em 0; box-shadow: var(--shadow-style); }
+    .markdown-section table th { background: var(--theme-dim) !important; color: #fff; font-weight: 800; padding: 15px; text-transform: uppercase; border-bottom: 2px solid var(--theme-color); }
+    .markdown-section table td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ddd; }
+    .markdown-section table tr:nth-child(2n) { background: rgba(255,255,255,0.02); }
+    .markdown-section table tr:hover td { background: var(--theme-dim); color: #fff; transition: background 0.3s; }
+
+    /* Alertes (!> et ?>) */
+    .warn, .tip { padding: 20px !important; border-radius: var(--ui-radius) !important; position: relative !important; font-weight: 500 !important; margin: 20px 0; border: var(--ui-border) !important; backdrop-filter: blur(5px); }
+    .warn { background: rgba(255, 68, 68, 0.1) !important; border-left: 5px solid #ff4444 !important; }
+    .warn::before { content: '⚠️ ATTENTION'; display: block; font-weight: 900; color: #ff4444; margin-bottom: 5px; }
+    .tip { background: rgba(0, 238, 255, 0.1) !important; border-left: 5px solid #00eeff !important; }
+    .tip::before { content: '💡 ASTUCE'; display: block; font-weight: 900; color: #00eeff; margin-bottom: 5px; }
+
+    /* =========================================
+       ★ 5. PAGINATION (BOUTONS CORRIGÉS) ★
+       ========================================= */
+    .docsify-pagination-container { display: flex !important; justify-content: space-between !important; gap: 20px !important; margin-top: 60px !important; padding-top: 30px !important; border-top: var(--ui-border) !important; flex-wrap: wrap; }
+    .pagination-item { margin: 0 !important; flex: 1; min-width: 250px; }
+    .pagination-item a { display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: center !important; text-align: center; background: rgba(0,0,0,0.5) !important; border: var(--ui-border) !important; border-radius: var(--ui-radius) !important; padding: 25px 20px !important; transition: all 0.3s ease !important; text-decoration: none !important; width: 100% !important; box-sizing: border-box !important; box-shadow: var(--shadow-style) !important;}
+    .pagination-item a:hover { background: var(--theme-dim) !important; border-color: var(--theme-color) !important; box-shadow: 0 0 25px var(--theme-glow) !important; transform: translateY(-5px) !important; }
+    .pagination-item-title { font-family: var(--font-headers) !important; font-weight: 800 !important; font-size: 1.2em !important; color: #fff !important; margin-top: 5px !important; }
+    .pagination-item-label { color: var(--theme-color) !important; font-size: 0.8em !important; text-transform: uppercase; font-weight: 900; letter-spacing: 1px; }
+
+    /* =========================================
+       ★ 6. PANNEAU DE THÈMES & LOADING ★
        ========================================= */
     #theme-picker {
       position: fixed; top: 15px; right: 25px; z-index: 1000;
-      background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
-      padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2);
-      display: flex; gap: 12px; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      padding: 10px 20px; border-radius: 50px; border: var(--ui-border); box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+      display: flex; gap: 12px; align-items: center; transition: 0.4s;
     }
-    #theme-picker span { color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 2px; margin-right: 8px; opacity: 0.6; }
-    .theme-dot { width: 18px; height: 18px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.3); transition: 0.3s; }
-    .theme-dot:hover { transform: scale(1.5); border-color: #fff; box-shadow: 0 0 15px currentColor; }
+    #theme-picker:hover { border-color: var(--theme-color); box-shadow: 0 0 25px var(--theme-glow); }
+    #theme-picker span { color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 2px; margin-right: 8px; opacity: 0.6; text-transform: uppercase; }
+    .theme-dot { width: 18px; height: 18px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.3); transition: 0.4s; }
+    .theme-dot:hover { transform: scale(1.6); border-color: #fff; box-shadow: 0 0 20px currentColor; }
     .dot-kana { border-color: #66001a; }
 
-    /* CLASSES D'ANIMATIONS (Gérées par JS) */
+    #loading-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s, visibility 0.8s; }
+    .loader-icon { font-size: 80px; color: var(--theme-color); text-shadow: 0 0 30px var(--theme-color); animation: spinLoader 2s infinite; }
+    .loader-text { margin-top: 20px; color: #fff; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; font-size: 14px; animation: pulseText 1.5s infinite alternate; font-family: 'Poppins';}
+    @keyframes spinLoader { 0% { transform: rotate(0deg) scale(0.8); } 50% { transform: rotate(180deg) scale(1.2); } 100% { transform: rotate(360deg) scale(0.8); } }
+    @keyframes pulseText { 0% { opacity: 0.3; } 100% { opacity: 1; text-shadow: 0 0 15px var(--theme-color); color: var(--theme-color); } }
+    body.loaded #loading-screen { opacity: 0; visibility: hidden; }
+
+    /* =========================================
+       ★ 7. ANIMATIONS JS (PARTICULES) ★
+       ========================================= */
     .fx-star { position: absolute; opacity: 0; animation: twinkle linear infinite; }
     .fx-heart { position: absolute; opacity: 0; animation: floatUp linear infinite; }
-    .fx-orb { position: absolute; border-radius: 50%; opacity: 0; animation: pulseOrb ease-in-out infinite alternate; filter: blur(8px); }
+    .fx-orb { position: absolute; border-radius: 50%; opacity: 0; animation: pulseOrb ease-in-out infinite alternate; filter: blur(15px); }
     .fx-pixel { position: absolute; opacity: 0; font-family: 'Fira Code'; font-weight: bold; animation: glitch linear infinite; }
 
-    @keyframes twinkle { 0% { opacity: 0; transform: scale(0.5); } 50% { opacity: 0.8; transform: scale(1.2); } 100% { opacity: 0; transform: scale(0.5); } }
-    @keyframes floatUp { 0% { opacity: 0; transform: translateY(20px) scale(0.8); } 50% { opacity: 0.6; } 100% { opacity: 0; transform: translateY(-50px) scale(1.2); } }
-    @keyframes pulseOrb { 0% { opacity: 0.1; transform: scale(1); } 100% { opacity: 0.4; transform: scale(2); } }
-    @keyframes glitch { 0%, 100% { opacity: 0; } 5% { opacity: 1; transform: translateX(-2px); } 10% { opacity: 0; transform: translateX(2px); } }
+    @keyframes twinkle { 0% { opacity: 0; transform: scale(0.5); } 50% { opacity: 0.8; transform: scale(1.2); text-shadow: 0 0 15px currentColor;} 100% { opacity: 0; transform: scale(0.5); } }
+    @keyframes floatUp { 0% { opacity: 0; transform: translateY(50px) scale(0.8); } 50% { opacity: 0.6; text-shadow: 0 0 20px currentColor;} 100% { opacity: 0; transform: translateY(-100px) scale(1.2); } }
+    @keyframes pulseOrb { 0% { opacity: 0.05; transform: scale(1) translateY(0); } 100% { opacity: 0.3; transform: scale(2.5) translateY(-30px); } }
+    @keyframes glitch { 0%, 100% { opacity: 0; } 1% { opacity: 1; transform: translateX(-5px); } 2% { opacity: 0; transform: translateX(5px); } }
 
   </style>
 </head>
 <body>
 
+  <!-- ÉLÉMENTS UI -->
   <div id="reading-progress"></div>
+  <div id="loading-screen"><div class="loader-icon" id="loader-star">★</div><div class="loader-text">Ouverture des rideaux...</div></div>
   <div id="fx-container"></div>
 
+  <!-- PANNEAU DE THÈMES -->
   <div id="theme-picker">
-    <span>推し</span>
+    <span>推し OSHI</span>
     <div class="theme-dot" style="background:#ff55aa; color:#ff55aa" onclick="setTheme('ai')" title="Ai (Glass & Pop)"></div>
     <div class="theme-dot" style="background:#ff0044; color:#ff0044" onclick="setTheme('ruby')" title="Ruby (Énergie)"></div>
-    <div class="theme-dot" style="background:#00eeff; color:#00eeff" onclick="setTheme('aqua')" title="Aqua (Cinéma Sombre)"></div>
-    <div class="theme-dot dot-kana" style="background:#ffffff; color:#ffffff" onclick="setTheme('kana')" title="Kana (Théâtre Élégant)"></div>
-    <div class="theme-dot" style="background:#5577ff; color:#5577ff" onclick="setTheme('akane')" title="Akane (Abysses)"></div>
-    <div class="theme-dot" style="background:#ffcc00; color:#ffcc00" onclick="setTheme('memcho')" title="Mem-cho (Pop Brutalisme)"></div>
+    <div class="theme-dot" style="background:#00eeff; color:#00eeff" onclick="setTheme('aqua')" title="Aqua (Hacker/Cinéma Noir)"></div>
+    <div class="theme-dot dot-kana" style="background:#ffffff; color:#ffffff" onclick="setTheme('kana')" title="Kana (Théâtre Classique)"></div>
+    <div class="theme-dot" style="background:#5577ff; color:#5577ff" onclick="setTheme('akane')" title="Akane (Abysses Mentales)"></div>
+    <div class="theme-dot" style="background:#ffcc00; color:#ffcc00" onclick="setTheme('memcho')" title="Mem-cho (Neo-Brutalisme Pop)"></div>
   </div>
 
-  <div id="app">Chargement...</div>
+  <div id="app"></div>
 
   <script>
-    // --- MOTEUR DE THÈMES DYNAMIQUE ---
+    // --- 1. GESTION DES THÈMES & PARTICULES DYNAMIQUES ---
     function setTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('solus-wiki-theme', theme);
       
-      const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-color').trim();
-      if (window.$docsify) window.$docsify.themeColor = themeColor;
-      
-      generateEffects(theme, themeColor);
+      setTimeout(() => {
+        const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-color').trim();
+        const themeIcon = getComputedStyle(document.documentElement).getPropertyValue('--theme-icon').replace(/["']/g, '').trim();
+        
+        if (window.$docsify) window.$docsify.themeColor = themeColor;
+        document.getElementById('loader-star').innerText = themeIcon;
+        generateEffects(theme, themeColor, themeIcon);
+      }, 50); // Petit délai pour laisser le CSS Apply
     }
 
-    // Génère des effets visuels en fonction de l'aura du personnage
-    function generateEffects(theme, color) {
+    function generateEffects(theme, color, icon) {
       const container = document.getElementById('fx-container');
-      container.innerHTML = ''; // Reset
+      container.innerHTML = ''; 
       
-      let count = 40;
-      let types = [];
-      let charArray = [];
+      let count = 40; let types = []; let charArray = [];
 
-      // Définition du style selon le thème
-      if (theme === 'ai') { charArray = ['★', '✧']; types = ['fx-star']; }
-      else if (theme === 'ruby') { charArray = ['♥', '♡']; types = ['fx-heart']; }
-      else if (theme === 'aqua') { charArray = ['/', '\\', '[', ']']; types = ['fx-pixel']; count = 60; }
+      // Configurations uniques par thème
+      if (theme === 'ai') { charArray = [icon, '✧']; types = ['fx-star']; count = 50; }
+      else if (theme === 'ruby') { charArray = [icon, '♡']; types = ['fx-heart']; count = 40; }
+      else if (theme === 'aqua') { charArray = ['/', '\\', '[', ']', '{', '}']; types = ['fx-pixel']; count = 70; }
       else if (theme === 'kana') { charArray = ['✨', '✦']; types = ['fx-star']; count = 30; }
       else if (theme === 'akane') { charArray = ['']; types = ['fx-orb']; count = 15; }
-      else if (theme === 'memcho') { charArray = ['▲', '●', '■']; types = ['fx-star']; count = 25; }
+      else if (theme === 'memcho') { charArray = ['▲', '●', '■', '+']; types = ['fx-star']; count = 35; }
 
       for (let i = 0; i < count; i++) {
         let fx = document.createElement('div');
         fx.className = types[Math.floor(Math.random() * types.length)];
         
         if (theme === 'akane') {
-          // Création d'orbes floues pour Akane
-          fx.style.width = (Math.random() * 100 + 50) + 'px';
+          fx.style.width = (Math.random() * 150 + 100) + 'px';
           fx.style.height = fx.style.width;
           fx.style.background = color;
         } else {
           fx.innerHTML = charArray[Math.floor(Math.random() * charArray.length)];
           fx.style.color = color;
-          fx.style.fontSize = (Math.random() * 15 + 8) + 'px';
-          fx.style.textShadow = `0 0 10px ${color}`;
+          fx.style.fontSize = (Math.random() * 18 + 8) + 'px';
         }
         
         fx.style.left = Math.random() * 100 + 'vw';
@@ -267,25 +339,64 @@
 
     setTheme(localStorage.getItem('solus-wiki-theme') || 'ai');
 
-    // Barre de progression
+    // --- 2. BARRE DE LECTURE ---
     window.addEventListener('scroll', () => {
       let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
       let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       document.getElementById('reading-progress').style.width = (winScroll / height) * 100 + "%";
     });
 
-    // Configuration Docsify
+    // --- 3. CONFIGURATION DOCSIFY ---
     window.$docsify = {
-      name: 'Solus Wiki',
+      name: 'Solus Wiki <span>★</span>',
       repo: '', loadSidebar: true, subMaxLevel: 3, sidebarDisplayLevel: 1, auto2top: true,
-      search: { placeholder: '🔎 Rechercher...', noData: '❌ Rien trouvé.' },
+      search: { placeholder: '🔎 Rechercher un script...', noData: '❌ Aucune rumeur trouvée.' },
       copyCode: { buttonText: '📋 Copier', successText: '✨ Copié !' },
-      pagination: { previousText: 'Chapitre Précédent', nextText: 'Chapitre Suivant', crossChapter: true },
-      tabs: { persist: true, sync: true, theme: 'classic' }
+      pagination: { previousText: 'Chapitre Précédent', nextText: 'Chapitre Suivant', crossChapter: true, crossChapterText: true },
+      tabs: { persist: true, sync: true, theme: 'classic' },
+
+      plugins: [
+        function(hook, vm) {
+          hook.mounted(function() {
+            // Retire l'écran de chargement
+            setTimeout(() => { document.body.classList.add('loaded'); }, 500);
+            
+            // --- SCRIPT DE REDIMENSIONNEMENT DE LA SIDEBAR ---
+            const sidebar = document.querySelector('.sidebar');
+            if(sidebar) {
+              const resizer = document.createElement('div');
+              resizer.className = 'sidebar-resizer';
+              sidebar.appendChild(resizer);
+
+              let isResizing = false;
+              resizer.addEventListener('mousedown', (e) => {
+                isResizing = true; resizer.classList.add('active');
+                document.body.style.cursor = 'col-resize';
+                document.body.style.userSelect = 'none';
+              });
+
+              document.addEventListener('mousemove', (e) => {
+                if (!isResizing) return;
+                // Min 250px, Max 600px de large
+                let newWidth = Math.max(250, Math.min(e.clientX, 600)); 
+                document.documentElement.style.setProperty('--sidebar-width', newWidth + 'px');
+              });
+
+              document.addEventListener('mouseup', () => {
+                if(isResizing) {
+                  isResizing = false; resizer.classList.remove('active');
+                  document.body.style.cursor = 'default';
+                  document.body.style.userSelect = 'auto';
+                }
+              });
+            }
+          });
+        }
+      ]
     }
   </script>
 
-  <!-- SCRIPTS REQUIS -->
+  <!-- SCRIPTS REQUIS DOCSIFY & PLUGINS -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
