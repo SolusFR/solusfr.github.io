@@ -7,7 +7,7 @@ Derrière **Solus Wiki** et l'écosystème **SolusFR**, il y a une équipe de pa
 ## 👑 Administration
 *Les piliers du projet, responsables de la vision globale et de la direction de SolusFR.*
 
-* **AngmarRoiSOrcier** ★
+* **AngmarRoiSorcier** ★
     * **Rôle :** Fondateur & Visionnaire
     * **Spécialité :** Architecture du Wiki & Coordination
     * **Contact :** `@angmarroisorcie`
