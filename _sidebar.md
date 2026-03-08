@@ -2,6 +2,7 @@
     * **Minecraft**
       * **Serveur**
         * **Craftok**
+          * [Règlement Kitpvp](docs/Minecraft/Serveur/Craftok/Règlement-KITPVP.md)
           * [Règlement](docs/Minecraft/Serveur/Craftok/Règlement.md)
     * **Sécurité**
       * [Anti Phishing](docs/Sécurité/Anti-Phishing.md)
