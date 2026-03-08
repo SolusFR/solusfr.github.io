@@ -1,66 +1,72 @@
 <style>
-  /* --- 1. ÉLIMINATION RADICALE DU ROSE --- */
+  /* --- 1. OVERRIDE GLOBAL DU MOTEUR (FINI LE ROSE) --- */
   :root {
     --theme-color: #00ffaa !important;
+    --docsifytabs-tab-highlight-color: #00ffaa !important;
   }
 
-  /* On tue le glow rose et les ombres des blocs markdown vus sur tes images */
-  .markdown-section p, .markdown-section code, .markdown-section pre, 
-  .markdown-section blockquote, .markdown-section img, .content {
-    box-shadow: 0 0 20px rgba(0, 255, 170, 0.1) !important; /* Glow vert discret */
+  /* Tue le rose sur les fonds, bordures et lignes horizontales du MD */
+  .markdown-section hr, 
+  .markdown-section blockquote,
+  .markdown-section code,
+  .markdown-section p,
+  .markdown-section table,
+  .markdown-section tr:nth-child(2n) {
     border-color: #1a3a2a !important;
+    background-color: rgba(0, 255, 170, 0.02) !important;
   }
 
-  /* Force le remplacement des textes roses résiduels */
-  .markdown-section strong, .markdown-section b, .markdown-section em, .markdown-section a {
+  /* Cible spécifiquement les éléments roses vus sur tes captures */
+  .markdown-section a, 
+  .markdown-section strong, 
+  .markdown-section span.token,
+  .anchor span {
     color: #00ffaa !important;
-    text-shadow: 0 0 5px rgba(0, 255, 170, 0.5) !important;
-    text-decoration: none !important;
+    text-shadow: 0 0 8px rgba(0, 255, 170, 0.4) !important;
+    border-bottom-color: transparent !important;
   }
 
-  /* --- 2. TRANSFORMATION DE LA SIDEBAR (ZÉRO GLOW ROSE) --- */
+  /* --- 2. LA STRUCTURE SPECTRE (FORME AMÉLIORÉE) --- */
+  html, body { background: #010203 !important; overflow: hidden !important; }
+
+  /* Sidebar : Effet glow vert pur (fini le halo rose) */
   .sidebar {
     background: #050708 !important;
     border: none !important;
-    /* On remplace le glow rose par un halo d'acier noir */
-    box-shadow: 15px 0 35px rgba(0, 0, 0, 0.9) !important; 
-    clip-path: polygon(0 0, 100% 0, 100% 92%, 75% 100%, 0 100%) !important;
+    box-shadow: 15px 0 35px rgba(0, 0, 0, 0.95), 5px 0 15px rgba(0, 255, 170, 0.05) !important;
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 80% 100%, 0 100%) !important;
   }
 
-  /* L'effet glow de sélection passe au vert spectral */
-  .sidebar-nav li.active > a, .sidebar-nav li a:hover {
-    background: linear-gradient(90deg, rgba(0, 255, 170, 0.15) 0%, transparent 100%) !important;
-    box-shadow: -5px 0 15px rgba(0, 255, 170, 0.3) !important;
-    color: #fff !important;
-    border: none !important;
-  }
-
-  /* --- 3. FORME DU SITE : FRAGMENT D'ARMURE --- */
-  html, body { background: #010203 !important; overflow: hidden !important; }
-
+  /* Contenu : Stèle de Minas Morgul détachée */
   .content {
     background: #080a0c !important;
-    border-top: 2px solid #00ffaa !important;
-    clip-path: polygon(3% 0, 100% 0, 100% 100%, 0 100%, 0 6%) !important;
-    margin-top: 10px !important;
-    padding: 60px !important;
+    border: 1px solid #1a3a2a !important;
+    border-top: 3px solid #00ffaa !important;
+    border-left: 3px solid #00ffaa !important;
+    clip-path: polygon(4% 0, 100% 0, 100% 100%, 0 100%, 0 8%) !important;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 1) !important;
+    padding: 50px !important;
+    left: 320px !important;
+    margin-top: 15px !important;
+    height: calc(100vh - 30px) !important;
   }
 
-  /* --- 4. LISIBILITÉ D'ACIER --- */
+  /* --- 3. LISIBILITÉ D'ACIER (FIX IMAGE_73E959) --- */
   .markdown-section {
-    color: #e2e8f0 !important; /* Gris blanc tranchant pour tes captures */
+    color: #d1d5db !important;
     font-family: 'Cinzel', serif !important;
   }
 
-  .markdown-section h1, .markdown-section h2 {
-    color: #00ffaa !important;
-    text-shadow: 0 0 12px rgba(0, 255, 170, 0.4) !important;
-    border-bottom: 1px double #1a3a2a !important;
+  .sidebar-nav li.active > a, .sidebar-nav li a:hover {
+    background: linear-gradient(90deg, rgba(0, 255, 170, 0.2) 0%, transparent 100%) !important;
+    color: #ffffff !important;
+    text-shadow: 0 0 10px #00ffaa !important;
   }
 
-  /* Purge des boutons de menu et étoiles roses vus sur tes captures */
-  .sidebar-toggle, #theme-picker, .app-nav, #stars-container, .star {
+  /* Masque les résidus vus sur image_73f443.jpg */
+  .sidebar-toggle, #theme-picker, .app-nav, #stars-container {
     display: none !important;
+    visibility: hidden !important;
   }
 </style>
 
@@ -68,29 +74,26 @@
 
 <script>
   (function() {
-    const morgulPurge = () => {
-      // 1. On scanne tous les éléments pour supprimer le style "pink" ou "rose" injecté
-      document.querySelectorAll('*').forEach(el => {
+    const antiPinkForce = () => {
+      // On traque et on détruit toute couleur rose/magenta injectée dynamiquement
+      const allElements = document.querySelectorAll('*');
+      allElements.forEach(el => {
         const style = window.getComputedStyle(el);
-        // Si l'ombre est rose/rouge (vu sur image_73f443.jpg)
-        if (style.boxShadow.includes('255,') || style.boxShadow.includes('rgb(')) {
-           if (!style.boxShadow.includes('0, 255, 170')) {
-             el.style.setProperty('box-shadow', 'none', 'important');
-           }
+        const pinkTerms = ['255, 51, 153', 'rgb(255, 0, 255)', 'pink', '#ff3399'];
+        
+        if (pinkTerms.some(term => style.color.includes(term) || style.borderColor.includes(term) || style.boxShadow.includes(term))) {
+          el.style.setProperty('color', '#00ffaa', 'important');
+          el.style.setProperty('border-color', '#1a3a2a', 'important');
+          el.style.setProperty('box-shadow', '0 0 5px #00ffaa', 'important');
         }
       });
 
-      // 2. On vire la barre de menu grise en bas
+      // Suppression de la barre grise en bas
       const toggle = document.querySelector('.sidebar-toggle');
       if(toggle) toggle.remove();
     };
 
-    morgulPurge();
-    setInterval(morgulPurge, 400);
-
-    // Titre de la Sidebar
-    const title = document.querySelector('.sidebar h1 a');
-    if(title) title.innerHTML = "◈ SPECTRE // SOLUS";
+    antiPinkForce();
+    setInterval(antiPinkForce, 300); // Surveillance constante
   })();
 </script>
-
