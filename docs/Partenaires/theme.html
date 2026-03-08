@@ -1,99 +1,104 @@
 <style>
-  /* --- 1. RESET COMPLET & NETTOYAGE DES BUGS --- */
+  /* --- 1. ÉRADICATION DES BUGS VISUELS --- */
   html, body {
-    background: #1a0f05 !important; /* Fond sombre pour faire ressortir le parchemin */
-    overflow-x: hidden !important;
+    background: #050708 !important; /* Noir profond */
+    overflow: hidden !important;
+    height: 100vh !important;
   }
 
-  /* Suppression chirurgicale des barres grises et boutons roses vus sur tes captures */
+  /* Nettoyage de la barre grise en bas et du sélecteur rose vus sur les captures */
   .sidebar-toggle, #theme-picker, .app-nav, .search, #stars-container, #fx-container {
     display: none !important;
     opacity: 0 !important;
   }
 
-  /* --- 2. LE PARCHEMIN GLOBAL (CONTENU) --- */
+  /* --- 2. LA STÈLE DE MINAS MORGUL (CONTENU) --- */
   .content {
-    background: #e9dcc0 !important; /* Couleur papier vieilli plus riche */
-    background-image: url('https://www.transparenttextures.com/patterns/paper.png') !important;
-    border: 20px solid transparent !important;
-    border-image: url('https://i.imgur.com/8S9S8pX.png') 40 round !important; /* Bordure ornementale */
-    box-shadow: 0 0 50px rgba(0,0,0,0.8) !important;
+    background: rgba(10, 15, 12, 0.95) !important; /* Vert très sombre spectral */
+    border: 1px solid #2d4c3b !important; /* Acier vert corrompu */
+    box-shadow: 0 0 60px rgba(0, 255, 100, 0.05), inset 0 0 40px rgba(0, 0, 0, 1) !important;
     margin: 40px auto !important;
-    max-width: 900px !important;
-    min-height: 80vh !important;
+    max-width: 950px !important;
+    min-height: 85vh !important;
     position: relative !important;
     z-index: 10 !important;
+    overflow-y: auto !important;
+    border-radius: 0px !important;
   }
 
-  /* Correction Lisibilité : Texte en "Encre de Chine" */
+  /* --- 3. LISIBILITÉ TOTALE (FIX POUR TES CAPTURES) --- */
   .markdown-section {
-    color: #2a1b0a !important; /* Marron très foncé, presque noir pour la lecture */
-    font-family: 'Crimson Text', serif !important;
-    line-height: 1.6 !important;
-  }
-
-  .markdown-section h1, .markdown-section h2 {
+    color: #a3b1a9 !important; /* Gris acier clair pour une lecture parfaite sur fond noir */
     font-family: 'Cinzel', serif !important;
-    color: #5d3a1a !important;
-    text-align: center !important;
-    border-bottom: 2px solid rgba(139, 69, 19, 0.3) !important;
+    line-height: 1.7 !important;
+    padding: 60px !important;
   }
 
-  /* --- 3. LA SIDEBAR : MANUSCRIT ANCIEN --- */
+  /* Titres Spectraux */
+  .markdown-section h1, .markdown-section h2 {
+    color: #00ffaa !important; /* Vert Morgul */
+    text-shadow: 0 0 15px rgba(0, 255, 170, 0.4) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 3px !important;
+    border-bottom: 1px solid #1a3a2a !important;
+  }
+
+  /* --- 4. LA SIDEBAR : LES NEUF CAVALIERS --- */
   .sidebar {
-    background: #dccba6 !important; /* Teinte légèrement différente pour séparer */
-    border-right: 3px double #8b4513 !important;
-    box-shadow: 5px 0 15px rgba(0,0,0,0.3) !important;
+    background: #080a0c !important;
+    border-right: 2px solid #1a3a2a !important;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.9) !important;
     z-index: 100 !important;
   }
 
-  /* Titre de la sidebar style "Inscription de l'Anneau" */
   .sidebar h1 a {
-    font-family: 'Papyrus', 'Palatino', serif !important;
-    color: #3d2419 !important;
-    text-shadow: 1px 1px 0px #fff !important;
-    font-weight: bold !important;
+    font-family: 'Cinzel', serif !important;
+    color: #00ffaa !important;
+    text-shadow: 0 0 10px #00ffaa !important;
+    letter-spacing: 2px !important;
   }
 
-  /* Liens (Minecraft, Partenaires...) : On force le contraste */
+  /* Liens du menu (Minecraft, Sécurité...) */
   .sidebar-nav ul li a {
-    color: #4b2c20 !important; /* Marron foncé pour être lisible */
-    font-weight: 700 !important;
+    color: #667c71 !important; /* Gris-vert fantomatique */
+    font-weight: 400 !important;
     font-size: 1.1em !important;
-    border: none !important;
+    transition: 0.4s !important;
   }
 
+  /* Effet de sélection Nazgûl */
   .sidebar-nav ul li.active > a, .sidebar-nav ul li a:hover {
-    color: #b30000 !important; /* Rouge sang/sacré pour la sélection */
-    background: rgba(139, 69, 19, 0.1) !important;
-    border-left: 4px solid #b30000 !important;
+    color: #ffffff !important;
+    background: linear-gradient(90deg, rgba(0, 255, 170, 0.1), transparent) !important;
+    border-left: 3px solid #00ffaa !important;
+    text-shadow: 0 0 8px #fff !important;
   }
 
-  /* --- 4. EFFET DE LUMIÈRE (L'UNIQUE ANNEAU) --- */
-  .markdown-section strong, .markdown-section b {
-    color: #b30000 !important; /* On met les éléments importants en rouge "Anneau" */
-    text-shadow: 0 0 2px rgba(179, 0, 0, 0.2) !important;
+  /* --- 5. EFFET VISUEL : BRUME SPECTRALE --- */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 255, 170, 0.05) 0%, transparent 80%);
+    pointer-events: none;
+    z-index: 1;
   }
 </style>
 
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;700&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
 
 <script>
   (function() {
-    // Nettoyage agressif des éléments Docsify vus sur les captures
-    const cleanupLOTR = () => {
-        const bugs = ['.sidebar-toggle', '#theme-picker', '.app-nav', '.search'];
-        bugs.forEach(selector => {
-            const el = document.querySelector(selector);
-            if(el) el.remove();
-        });
+    // Force la suppression des éléments polluants des captures
+    const purgeMorgul = () => {
+        document.querySelectorAll('.sidebar-toggle, #theme-picker, .app-nav').forEach(el => el.remove());
         
-        // On change le titre pour l'immersion
+        // On change le titre pour le thème Nazgûl
         const title = document.querySelector('.sidebar h1 a');
-        if(title) title.innerText = "📜 LE LIVRE ROUGE";
+        if(title) title.innerText = "◈ MINAS MORGUL";
     };
 
-    cleanupLOTR();
-    setInterval(cleanupLOTR, 1000);
+    purgeMorgul();
+    setInterval(purgeMorgul, 1000);
   })();
 </script>
