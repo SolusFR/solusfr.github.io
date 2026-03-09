@@ -5,6 +5,7 @@
   <title>Solus Wiki ★ Oshi no Ko</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   
+  <!-- Polices : Poppins (Moderne/Pop), Playfair (Théâtre/Kana), Fira Code (Hacker/Aqua) -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Fira+Code:wght@400;600;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
@@ -29,20 +30,112 @@
       --theme-icon: "★";
     }
 
-    [data-theme='ai'] { --theme-color: #ff55aa; --theme-dim: rgba(255,85,170,0.15); --theme-glow: rgba(255,85,170,0.6); --bg-main: #0a0105; --bg-pattern: radial-gradient(circle at 50% -20%, #2a0a1a 0%, #0a0105 80%); --ui-radius: 20px; --ui-border: 1px solid rgba(255,85,170,0.3); --shadow-style: 0 0 25px rgba(255,85,170,0.2); --theme-icon: "★"; }
-    [data-theme='aqua'] { --theme-color: #00eeff; --theme-dim: rgba(0,238,255,0.1); --theme-glow: rgba(0,238,255,0.8); --bg-main: #020304; --bg-pattern: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,238,255,0.03) 2px, rgba(0,238,255,0.03) 4px); --ui-radius: 0px; --ui-border: 1px solid var(--theme-color); --shadow-style: 0 0 10px rgba(0,238,255,0.3); --font-headers: 'Fira Code', monospace; --theme-icon: "✦"; }
-    [data-theme='ruby'] { --theme-color: #ff0044; --theme-dim: rgba(255,0,68,0.15); --theme-glow: rgba(255,0,68,0.7); --bg-main: #050001; --bg-pattern: linear-gradient(135deg, #200005 0%, #000000 100%); --ui-radius: 12px; --ui-border: 1px solid rgba(255,0,68,0.4); --shadow-style: 0 10px 20px rgba(255,0,68,0.2); --theme-icon: "♥"; }
-    [data-theme='kana'] { --theme-color: #ffffff; --theme-dim: rgba(255,255,255,0.1); --theme-glow: rgba(255,255,255,0.4); --bg-main: #0a0204; --bg-pattern: radial-gradient(circle at 50% 50%, #1a0508 0%, #050102 100%); --ui-radius: 4px; --ui-border: 2px solid #551122; --shadow-style: 5px 5px 0px #330011; --font-headers: 'Playfair Display', serif; --theme-icon: "♔"; }
-    [data-theme='akane'] { --theme-color: #5577ff; --theme-dim: rgba(85,119,255,0.15); --theme-glow: rgba(85,119,255,0.8); --bg-main: #01010a; --bg-pattern: none; --ui-radius: 16px; --ui-border: 1px solid rgba(85,119,255,0.2); --shadow-style: 0 0 30px rgba(85,119,255,0.1); --theme-icon: "✿"; }
-    [data-theme='memcho'] { --theme-color: #ffcc00; --theme-dim: rgba(255,204,0,0.2); --theme-glow: rgba(255,204,0,0.6); --bg-main: #0f0f00; --bg-pattern: radial-gradient(rgba(255,204,0,0.15) 2px, transparent 2px); background-size: 20px 20px !important; --ui-radius: 6px; --ui-border: 3px solid #ffcc00; --shadow-style: 8px 8px 0px #aa8800; --theme-icon: "♪"; }
+    /* ⭐ AI HOSHINO (Idole Parfaite, Glassmorphism) */
+    [data-theme='ai'] { 
+      --theme-color: #ff55aa; 
+      --theme-dim: rgba(255,85,170,0.15); 
+      --theme-glow: rgba(255,85,170,0.6); 
+      --bg-main: #0a0105; 
+      --bg-pattern: radial-gradient(circle at 50% -20%, #2a0a1a 0%, #0a0105 80%); 
+      --ui-radius: 20px; 
+      --ui-border: 1px solid rgba(255,85,170,0.3); 
+      --shadow-style: 0 0 25px rgba(255,85,170,0.2); 
+      --theme-icon: "★"; 
+    }
+
+    /* 🎬 AQUA HOSHINO (Hacker, Cinéma Noir, Scanlines) */
+    [data-theme='aqua'] { 
+      --theme-color: #00eeff; 
+      --theme-dim: rgba(0,238,255,0.1); 
+      --theme-glow: rgba(0,238,255,0.8); 
+      --bg-main: #020304; 
+      --bg-pattern: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,238,255,0.03) 2px, rgba(0,238,255,0.03) 4px); 
+      --ui-radius: 0px; 
+      --ui-border: 1px solid var(--theme-color); 
+      --shadow-style: 0 0 10px rgba(0,238,255,0.3); 
+      --font-headers: 'Fira Code', monospace; 
+      --theme-icon: "✦"; 
+    }
+
+    /* ❤️ RUBY HOSHINO (Énergie, Dégradés) */
+    [data-theme='ruby'] { 
+      --theme-color: #ff0044; 
+      --theme-dim: rgba(255,0,68,0.15); 
+      --theme-glow: rgba(255,0,68,0.7); 
+      --bg-main: #050001; 
+      --bg-pattern: linear-gradient(135deg, #200005 0%, #000000 100%); 
+      --ui-radius: 12px; 
+      --ui-border: 1px solid rgba(255,0,68,0.4); 
+      --shadow-style: 0 10px 20px rgba(255,0,68,0.2); 
+      --theme-icon: "♥"; 
+    }
+
+    /* 🎭 KANA ARIMA (Théâtre Classique) */
+    [data-theme='kana'] { 
+      --theme-color: #ffffff; 
+      --theme-dim: rgba(255,255,255,0.1); 
+      --theme-glow: rgba(255,255,255,0.4); 
+      --bg-main: #0a0204; 
+      --bg-pattern: radial-gradient(circle at 50% 50%, #1a0508 0%, #050102 100%); 
+      --ui-radius: 4px; 
+      --ui-border: 2px solid #551122; 
+      --shadow-style: 5px 5px 0px #330011; 
+      --font-headers: 'Playfair Display', serif; 
+      --theme-icon: "♔"; 
+    }
+
+    /* 🌊 AKANE KUROKAWA (Abysses Psychologiques) */
+    [data-theme='akane'] { 
+      --theme-color: #5577ff; 
+      --theme-dim: rgba(85,119,255,0.15); 
+      --theme-glow: rgba(85,119,255,0.8); 
+      --bg-main: #01010a; 
+      --bg-pattern: none; 
+      --ui-radius: 16px; 
+      --ui-border: 1px solid rgba(85,119,255,0.2); 
+      --shadow-style: 0 0 30px rgba(85,119,255,0.1); 
+      --theme-icon: "✿"; 
+    }
+
+    /* 📱 MEM-CHO (Neo-Brutalisme Pop) */
+    [data-theme='memcho'] { 
+      --theme-color: #ffcc00; 
+      --theme-dim: rgba(255,204,0,0.2); 
+      --theme-glow: rgba(255,204,0,0.6); 
+      --bg-main: #0f0f00; 
+      --bg-pattern: radial-gradient(rgba(255,204,0,0.15) 2px, transparent 2px); 
+      background-size: 20px 20px !important; 
+      --ui-radius: 6px; 
+      --ui-border: 3px solid #ffcc00; 
+      --shadow-style: 8px 8px 0px #aa8800; 
+      --theme-icon: "♪"; 
+    }
 
     /* =========================================
        ★ 2. FOND, SCROLL ET PROGRESSION ★
        ========================================= */
-    body { font-family: var(--font-body) !important; color: #f0f0f0; background-color: var(--bg-main) !important; background-image: var(--bg-pattern) !important; background-attachment: fixed; overflow-x: hidden; }
+    body { 
+      font-family: var(--font-body) !important; 
+      color: #f0f0f0; 
+      background-color: var(--bg-main) !important; 
+      background-image: var(--bg-pattern) !important; 
+      background-attachment: fixed; 
+      overflow-x: hidden; 
+    }
     ::selection { background: var(--theme-color); color: #000; }
-    #reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--theme-color); z-index: 9999; width: 0%; box-shadow: 0 0 15px var(--theme-glow); transition: width 0.1s; pointer-events: none; }
-    #fx-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -2; overflow: hidden; }
+    
+    #reading-progress { 
+      position: fixed; top: 0; left: 0; height: 3px; 
+      background: var(--theme-color); z-index: 9999; 
+      width: 0%; box-shadow: 0 0 15px var(--theme-glow); 
+      transition: width 0.1s; pointer-events: none; 
+    }
+
+    #fx-container { 
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+      pointer-events: none; z-index: -2; overflow: hidden; 
+    }
+
     ::-webkit-scrollbar { width: 10px; height: 10px; }
     ::-webkit-scrollbar-track { background: var(--bg-main); border-left: 1px solid rgba(255,255,255,0.05); }
     ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: var(--ui-radius); border: 2px solid var(--bg-main); }
@@ -51,19 +144,44 @@
     /* =========================================
        ★ 3. SIDEBAR (REDIMENSIONNABLE) ★
        ========================================= */
-    .sidebar { width: var(--sidebar-width) !important; background: rgba(5,5,8, 0.7) !important; backdrop-filter: blur(20px); border-right: var(--ui-border) !important; box-shadow: var(--shadow-style); padding-bottom: 50px; }
+    .sidebar { 
+      width: var(--sidebar-width) !important; 
+      background: rgba(5,5,8, 0.7) !important; 
+      backdrop-filter: blur(20px); 
+      border-right: var(--ui-border) !important; 
+      box-shadow: var(--shadow-style); 
+      padding-bottom: 50px; 
+    }
     .content { left: var(--sidebar-width) !important; transition: left 0.1s; }
-    .sidebar-resizer { position: absolute; top: 0; right: 0; width: 6px; height: 100%; cursor: col-resize; z-index: 100; transition: background 0.3s; }
+    
+    .sidebar-resizer { 
+      position: absolute; top: 0; right: 0; width: 6px; height: 100%; 
+      cursor: col-resize; z-index: 100; transition: background 0.3s; 
+    }
     .sidebar-resizer:hover, .sidebar-resizer.active { background: var(--theme-color); box-shadow: 0 0 10px var(--theme-glow); }
     
-    .sidebar h1 { font-family: var(--font-headers); font-weight: 900; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px var(--theme-glow); border-bottom: 2px solid var(--theme-color); padding-bottom: 15px; text-transform: uppercase; text-align: center; margin-top: 10px; }
+    .sidebar h1 { 
+      font-family: var(--font-headers); font-weight: 900; letter-spacing: 2px; 
+      color: #fff; text-shadow: 0 0 15px var(--theme-glow); 
+      border-bottom: 2px solid var(--theme-color); padding-bottom: 15px; 
+      text-transform: uppercase; text-align: center; margin-top: 10px; 
+    }
     [data-theme='kana'] .sidebar h1 { text-transform: none; font-style: italic; }
     
     .search { margin-bottom: 20px; border: none !important; }
-    .search input { background: rgba(0,0,0,0.4) !important; border: var(--ui-border) !important; color: #fff !important; border-radius: var(--ui-radius) !important; padding: 12px 15px !important; font-family: var(--font-body); font-weight: 600; text-align: center; }
+    .search input { 
+      background: rgba(0,0,0,0.4) !important; border: var(--ui-border) !important; 
+      color: #fff !important; border-radius: var(--ui-radius) !important; 
+      padding: 12px 15px !important; font-family: var(--font-body); font-weight: 600; text-align: center; 
+    }
     .search input:focus { border-color: var(--theme-color) !important; box-shadow: 0 0 20px var(--theme-dim) !important; outline: none; }
     
-    .sidebar-nav ul li a { white-space: normal !important; word-wrap: break-word; line-height: 1.4; transition: 0.3s; font-weight: 500; color: #aaa; padding: 10px 15px; border-radius: var(--ui-radius); margin: 2px 10px; display: block; }
+    /* ANTI COUPURE DE TEXTE MENU */
+    .sidebar-nav ul li a { 
+      white-space: normal !important; word-wrap: break-word !important; overflow-wrap: break-word !important; line-height: 1.4; 
+      transition: 0.3s; font-weight: 500; color: #aaa; padding: 10px 15px; 
+      border-radius: var(--ui-radius); margin: 2px 10px; display: block; 
+    }
     .sidebar-nav ul li a:hover { color: #fff; background: rgba(255,255,255,0.05); transform: translateX(5px); }
     
     .sidebar-nav li.collapse > a::before { content: "▶" !important; font-size: 10px; margin-right: 12px; color: #555; transition: 0.4s; display: inline-block; }
@@ -81,16 +199,19 @@
        ========================================= */
     .markdown-section { max-width: 900px; margin: 0 auto; padding: 40px 15px; }
     
-    /* FIX MOBILE : Empêcher les titres de déborder */
-    .markdown-section h1, .markdown-section h2, .markdown-section h3 { 
+    /* ANTI COUPURE DE TEXTE TITRES MARKDOWN */
+    .markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4 { 
       font-family: var(--font-headers); font-weight: 900; color: #fff; 
       text-transform: uppercase; letter-spacing: 1px; position: relative; 
       padding-bottom: 10px; margin-top: 50px; 
-      word-wrap: break-word !important; overflow-wrap: break-word !important; hyphens: auto; /* Fix dépassement */
+      word-wrap: break-word !important; overflow-wrap: break-word !important; hyphens: auto; 
     }
     [data-theme='kana'] .markdown-section h1 { text-transform: none; font-style: italic; }
     .markdown-section h1 { font-size: 2.5em; text-shadow: 0 0 20px var(--theme-dim); }
-    .markdown-section h1::after, .markdown-section h2::after { content: ''; position: absolute; bottom: 0; left: 0; width: 50px; height: 4px; background: var(--theme-color); transition: width 0.4s ease; box-shadow: 0 0 10px var(--theme-glow); }
+    .markdown-section h1::after, .markdown-section h2::after { 
+      content: ''; position: absolute; bottom: 0; left: 0; width: 50px; height: 4px; 
+      background: var(--theme-color); transition: width 0.4s ease; box-shadow: 0 0 10px var(--theme-glow); 
+    }
     .markdown-section h1:hover::after, .markdown-section h2:hover::after { width: 100%; }
     
     .markdown-section a { color: var(--theme-color); font-weight: 800; text-decoration: none; border-bottom: 1px dashed var(--theme-color); transition: 0.3s; }
@@ -177,43 +298,52 @@
     @keyframes glitch { 0%, 100% { opacity: 0; } 1% { opacity: 1; transform: translateX(-5px); } 2% { opacity: 0; transform: translateX(5px); } }
 
     /* =========================================
-       ★ 7. RESPONSIVE MOBILE (CORRECTIFS) ★
+       ★ 7. FIX RESPONSIVE MOBILE ★
        ========================================= */
     @media screen and (max-width: 768px) {
-      .content { left: 0 !important; width: 100vw !important; }
+      .content { left: 0 !important; width: 100vw !important; transition: transform 0.25s ease !important; }
       .sidebar-resizer { display: none !important; }
       
-      /* Centre le picker pour éviter la superposition des titres */
+      /* Centre le picker de thème pour ne pas cacher le titre */
       #theme-picker {
         top: 15px; left: 50%; right: auto;
         transform: translateX(-50%);
         padding: 8px 15px; width: max-content;
       }
-      #theme-picker span { display: none; }
+      #theme-picker span { display: none; } /* Cache le mot OSHI pour gagner de la place */
       
-      /* Repousse le contenu vers le bas pour ne pas toucher le thème picker */
-      .markdown-section { padding: 80px 20px 40px 20px !important; }
+      /* Décale le contenu vers le bas pour ne pas toucher le sélecteur */
+      .markdown-section { padding-top: 80px !important; }
       
-      /* BOUTON HAMBURGER MAGNIFIQUE (Fix du gros carré moche) */
+      /* FIX BOUTON MENU (HAMBURGER) */
       .sidebar-toggle {
         background: rgba(10, 10, 15, 0.9) !important;
+        backdrop-filter: blur(10px) !important;
         border: 2px solid var(--theme-color) !important;
-        border-radius: 50% !important; /* Bouton 100% rond */
+        border-radius: 50% !important; /* Rend le bouton 100% rond */
         bottom: 20px !important; left: 20px !important;
         width: 50px !important; height: 50px !important;
-        padding: 0 !important;
+        padding: 14px !important; /* Centre parfaitement les barres */
         box-shadow: 0 0 15px var(--theme-glow) !important;
         display: flex !important; flex-direction: column !important;
-        align-items: center !important; justify-content: center !important;
+        justify-content: space-around !important; align-items: center !important;
+        z-index: 9999 !important;
+      }
+      .sidebar-toggle .sidebar-toggle-button {
+        padding: 0 !important; background: transparent !important;
+        display: flex !important; flex-direction: column !important;
+        justify-content: space-between !important;
+        width: 100% !important; height: 100% !important;
       }
       .sidebar-toggle span {
         background: var(--theme-color) !important;
-        width: 22px !important; height: 3px !important;
-        margin: 2px 0 !important; border-radius: 3px !important;
+        width: 100% !important; height: 3px !important;
+        margin: 0 !important; border-radius: 3px !important;
+        display: block !important;
       }
 
-      /* Empêche les boutons de pagination de se chevaucher */
-      .pagination-item { min-width: 100%; }
+      /* Empêche les boutons suivant/précédent de se chevaucher */
+      .pagination-item { min-width: 100% !important; margin-bottom: 10px !important; }
     }
   </style>
 
