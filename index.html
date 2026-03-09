@@ -293,6 +293,33 @@
     @keyframes floatUp { 0% { opacity: 0; transform: translateY(50px) scale(0.8); } 50% { opacity: 0.6; text-shadow: 0 0 20px currentColor;} 100% { opacity: 0; transform: translateY(-100px) scale(1.2); } }
     @keyframes pulseOrb { 0% { opacity: 0.05; transform: scale(1) translateY(0); } 100% { opacity: 0.3; transform: scale(2.5) translateY(-30px); } }
     @keyframes glitch { 0%, 100% { opacity: 0; } 1% { opacity: 1; transform: translateX(-5px); } 2% { opacity: 0; transform: translateX(5px); } }
+
+    /* =========================================
+       ★ 7. RESPONSIVE MOBILE ★
+       ========================================= */
+    @media screen and (max-width: 768px) {
+      .content { left: 0 !important; width: 100vw !important; }
+      .sidebar-resizer { display: none !important; }
+      
+      #theme-picker {
+        top: 15px; left: 50%; right: auto;
+        transform: translateX(-50%);
+        padding: 8px 15px;
+        width: max-content;
+      }
+      #theme-picker span { display: none; }
+      
+      .pagination-item { min-width: 100%; }
+      
+      .sidebar-toggle {
+        background: rgba(0, 0, 0, 0.8) !important;
+        border: var(--ui-border) !important;
+        border-radius: var(--ui-radius) !important;
+        bottom: 20px !important;
+        left: 20px !important;
+      }
+      .sidebar-toggle span { background: var(--theme-color) !important; }
+    }
   </style>
 
   <!-- BALISE OÙ SERA INJECTÉ LE CSS DES THEMES.HTML CUSTOM -->
