@@ -156,6 +156,53 @@
   .sidebar .search input::placeholder {
     color: rgba(0, 251, 255, 0.4) !important;
   }
+  /* --- RESET & FIX DU GLOW (LUEUR) DU MENU --- */
+
+  /* 1. Le titre principal "Solus Wiki" */
+  .sidebar > h1 {
+    text-shadow: 0 0 15px var(--accent-color) !important;
+    border-bottom: 2px solid var(--accent-color) !important;
+  }
+
+  /* 2. Lueur du bouton de recherche quand on clique dessus */
+  .sidebar .search input:focus {
+    box-shadow: 0 0 15px rgba(0, 251, 255, 0.4) !important;
+    border-color: var(--accent-color) !important;
+  }
+
+  /* 3. Lueur de la page ACTIVE (le lien sélectionné) */
+  .sidebar-nav ul li.active > a {
+    /* On écrase le box-shadow rouge par du Cyan Cyberpunk */
+    box-shadow: 0 0 20px rgba(0, 251, 255, 0.6) !important;
+    background-color: var(--accent-color) !important;
+    color: #000 !important;
+    border: none !important;
+  }
+
+  /* 4. Lueur au survol des liens (Dossiers et fichiers) */
+  .sidebar-nav ul:not(.app-sub-sidebar) > li.collapse > a:hover,
+  .sidebar-nav ul:not(.app-sub-sidebar) > li.collapse > p:hover,
+  .sidebar-nav ul li a:hover {
+    text-shadow: 0 0 10px var(--accent-color) !important;
+  }
+
+  /* 5. Fix de la barre de scroll (elle avait peut-être gardé du rouge) */
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent-color) !important;
+    box-shadow: 0 0 10px var(--accent-color) !important;
+  }
+
+  /* 6. Fix couleur du texte de recherche et résultats */
+  .sidebar .search input {
+    color: var(--accent-color) !important;
+  }
+  
+  /* Surlignage des mots trouvés dans la recherche */
+  .search .search-results .matching-post em {
+    color: var(--accent-color) !important;
+    background: rgba(0, 251, 255, 0.2) !important;
+    text-shadow: 0 0 5px var(--accent-color) !important;
+  }
 </style>
 
 <!-- HTML injecté pour les effets visuels -->
