@@ -7,40 +7,46 @@ def generate_sidebar():
         return
 
     with open('_sidebar.md', 'w', encoding='utf-8') as f:
-        # On parcourt le contenu de 'docs' sans écrire le nom du dossier parent
         for root, dirs, files in os.walk(base_folder):
+            # Trier pour avoir un ordre alphabétique
             files.sort()
-            dirs.sort() # Trier aussi les dossiers
+            dirs.sort()
             
-            # Calcul de la profondeur par rapport au dossier 'docs'
-            # Si root == 'docs', rel_path est '.', donc la profondeur est 0
-            rel_path = os.path.relpath(root, base_folder)
-            if rel_path == '.':
+            # On calcule le chemin relatif par rapport à 'docs'
+            # C'est l'étape CRUCIALE pour que les liens fonctionnent
+            rel_root = os.path.relpath(root, base_folder)
+            
+            if rel_root == '.':
                 depth = 0
             else:
-                depth = rel_path.count(os.sep) + 1
+                depth = rel_root.count(os.sep) + 1
             
             indent = '  ' * depth
             
-            # Si on n'est pas à la racine de 'docs', on écrit le nom du sous-dossier
-            if root != base_folder:
+            # Si on est dans un sous-dossier, on écrit son nom
+            if rel_root != '.':
                 folder_name = os.path.basename(root).replace('-', ' ').title()
                 f.write(f'{indent}* **{folder_name}**\n')
-                indent += '  ' # On indente les fichiers à l'intérieur de ce dossier
+                indent += '  '
 
             # Ajout des fichiers
             for file in files:
-                # On ignore _sidebar.md et éventuellement les README de la racine si nécessaire
                 if file.endswith('.md') and file != '_sidebar.md':
-                    path = os.path.join(root, file).replace('\\', '/')
+                    # On crée le chemin relatif au dossier docs
+                    # Exemple: au lieu de 'docs/tuto.md', on veut 'tuto.md'
+                    full_path = os.path.join(rel_root, file).replace('\\', '/')
                     
-                    # Nettoyage du nom du fichier pour l'affichage
+                    # Si le fichier est à la racine, relpath peut mettre './'
+                    if full_path.startswith('./'):
+                        full_path = full_path[2:]
+
+                    # Nom affiché
                     name = file.replace('.md', '').replace('-', ' ').title()
                     if name.lower() == 'readme': 
                         name = "Introduction"
                         
-                    f.write(f'{indent}* [{name}]({path})\n')
+                    f.write(f'{indent}* [{name}]({full_path})\n')
 
 if __name__ == "__main__":
     generate_sidebar()
-    print("Sidebar générée avec succès !")
+    print("Sidebar générée sans le préfixe 'docs/' dans les liens.")
