@@ -250,6 +250,58 @@
         white-space: nowrap !important;
       }
     }
+  </style>
+
+  <!-- BALISE OÙ SERA INJECTÉ LE CSS DES THEMES DE DOSSIER (Custom) -->
+  <style id="custom-folder-css"></style>
+</head>
+<body>
+  
+  <!-- BALISE OÙ SERA INJECTÉ LE HTML DES THEMES DE DOSSIER (Custom) -->
+  <div id="custom-folder-html" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1;"></div>
+
+  <!-- Calque d'animation de fond -->
+  <div class="animated-background"></div>
+
+  <div id="app">✨ Ouverture des archives...</div>
+
+  <script>
+    // --- MOTEUR D'INJECTION DE THEMES PAR DOSSIER ---
+    const customCssTarget = document.getElementById('custom-folder-css');
+    const customHtmlTarget = document.getElementById('custom-folder-html');
+    let themeCache = {}; 
+    
+    // Fonction qui remonte les dossiers pour chercher un fichier "theme.html"
+    async function loadFolderCustomTheme(filePath) {
+      if (!filePath) return null;
+      let parts = filePath.split('/');
+      parts.pop(); // Retire le nom du fichier pour ne garder que le dossier
+      
+      while (parts.length > 0) {
+        let folderPath = parts.join('/');
+        let themeUrl = folderPath + '/theme.html';
+        
+        // Cache pour ne pas re-télécharger le fichier si on navigue dans le même dossier
+        if (themeCache[themeUrl] !== undefined) {
+          if (themeCache[themeUrl]) return themeCache[themeUrl];
+        } else {
+          try {
+            let res = await fetch(themeUrl);
+            if (res.ok) {
+              let text = await res.text();
+              themeCache[themeUrl] = text;
+              return text; 
+            } else {
+              themeCache[themeUrl] = null;
+            }
+          } catch(e) {
+            themeCache[themeUrl] = null;
+          }
+        }
+        parts.pop(); // Remonte d'un dossier parent
+      }
+      return null; 
+    }
 
     // --- CONFIGURATION DOCSIFY ---
     window.$docsify = {
