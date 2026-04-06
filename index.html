@@ -213,37 +213,45 @@
 
     /* ================= RESPONSIVE MOBILE ================= */
 /* ================= RESPONSIVE (STYLE LEGAL WIKI) ================= */
+/* ================= RESPONSIVE (STYLE MINIMALISTE BAS GAUCHE) ================= */
     @media screen and (max-width: 768px) {
-      /* Bouton menu simple et natif */
+      /* Le bouton devient invisible (pas de fond, pas de bordure) */
       .sidebar-toggle {
-        background-color: rgba(11, 2, 4, 0.9) !important;
-        backdrop-filter: blur(10px);
+        background: transparent !important;
+        border: none !important;
         width: 44px !important;
         height: 44px !important;
-        padding: 10px !important;
-        left: 0 !important;
-        bottom: auto !important;
-        top: 0 !important;
-        border-right: 1px solid var(--accent-color);
-        border-bottom: 1px solid var(--accent-color);
+        left: 10px !important;
+        bottom: 10px !important; /* Position en bas */
+        top: auto !important;    /* Désactive le positionnement haut */
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
       }
 
-      /* On remet la sidebar en plein écran propre */
+      /* On stylise les 3 barres (l'icône burger) */
+      .sidebar-toggle .sidebar-toggle-button span {
+        background: var(--heading-color) !important; /* Couleur orange/rubis comme sur ton image */
+        height: 2px !important;
+        width: 25px !important;
+        margin: 4px 0 !important;
+        display: block;
+      }
+
       .sidebar {
         background-color: rgba(14, 2, 4, 0.98) !important;
-        box-shadow: none;
       }
 
       .content {
         left: 0 !important;
       }
 
-      /* Espace pour ne pas que le texte soit sous le bouton menu */
+      /* On remet un padding normal en haut car le bouton n'y est plus */
       .markdown-section {
-        padding: 60px 20px 20px 20px !important;
+        padding: 40px 20px 20px 20px !important;
       }
 
-      /* Tableaux scrollables pour ne pas casser le design */
       .markdown-section table {
         display: block !important;
         overflow-x: auto !important;
