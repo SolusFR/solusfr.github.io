@@ -2,348 +2,267 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Solus Wiki ★ Oshi no Ko</title>
+  <title>LifeSteal Legal</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  
-  <!-- Polices : Poppins (Moderne/Pop), Playfair (Théâtre/Kana), Fira Code (Hacker/Aqua) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Fira+Code:wght@400;600;800&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.css" />
 
-  <style id="core-theme">
-    /* =========================================
-       ★ 1. LE MOTEUR DE THÈMES DE BASE ★
-       ========================================= */
+  <!-- Police "Poppins" -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="branding/logo-icon.png">
+
+  <!-- Thème de base Dark -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/dark.css">
+  
+  <!-- CSS pour la barre latérale DÉPLIABLE -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
+
+  <!-- DESIGN "RUBY RED THEME" FIXÉ (Custom CSS) -->
+  <style>
     :root {
-      --sidebar-width: 320px;
-      --theme-color: #ff55aa; 
-      --theme-dim: rgba(255,85,170,0.15); 
-      --theme-glow: rgba(255,85,170,0.5);
-      --bg-main: #0a0105; 
-      --bg-pattern: radial-gradient(circle at 50% 0%, #2a0a1a 0%, #0a0105 80%);
-      --ui-radius: 16px; 
-      --ui-border: 1px solid rgba(255,255,255,0.1);
-      --font-headers: 'Poppins', sans-serif; 
-      --font-body: 'Poppins', sans-serif;
-      --shadow-style: 0 10px 30px rgba(0,0,0,0.5);
-      --theme-icon: "★";
+      /* Palette "Ruby Hoshino" (Rouge Rubis / Bordeaux) */
+      --bg-color: #0b0204;
+      --text-color: #ffeff3;
+      --heading-color: #ff4d6d;
+      --accent-color: #ff1e46;
+      --accent-hover: #ff4d6d;
+      --border-color: #4a0d1a;
+      --star-color: #ffdf00;
+
+      /* 🛠️ VARIABLES DE LA SIDEBAR ET SOUS-MENUS */
+      --sidebar-width: 300px;
+      --nav-folder-weight: 800;             /* Épaisseur des dossiers (ex: SHOP) */
+      --nav-item-weight: 500;               /* Épaisseur des sous-menus (ex: Terms) */
+      --nav-indent: 15px;                   /* Décalage des sous-menus vers la droite */
+      --nav-line-color: rgba(255, 30, 70, 0.2); /* Couleur de la ligne de l'arbre (Rouge sombre) */
+      --nav-hover-bg: rgba(255, 30, 70, 0.15);  /* Fond au survol des liens */
     }
 
-    [data-theme='ai'] { --theme-color: #ff55aa; --theme-dim: rgba(255,85,170,0.15); --theme-glow: rgba(255,85,170,0.6); --bg-main: #0a0105; --bg-pattern: radial-gradient(circle at 50% -20%, #2a0a1a 0%, #0a0105 80%); --ui-radius: 20px; --ui-border: 1px solid rgba(255,85,170,0.3); --shadow-style: 0 0 25px rgba(255,85,170,0.2); --theme-icon: "★"; }
-    [data-theme='aqua'] { --theme-color: #00eeff; --theme-dim: rgba(0,238,255,0.1); --theme-glow: rgba(0,238,255,0.8); --bg-main: #020304; --bg-pattern: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,238,255,0.03) 2px, rgba(0,238,255,0.03) 4px); --ui-radius: 0px; --ui-border: 1px solid var(--theme-color); --shadow-style: 0 0 10px rgba(0,238,255,0.3); --font-headers: 'Fira Code', monospace; --theme-icon: "✦"; }
-    [data-theme='ruby'] { --theme-color: #ff0044; --theme-dim: rgba(255,0,68,0.15); --theme-glow: rgba(255,0,68,0.7); --bg-main: #050001; --bg-pattern: linear-gradient(135deg, #200005 0%, #000000 100%); --ui-radius: 12px; --ui-border: 1px solid rgba(255,0,68,0.4); --shadow-style: 0 10px 20px rgba(255,0,68,0.2); --theme-icon: "♥"; }
-    [data-theme='kana'] { --theme-color: #ffffff; --theme-dim: rgba(255,255,255,0.1); --theme-glow: rgba(255,255,255,0.4); --bg-main: #0a0204; --bg-pattern: radial-gradient(circle at 50% 50%, #1a0508 0%, #050102 100%); --ui-radius: 4px; --ui-border: 2px solid #551122; --shadow-style: 5px 5px 0px #330011; --font-headers: 'Playfair Display', serif; --theme-icon: "♔"; }
-    [data-theme='akane'] { --theme-color: #5577ff; --theme-dim: rgba(85,119,255,0.15); --theme-glow: rgba(85,119,255,0.8); --bg-main: #01010a; --bg-pattern: none; --ui-radius: 16px; --ui-border: 1px solid rgba(85,119,255,0.2); --shadow-style: 0 0 30px rgba(85,119,255,0.1); --theme-icon: "✿"; }
-    [data-theme='memcho'] { --theme-color: #ffcc00; --theme-dim: rgba(255,204,0,0.2); --theme-glow: rgba(255,204,0,0.6); --bg-main: #0f0f00; --bg-pattern: radial-gradient(rgba(255,204,0,0.15) 2px, transparent 2px); background-size: 20px 20px !important; --ui-radius: 6px; --ui-border: 3px solid #ffcc00; --shadow-style: 8px 8px 0px #aa8800; --theme-icon: "♪"; }
-
-    /* =========================================
-       ★ 2. FOND, SCROLL ET PROGRESSION ★
-       ========================================= */
-    body { 
-      font-family: var(--font-body) !important; 
-      color: #f0f0f0; 
-      background-color: var(--bg-main) !important; 
-      background-image: var(--bg-pattern) !important; 
-      background-attachment: fixed; 
-      overflow-x: hidden; 
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
-    ::selection { background: var(--theme-color); color: #000; }
     
-    #reading-progress { 
-      position: fixed; top: 0; left: 0; height: 3px; 
-      background: var(--theme-color); z-index: 9999; 
-      width: 0%; box-shadow: 0 0 15px var(--theme-glow); 
-      transition: width 0.1s ease-out; /* Optimisation transition */
-      pointer-events: none; 
-      will-change: width; /* Optimisation GPU */
+    ::selection { background: var(--accent-color); color: #fff; }
+
+    /* Rend le fond sombre/transparent quand on clique sur une image Docsify */
+    .medium-zoom-overlay { background-color: rgba(11, 11, 14, 0.9) !important; }
+
+    /* ================= ANIMATION DE FOND ================= */
+    .animated-background {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -2; background-color: var(--bg-color); overflow: hidden;
+      will-change: transform;
+    }
+    .animated-background::before, .animated-background::after {
+      content: ''; position: absolute; border-radius: 50%;
+      filter: blur(120px); opacity: 0.35;
+      animation: float 12s infinite alternate ease-in-out;
+      will-change: transform;
+    }
+    .animated-background::before { width: 45vw; height: 45vw; background: var(--accent-color); top: -10vw; left: -10vw; }
+    .animated-background::after { width: 40vw; height: 40vw; background: #8a0820; bottom: -10vw; right: -10vw; animation-duration: 16s; animation-delay: -5s; }
+    
+    @keyframes float {
+      0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.2; }
+      100% { transform: translate3d(60px, 40px, 0) scale(1.15); opacity: 0.45; }
     }
 
-    #fx-container { 
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-      pointer-events: none; z-index: -2; overflow: hidden; 
+    /* ================= BARRE LATÉRALE (ARBORESCENCE AVANCÉE) ================= */
+    .sidebar {
+      width: var(--sidebar-width) !important;
+      background-color: rgba(14, 2, 4, 0.75) !important;
+      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      border-right: 1px solid rgba(255, 30, 70, 0.15);
+      box-shadow: 2px 0 20px rgba(0, 0, 0, 0.6);
+    }
+    .content { left: var(--sidebar-width) !important; transition: left 0.25s ease; }
+
+    .sidebar > h1 {
+      font-weight: 900; font-size: 1.4rem; color: #fff; text-transform: uppercase;
+      margin: 20px 0; text-align: center; text-shadow: 0 0 12px rgba(255, 30, 70, 0.8);
+      border-bottom: 2px solid var(--accent-color); padding-bottom: 15px;
+    }
+    .sidebar > h1 .app-name-link::after { content: " ✨"; }
+    
+    /* Barre de recherche */
+    .sidebar .search { margin-bottom: 20px; border: none !important; }
+    .sidebar .search input {
+      background-color: rgba(10, 2, 3, 0.8) !important; border: 1px solid var(--border-color) !important;
+      color: #fff !important; border-radius: 12px !important; padding: 10px 15px !important; 
+      font-family: 'Poppins', sans-serif; text-align: center; font-weight: 600;
+      -webkit-appearance: none;
+    }
+    .sidebar .search input:focus { border-color: var(--accent-color) !important; box-shadow: 0 0 10px rgba(255, 30, 70, 0.3) !important; outline: none; }
+
+    /* 📁 NIVEAU 1 : LES DOSSIERS (Ex: "SHOP") */
+    .sidebar-nav ul:not(.app-sub-sidebar) > li.collapse > a,
+    .sidebar-nav ul:not(.app-sub-sidebar) > li.collapse > p {
+      font-weight: var(--nav-folder-weight) !important;
+      color: var(--heading-color) !important;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      font-size: 1.05em; margin-top: 15px; padding: 8px 15px;
+      display: flex; align-items: center;
+      transition: text-shadow 0.3s;
+      -webkit-tap-highlight-color: transparent; user-select: none;
+    }
+    
+    /* Chevron animé pour les dossiers */
+    .sidebar-nav li.collapse > a::before,
+    .sidebar-nav li.collapse > p::before {
+      content: '' !important; display: inline-block;
+      width: 6px; height: 6px; margin-right: 12px;
+      border-right: 2px solid var(--heading-color); border-bottom: 2px solid var(--heading-color);
+      transform: translateY(-2px) rotate(45deg); /* Flèche vers le bas (ouvert) */
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0;
+    }
+    .sidebar-nav li.collapse.close > a::before,
+    .sidebar-nav li.collapse.close > p::before {
+      transform: translateY(-2px) rotate(-45deg); /* Flèche vers la droite (fermé) */
     }
 
-    ::-webkit-scrollbar { width: 10px; height: 10px; }
-    ::-webkit-scrollbar-track { background: var(--bg-main); border-left: 1px solid rgba(255,255,255,0.05); }
-    ::-webkit-scrollbar-thumb { background: var(--theme-color); border-radius: var(--ui-radius); border: 2px solid var(--bg-main); }
-    ::-webkit-scrollbar-thumb:hover { background: #fff; box-shadow: 0 0 15px var(--theme-glow); }
-
-    /* =========================================
-       ★ 3. SIDEBAR (REDIMENSIONNABLE) ★
-       ========================================= */
-    .sidebar { width: var(--sidebar-width) !important; background: rgba(5,5,8, 0.7) !important; backdrop-filter: blur(10px); /* Blur réduit pour perf */ border-right: var(--ui-border) !important; box-shadow: var(--shadow-style); padding-bottom: 50px; }
-    .content { left: var(--sidebar-width) !important; transition: left 0.1s; }
+    /* 📄 NIVEAU 2+ : LES SOUS-MENUS (Ex: "Terms") */
+    .sidebar-nav .app-sub-sidebar {
+      margin: 5px 0 15px 18px !important;
+      padding-left: var(--nav-indent) !important;
+      border-left: 2px solid var(--nav-line-color) !important;
+    }
     
-    .sidebar-resizer { position: absolute; top: 0; right: 0; width: 6px; height: 100%; cursor: col-resize; z-index: 100; transition: background 0.3s; }
-    .sidebar-resizer:hover, .sidebar-resizer.active { background: var(--theme-color); box-shadow: 0 0 10px var(--theme-glow); }
+    /* Liens des sous-menus */
+    .sidebar-nav ul li a { 
+      color: #ffb3c6; font-size: 0.95rem; font-weight: var(--nav-item-weight);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 8px; padding: 8px 12px; margin: 2px 0;
+      text-decoration: none; display: block;
+      white-space: normal !important; word-wrap: break-word !important; 
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sidebar-nav ul li a:hover {
+      color: #fff; background-color: var(--nav-hover-bg);
+      transform: translateX(5px);
+    }
     
-    .sidebar h1 { font-family: var(--font-headers); font-weight: 900; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px var(--theme-glow); border-bottom: 2px solid var(--theme-color); padding-bottom: 15px; text-transform: uppercase; text-align: center; margin-top: 10px; }
-    [data-theme='kana'] .sidebar h1 { text-transform: none; font-style: italic; }
+    /* Page Actuellement ouverte */
+    .sidebar-nav ul li.active > a {
+      color: #fff !important; background-color: var(--accent-color);
+      font-weight: 700; box-shadow: 0 4px 12px rgba(255, 30, 70, 0.4);
+      transform: translateX(0); /* Annule le transform du hover */
+    }
     
-    .search { margin-bottom: 20px; border: none !important; }
-    .search input { background: rgba(0,0,0,0.4) !important; border: var(--ui-border) !important; color: #fff !important; border-radius: var(--ui-radius) !important; padding: 12px 15px !important; font-family: var(--font-body); font-weight: 600; text-align: center; }
-    .search input:focus { border-color: var(--theme-color) !important; box-shadow: 0 0 20px var(--theme-dim) !important; outline: none; }
-    
-    .sidebar-nav ul li a { white-space: normal !important; word-wrap: break-word !important; overflow-wrap: break-word !important; line-height: 1.4; transition: 0.3s; font-weight: 500; color: #aaa; padding: 10px 15px; border-radius: var(--ui-radius); margin: 2px 10px; display: block; }
-    .sidebar-nav ul li a:hover { color: #fff; background: rgba(255,255,255,0.05); transform: translateX(5px); }
-    
-    .sidebar-nav li.collapse > a::before { content: "▶" !important; font-size: 10px; margin-right: 12px; color: #555; transition: 0.4s; display: inline-block; }
-    .sidebar-nav li.collapse:not(.close) > a { color: #fff !important; font-weight: 800 !important; background: linear-gradient(90deg, var(--theme-dim), transparent); border-left: 4px solid var(--theme-color); border-radius: 0 var(--ui-radius) var(--ui-radius) 0; }
-    .sidebar-nav li.collapse:not(.close) > a::before { content: var(--theme-icon) !important; font-size: 14px; color: var(--theme-color) !important; text-shadow: 0 0 15px var(--theme-glow); transform: scale(1.3) rotate(360deg); animation: floatIcon 3s infinite ease-in-out; }
-    
-    .sidebar-nav ul li.active > a { color: #fff !important; font-weight: 800; background: var(--theme-color); box-shadow: 0 0 15px var(--theme-glow); border-radius: var(--ui-radius); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
-    .app-sub-sidebar { margin-left: 20px !important; border-left: 2px solid rgba(255,255,255,0.05); }
+    /* Masquer les puces par défaut de docsify */
     .sidebar-nav .app-sub-sidebar li::before { display: none !important; }
-    
-    @keyframes floatIcon { 0%, 100% { transform: translateY(0) scale(1.2); } 50% { transform: translateY(-3px) scale(1.2); } }
 
-    /* =========================================
-       ★ 4. MARKDOWN & TABLEAUX ★
-       ========================================= */
-    .markdown-section { max-width: 900px; margin: 0 auto; padding: 40px 15px; }
-    .markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4 { font-family: var(--font-headers); font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; position: relative; padding-bottom: 10px; margin-top: 50px; word-wrap: break-word !important; overflow-wrap: break-word !important; hyphens: auto; }
-    [data-theme='kana'] .markdown-section h1 { text-transform: none; font-style: italic; }
-    .markdown-section h1 { font-size: 2.5em; text-shadow: 0 0 20px var(--theme-dim); }
-    .markdown-section h1::after, .markdown-section h2::after { content: ''; position: absolute; bottom: 0; left: 0; width: 50px; height: 4px; background: var(--theme-color); transition: width 0.4s ease; box-shadow: 0 0 10px var(--theme-glow); }
-    .markdown-section h1:hover::after, .markdown-section h2:hover::after { width: 100%; }
+    /* ================= ADAPTATION DES FICHIERS .MD ================= */
+    .markdown-section { max-width: 900px; padding: 40px; position: relative; z-index: 1; }
+    .markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4 { color: var(--heading-color); font-weight: 800; text-transform: uppercase; word-wrap: break-word !important;}
+    .markdown-section h1 { font-size: 2.5rem; margin-bottom: 1.5rem; text-shadow: 0 2px 10px rgba(255, 77, 109, 0.3); }
+    .markdown-section h2 { font-size: 1.8rem; border-bottom: 2px dashed var(--border-color); padding-bottom: 0.5rem; margin-top: 2.5rem; }
+    .markdown-section h2::before { content: "✨ "; color: var(--star-color); text-shadow: 0 0 8px rgba(255, 223, 0, 0.4); }
     
-    .markdown-section a { color: var(--theme-color); font-weight: 800; text-decoration: none; border-bottom: 1px dashed var(--theme-color); transition: 0.3s; }
-    .markdown-section a:hover { text-shadow: 0 0 15px var(--theme-glow); border-bottom: 1px solid #fff; color: #fff; }
-    .markdown-section strong { color: var(--theme-color); text-shadow: 0 0 10px var(--theme-dim); }
+    .markdown-section a { color: var(--heading-color); text-decoration: none; font-weight: 600; border-bottom: 1px dashed var(--heading-color); transition: all 0.2s ease; }
+    .markdown-section a:hover { color: var(--accent-hover); border-bottom: 1px solid var(--accent-hover); text-shadow: 0 0 8px rgba(255, 30, 70, 0.4); }
+    .markdown-section strong { color: #fff; text-shadow: 0 0 5px rgba(255, 255, 255, 0.2); }
+    .markdown-section em { color: var(--star-color); }
     
-    .markdown-section ul { list-style: none; padding-left: 20px; }
-    .markdown-section ul li { position: relative; margin-bottom: 8px; }
-    .markdown-section ul li::before { content: var(--theme-icon); position: absolute; left: -25px; top: 2px; color: var(--theme-color); font-size: 14px; text-shadow: 0 0 8px var(--theme-glow); }
-    
-    .markdown-section input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border: var(--ui-border); border-radius: 4px; vertical-align: middle; position: relative; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.5); margin-right: 8px; }
-    .markdown-section input[type="checkbox"]:checked { border-color: var(--theme-color); background: var(--theme-dim); box-shadow: 0 0 10px var(--theme-glow); }
-    .markdown-section input[type="checkbox"]:checked::after { content: var(--theme-icon); position: absolute; top: -3px; left: 2px; color: var(--theme-color); font-size: 14px; text-shadow: 0 0 5px var(--theme-color); }
-    
-    .badge { padding: 3px 8px; border-radius: var(--ui-radius); font-size: 0.75em; font-weight: 800; text-transform: uppercase; vertical-align: middle; margin-left: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
-    .badge.new { background: var(--theme-color); color: #000; }
-    .badge.wip { background: transparent; color: var(--theme-color); border: var(--ui-border); }
-    
-    .markdown-section blockquote { border-left: 5px solid var(--theme-color); background: var(--theme-dim); margin: 2em 0; padding: 20px; border-radius: 0 var(--ui-radius) var(--ui-radius) 0; font-style: italic; color: #bbb; position: relative; box-shadow: inset 40px 0 50px -40px rgba(0,0,0,0.5); }
-    code, kbd { font-family: 'Fira Code', monospace; }
-    kbd { background: #1a1a1a; border: var(--ui-border); border-bottom: 3px solid #000; border-radius: 6px; padding: 4px 8px; font-weight: 600; font-size: 0.85em; color: var(--theme-color); }
-    
-    .markdown-section pre { background: rgba(0,0,0,0.6) !important; border: var(--ui-border); border-radius: var(--ui-radius); padding-top: 40px !important; position: relative; box-shadow: var(--shadow-style); overflow: hidden; margin: 20px 0; }
-    .markdown-section pre::before { content: ''; position: absolute; top: 15px; left: 15px; width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f; }
-    [data-theme='aqua'] .markdown-section pre::before { display: none; } 
-    .docsify-copy-code-button { background: rgba(0,0,0,0.8) !important; color: #fff !important; border: var(--ui-border) !important; border-radius: var(--ui-radius) !important; padding: 5px 12px !important; font-family: var(--font-body); font-size: 11px; top: 10px !important; right: 10px !important; transition: 0.3s; }
-    .docsify-copy-code-button:hover { background: var(--theme-color) !important; border-color: var(--theme-color) !important; box-shadow: 0 0 15px var(--theme-glow) !important; color: #000 !important;}
-    
-    .markdown-section table { width: 100%; border-collapse: separate; border-spacing: 0; background: rgba(0,0,0,0.4) !important; border-radius: var(--ui-radius); overflow: hidden; border: var(--ui-border); margin: 2em 0; box-shadow: var(--shadow-style); }
-    .markdown-section table th { background: var(--theme-dim) !important; color: #fff; font-weight: 800; padding: 15px; text-transform: uppercase; border-bottom: 2px solid var(--theme-color); }
-    .markdown-section table td { padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ddd; }
-    .markdown-section table tr:nth-child(2n) { background: rgba(255,255,255,0.02); }
-    .markdown-section table tr:hover td { background: var(--theme-dim); color: #fff; transition: background 0.3s; }
-    
-    .warn, .tip { padding: 20px !important; border-radius: var(--ui-radius) !important; position: relative !important; font-weight: 500 !important; margin: 20px 0; border: var(--ui-border) !important; }
-    .warn { background: rgba(255, 68, 68, 0.1) !important; border-left: 5px solid #ff4444 !important; }
-    .warn::before { content: '⚠️ ATTENTION'; display: block; font-weight: 900; color: #ff4444; margin-bottom: 5px; }
-    .tip { background: rgba(0, 238, 255, 0.1) !important; border-left: 5px solid #00eeff !important; }
-    .tip::before { content: '💡 ASTUCE'; display: block; font-weight: 900; color: #00eeff; margin-bottom: 5px; }
+    .markdown-section hr { border: none !important; border-bottom: 2px dashed rgba(255, 30, 70, 0.3) !important; margin: 30px 0 !important; }
 
-    /* =========================================
-       ★ 5. PAGINATION ★
-       ========================================= */
-    .docsify-pagination-container { display: flex !important; justify-content: space-between !important; gap: 20px !important; margin-top: 60px !important; padding-top: 30px !important; border-top: var(--ui-border) !important; flex-wrap: wrap; }
-    .pagination-item { margin: 0 !important; flex: 1; min-width: 250px; }
-    .pagination-item a { display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: center !important; text-align: center; background: rgba(0,0,0,0.5) !important; border: var(--ui-border) !important; border-radius: var(--ui-radius) !important; padding: 25px 20px !important; transition: all 0.3s ease !important; text-decoration: none !important; width: 100% !important; box-sizing: border-box !important; box-shadow: var(--shadow-style) !important;}
-    .pagination-item a:hover { background: var(--theme-dim) !important; border-color: var(--theme-color) !important; box-shadow: 0 0 25px var(--theme-glow) !important; transform: translateY(-5px) !important; }
-    .pagination-item-title { font-family: var(--font-headers) !important; font-weight: 800 !important; font-size: 1.2em !important; color: #fff !important; margin-top: 5px !important; }
-    .pagination-item-label { color: var(--theme-color) !important; font-size: 0.8em !important; text-transform: uppercase; font-weight: 900; letter-spacing: 1px; }
+    /* ================= BLOCS DE CODE (FIXÉS) ================= */
+    .markdown-section pre {
+      background-color: rgba(14, 2, 4, 0.85) !important; border: 1px solid var(--border-color) !important;
+      border-left: 4px solid var(--accent-color) !important; border-radius: 8px !important;
+      padding: 1.5rem !important; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+      margin: 25px 0 !important; overflow: auto !important; backdrop-filter: blur(5px);
+    }
+    .markdown-section pre > code { background-color: transparent !important; color: #ffeff3 !important; padding: 0 !important; font-size: 0.9em !important; border-radius: 0 !important; display: block !important; }
+    .markdown-section code { background-color: rgba(255, 30, 70, 0.15) !important; color: #ffb3c6 !important; border-radius: 4px !important; padding: 3px 6px !important; font-size: 0.9em !important; }
 
-    /* =========================================
-       ★ 6. PANNEAU DE THÈMES & LOADING ★
-       ========================================= */
-    #theme-picker { 
-      position: fixed; top: 15px; right: 25px; z-index: 1000; background: rgba(0, 0, 0, 0.8); 
-      backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 50px; 
-      border: var(--ui-border); box-shadow: 0 10px 20px rgba(0,0,0,0.8); 
-      display: flex; gap: 12px; align-items: center; transition: 0.4s; 
-    }
-    #theme-picker:hover { border-color: var(--theme-color); box-shadow: 0 0 20px var(--theme-glow); }
-    #theme-picker span { color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 2px; margin-right: 8px; opacity: 0.6; text-transform: uppercase; }
-    
-    .theme-dot { width: 18px; height: 18px; border-radius: 50%; cursor: pointer; border: 2px solid rgba(255,255,255,0.3); transition: 0.4s; }
-    .theme-dot:hover { transform: scale(1.6); border-color: #fff; box-shadow: 0 0 15px currentColor; }
-    .dot-kana { border-color: #66001a; }
-    
-    #loading-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s, visibility 0.5s; }
-    .loader-icon { font-size: 80px; color: var(--theme-color); text-shadow: 0 0 20px var(--theme-color); animation: spinLoader 2s infinite linear; }
-    .loader-text { margin-top: 20px; color: #fff; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; font-size: 14px; animation: pulseText 1.5s infinite alternate; font-family: 'Poppins';}
-    
-    @keyframes spinLoader { 0% { transform: rotate(0deg) scale(0.8); } 50% { transform: rotate(180deg) scale(1.1); } 100% { transform: rotate(360deg) scale(0.8); } }
-    @keyframes pulseText { 0% { opacity: 0.3; } 100% { opacity: 1; text-shadow: 0 0 10px var(--theme-color); color: var(--theme-color); } }
-    body.loaded #loading-screen { opacity: 0; visibility: hidden; }
+    /* Bouton copier le code */
+    .docsify-copy-code-button { background: rgba(0,0,0,0.8) !important; color: #fff !important; border: 1px solid var(--border-color) !important; border-radius: 6px !important; transition: 0.3s; }
+    .docsify-copy-code-button:hover { background: var(--accent-color) !important; border-color: var(--accent-color) !important; box-shadow: 0 0 10px rgba(255, 30, 70, 0.5) !important; }
 
-    /* =========================================
-       ★ PARTICULES OPTIMISÉES GPU (ANTI-LAG) ★
-       ========================================= */
-    .fx-star, .fx-heart, .fx-orb, .fx-pixel {
-      position: absolute; opacity: 0;
-      /* INDISPENSABLE pour éviter que le navigateur recalcule toute la page */
-      will-change: transform, opacity;
-      pointer-events: none;
-    }
-    
-    /* On supprime les text-shadow/box-shadow DANS les keyframes (tueurs de perfs). 
-       On les met en statique sur l'élément, et on n'anime que scale/translate/opacity */
-    .fx-orb { border-radius: 50%; filter: blur(8px); } /* blur réduit de 15 à 8 */
-    
-    .fx-star { animation: twinkle linear infinite; }
-    .fx-heart { animation: floatUp linear infinite; }
-    .fx-orb { animation: pulseOrb ease-in-out infinite alternate; }
-    .fx-pixel { font-family: 'Fira Code'; font-weight: bold; animation: glitch linear infinite; }
-    
-    @keyframes twinkle { 
-      0% { opacity: 0; transform: scale(0.5) translate3d(0,0,0); } 
-      50% { opacity: 0.8; transform: scale(1.2) translate3d(0,0,0); } 
-      100% { opacity: 0; transform: scale(0.5) translate3d(0,0,0); } 
-    }
-    @keyframes floatUp { 
-      0% { opacity: 0; transform: translate3d(0, 50px, 0) scale(0.8); } 
-      50% { opacity: 0.6; } 
-      100% { opacity: 0; transform: translate3d(0, -100px, 0) scale(1.2); } 
-    }
-    @keyframes pulseOrb { 
-      0% { opacity: 0.05; transform: scale(1) translate3d(0,0,0); } 
-      100% { opacity: 0.2; transform: scale(2.2) translate3d(0, -30px, 0); } 
-    }
-    @keyframes glitch { 
-      0%, 100% { opacity: 0; } 
-      1% { opacity: 1; transform: translate3d(-5px, 0, 0); } 
-      2% { opacity: 0; transform: translate3d(5px, 0, 0); } 
+    /* ================= CITATIONS ================= */
+    .markdown-section blockquote {
+      border-left: 4px solid var(--accent-color); background-color: rgba(255, 30, 70, 0.05);
+      color: #ffb3c6; border-radius: 0 12px 12px 0; padding: 15px 20px; margin: 20px 0; backdrop-filter: blur(5px);
     }
 
-    /* =========================================
-       ★ 7. FIX RESPONSIVE MOBILE ★
-       ========================================= */
+    /* ================= TABLEAUX (FIXÉS) ================= */
+    .markdown-section table {
+      display: table !important; width: 100% !important; border-collapse: separate !important; border-spacing: 0 !important;
+      margin: 25px 0 !important; border-radius: 10px !important; overflow: hidden !important;
+      background-color: rgba(15, 2, 4, 0.6) !important; box-shadow: 0 0 0 1px var(--border-color) !important; 
+    }
+    .markdown-section table tr { background-color: transparent !important; transition: background-color 0.2s ease; }
+    .markdown-section table tr:nth-child(2n) { background-color: rgba(20, 3, 6, 0.5) !important; }
+    .markdown-section table tr:hover { background-color: rgba(255, 30, 70, 0.15) !important; }
+    .markdown-section table th { background-color: rgba(255, 30, 70, 0.25) !important; color: #fff !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: 0.05em; padding: 14px 16px !important; border: none !important; border-bottom: 2px solid var(--accent-color) !important; text-align: left !important; }
+    .markdown-section table td { border: none !important; border-bottom: 1px solid rgba(74, 13, 26, 0.4) !important; padding: 12px 16px !important; color: var(--text-color) !important; }
+    .markdown-section table tr:last-child td { border-bottom: none !important; }
+
+    /* ================= SCROLLBAR ================= */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-color); }
+    ::-webkit-scrollbar-thumb { background: #4a0d1a; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+    /* ================= RESPONSIVE MOBILE ================= */
     @media screen and (max-width: 768px) {
       .content { left: 0 !important; width: 100vw !important; transition: transform 0.25s ease !important; }
-      .sidebar-resizer { display: none !important; }
+      .markdown-section { padding: 80px 15px 25px 15px !important; } /* Padding top pour le bouton menu */
+      .markdown-section h1 { font-size: 2rem; }
+      .markdown-section h2 { font-size: 1.5rem; }
+      .sidebar { background-color: rgba(14, 2, 4, 0.95) !important; }
+      .markdown-section table { display: block !important; overflow-x: auto !important; white-space: nowrap !important; }
       
-      #theme-picker { top: 15px; left: 50%; right: auto; transform: translateX(-50%); padding: 8px 15px; width: max-content; }
-      #theme-picker span { display: none; }
-      .markdown-section { padding-top: 80px !important; }
-      
+      /* Bouton Menu Mobile (Hamburger) */
       .sidebar-toggle {
-        background: rgba(10, 10, 15, 0.9) !important; border: 2px solid var(--theme-color) !important;
-        border-radius: 50% !important; bottom: 20px !important; left: 20px !important;
-        width: 50px !important; height: 50px !important; padding: 14px !important;
-        box-shadow: 0 0 15px var(--theme-glow) !important;
+        background: rgba(14, 2, 4, 0.9) !important; backdrop-filter: blur(10px) !important;
+        border: 2px solid var(--accent-color) !important; border-radius: 50% !important;
+        bottom: 20px !important; left: 20px !important; width: 50px !important; height: 50px !important;
+        padding: 14px !important; box-shadow: 0 0 15px rgba(255, 30, 70, 0.5) !important;
         display: flex !important; flex-direction: column !important; justify-content: space-around !important; align-items: center !important; z-index: 9999 !important;
       }
       .sidebar-toggle .sidebar-toggle-button { padding: 0 !important; background: transparent !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; width: 100% !important; height: 100% !important; }
-      .sidebar-toggle span { background: var(--theme-color) !important; width: 100% !important; height: 3px !important; margin: 0 !important; border-radius: 3px !important; display: block !important; }
-      .pagination-item { min-width: 100% !important; margin-bottom: 10px !important; }
+      .sidebar-toggle span { background: var(--accent-color) !important; width: 100% !important; height: 3px !important; margin: 0 !important; border-radius: 3px !important; display: block !important; }
     }
   </style>
 
-  <!-- BALISE OÙ SERA INJECTÉ LE CSS DES THEMES CUSTOM -->
+  <!-- BALISE OÙ SERA INJECTÉ LE CSS DES THEMES DE DOSSIER (Custom) -->
   <style id="custom-folder-css"></style>
 </head>
 <body>
+  
+  <!-- BALISE OÙ SERA INJECTÉ LE HTML DES THEMES DE DOSSIER (Custom) -->
+  <div id="custom-folder-html" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1;"></div>
 
-  <!-- BALISE OÙ SERA INJECTÉ LE HTML DES THEMES CUSTOM -->
-  <div id="custom-folder-html" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-3;"></div>
+  <!-- Calque d'animation de fond -->
+  <div class="animated-background"></div>
 
-  <div id="reading-progress"></div>
-  <div id="loading-screen"><div class="loader-icon" id="loader-star">★</div><div class="loader-text">Ouverture des rideaux...</div></div>
-  <div id="fx-container"></div>
-
-  <!-- PANNEAU DE THÈMES GLOBAUX -->
-  <div id="theme-picker">
-    <span>推し OSHI</span>
-    <div class="theme-dot" style="background:#ff55aa; color:#ff55aa" onclick="setGlobalTheme('ai')" title="Ai"></div>
-    <div class="theme-dot" style="background:#ff0044; color:#ff0044" onclick="setGlobalTheme('ruby')" title="Ruby"></div>
-    <div class="theme-dot" style="background:#00eeff; color:#00eeff" onclick="setGlobalTheme('aqua')" title="Aqua"></div>
-    <div class="theme-dot dot-kana" style="background:#ffffff; color:#ffffff" onclick="setGlobalTheme('kana')" title="Kana"></div>
-    <div class="theme-dot" style="background:#5577ff; color:#5577ff" onclick="setGlobalTheme('akane')" title="Akane"></div>
-    <div class="theme-dot" style="background:#ffcc00; color:#ffcc00" onclick="setGlobalTheme('memcho')" title="Mem-cho"></div>
-  </div>
-
-  <div id="app"></div>
+  <div id="app">✨ Ouverture des archives...</div>
 
   <script>
-    // --- 1. GESTION DU THEME GLOBAL ET PARTICULES ---
-    function setGlobalTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('solus-wiki-theme', theme);
-      
-      // RequestAnimationFrame évite le reflow bloquant du setTimeout
-      requestAnimationFrame(() => {
-        const styles = getComputedStyle(document.documentElement);
-        const themeColor = styles.getPropertyValue('--theme-color').trim();
-        const themeIcon = styles.getPropertyValue('--theme-icon').replace(/["']/g, '').trim();
-        
-        if (window.$docsify) window.$docsify.themeColor = themeColor;
-        document.getElementById('loader-star').innerText = themeIcon;
-        generateEffects(theme, themeColor, themeIcon);
-      });
-    }
-
-    function generateEffects(theme, color, icon) {
-      const container = document.getElementById('fx-container');
-      container.innerHTML = ''; // Nettoyage de la RAM
-      
-      // OPTIMISATION : Nombre de particules divisé par 2 pour préserver le CPU
-      let count = 20; let types = []; let charArray = [];
-
-      if (theme === 'ai') { charArray = [icon, '✧']; types = ['fx-star']; count = 25; }
-      else if (theme === 'ruby') { charArray = [icon, '♡']; types = ['fx-heart']; count = 20; }
-      else if (theme === 'aqua') { charArray = ['/', '\\', '[', ']']; types = ['fx-pixel']; count = 30; }
-      else if (theme === 'kana') { charArray = ['✨', '✦']; types = ['fx-star']; count = 15; }
-      else if (theme === 'akane') { charArray = ['']; types = ['fx-orb']; count = 8; }
-      else if (theme === 'memcho') { charArray = ['▲', '●', '■', '+']; types = ['fx-star']; count = 18; }
-
-      // Création d'un fragment pour injecter tout dans le DOM en 1 seule fois
-      const fragment = document.createDocumentFragment();
-
-      for (let i = 0; i < count; i++) {
-        let fx = document.createElement('div');
-        fx.className = types[Math.floor(Math.random() * types.length)];
-        
-        if (theme === 'akane') { 
-          fx.style.width = (Math.random() * 100 + 80) + 'px'; 
-          fx.style.height = fx.style.width; 
-          fx.style.background = color; 
-        } else { 
-          fx.innerHTML = charArray[Math.floor(Math.random() * charArray.length)]; 
-          fx.style.color = color; 
-          fx.style.fontSize = (Math.random() * 16 + 8) + 'px'; 
-          fx.style.textShadow = `0 0 10px ${color}`; // Appliqué statiquement, pas dans l'animation
-        }
-        
-        fx.style.left = Math.random() * 100 + 'vw'; 
-        fx.style.top = Math.random() * 100 + 'vh'; 
-        fx.style.animationDuration = (Math.random() * 6 + 4) + 's'; 
-        fx.style.animationDelay = (Math.random() * 5) + 's';
-        
-        fragment.appendChild(fx);
-      }
-      container.appendChild(fragment);
-    }
-    
-    setGlobalTheme(localStorage.getItem('solus-wiki-theme') || 'ai');
-
-    // --- 2. LE CERVEAU : INJECTEUR DE THEME.HTML (DOSSIERS CUSTOM) ---
+    // --- MOTEUR D'INJECTION DE THEMES PAR DOSSIER ---
     const customCssTarget = document.getElementById('custom-folder-css');
     const customHtmlTarget = document.getElementById('custom-folder-html');
     let themeCache = {}; 
     
+    // Fonction qui remonte les dossiers pour chercher un fichier "theme.html"
     async function loadFolderCustomTheme(filePath) {
       if (!filePath) return null;
       let parts = filePath.split('/');
-      parts.pop(); 
+      parts.pop(); // Retire le nom du fichier pour ne garder que le dossier
       
       while (parts.length > 0) {
         let folderPath = parts.join('/');
         let themeUrl = folderPath + '/theme.html';
         
+        // Cache pour ne pas re-télécharger le fichier si on navigue dans le même dossier
         if (themeCache[themeUrl] !== undefined) {
           if (themeCache[themeUrl]) return themeCache[themeUrl];
         } else {
@@ -360,93 +279,70 @@
             themeCache[themeUrl] = null;
           }
         }
-        parts.pop(); 
+        parts.pop(); // Remonte d'un dossier parent
       }
       return null; 
     }
 
-    // --- 3. BARRE DE LECTURE (OPTIMISÉE ANTI-LAG) ---
-    let isScrolling = false;
-    window.addEventListener('scroll', () => {
-      if (!isScrolling) {
-        window.requestAnimationFrame(() => {
-          let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-          let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-          document.getElementById('reading-progress').style.width = (winScroll / height) * 100 + "%";
-          isScrolling = false;
-        });
-        isScrolling = true;
-      }
-    }, { passive: true }); // passive:true soulage énormément le navigateur
-
-    // --- 4. CONFIGURATION DOCSIFY ---
+    // --- CONFIGURATION DOCSIFY ---
     window.$docsify = {
-      name: 'Solus Wiki <span>★</span>',
-      repo: '', loadSidebar: true, subMaxLevel: 3, sidebarDisplayLevel: 1, auto2top: true,
-      search: { placeholder: '🔎 Rechercher un script...', noData: '❌ Aucune rumeur trouvée.' },
-      copyCode: { buttonText: '📋 Copier', successText: '✨ Copié !' },
-      pagination: { previousText: 'Chapitre Précédent', nextText: 'Chapitre Suivant', crossChapter: true, crossChapterText: true },
-      tabs: { persist: true, sync: true, theme: 'classic' },
+      name: 'Legal Wiki',
+      repo: '',
+      
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md' // Empêche docsify de chercher une sidebar dans chaque sous-dossier
+      },
+      
+      loadSidebar: true,
+      subMaxLevel: 0, // N'affiche pas les titres H2/H3 dans la sidebar (garde une structure propre définie dans le _sidebar.md)
+      auto2top: true, // Remonte en haut de la page au clic d'un lien
+      
+      search: {
+        paths: 'auto',
+        placeholder: '🔍 Rechercher...',
+        noData: '❌ Aucun résultat.',
+        depth: 3,
+      },
+
+      sidebarDisplayLevel: 1,
 
       plugins: [
+        // ★ PLUGIN D'INJECTION DE THÈMES DOSSIERS ★
         function(hook, vm) {
           hook.beforeEach(function(content, next) {
             loadFolderCustomTheme(vm.route.file).then(customHtml => {
               if (customHtml) {
+                // Parse le theme.html trouvé dans le dossier
                 let parser = new DOMParser();
                 let doc = parser.parseFromString(customHtml, 'text/html');
                 
+                // 1. Extraction et Injection du CSS (Les balises <style>)
                 let extractedCss = '';
                 doc.querySelectorAll('style').forEach(s => extractedCss += s.innerHTML + '\n');
                 customCssTarget.innerHTML = extractedCss;
+                
+                // 2. Extraction et Injection du HTML (Les particules, fonds, etc.)
                 customHtmlTarget.innerHTML = doc.body.innerHTML;
               } else {
-                // Nettoyage impératif pour éviter le "saignement" CSS entre dossiers
+                // Si on sort du dossier, on nettoie pour retrouver le style "Bordeaux" par défaut
                 customCssTarget.innerHTML = '';
                 customHtmlTarget.innerHTML = '';
               }
               next(content);
             });
           });
-        },
-        
-        function(hook, vm) {
-          hook.mounted(function() {
-            setTimeout(() => { document.body.classList.add('loaded'); }, 500);
-            
-            const sidebar = document.querySelector('.sidebar');
-            if(sidebar) {
-              const resizer = document.createElement('div');
-              resizer.className = 'sidebar-resizer';
-              sidebar.appendChild(resizer);
-              let isResizing = false;
-              
-              resizer.addEventListener('mousedown', () => { isResizing = true; resizer.classList.add('active'); document.body.style.cursor = 'col-resize'; document.body.style.userSelect = 'none'; });
-              
-              document.addEventListener('mousemove', (e) => { 
-                if (!isResizing) return; 
-                // Utilise requestAnimationFrame pour le redimensionnement aussi
-                requestAnimationFrame(() => {
-                  document.documentElement.style.setProperty('--sidebar-width', Math.max(250, Math.min(e.clientX, 600)) + 'px'); 
-                });
-              }, { passive: true });
-              
-              document.addEventListener('mouseup', () => { if(isResizing) { isResizing = false; resizer.classList.remove('active'); document.body.style.cursor = 'default'; document.body.style.userSelect = 'auto'; } });
-            }
-          });
         }
       ]
     }
   </script>
 
-  <!-- SCRIPTS REQUIS DOCSIFY & PLUGINS -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+  <!-- Docsify Core -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
   
+  <!-- PLUGINS -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
 </body>
 </html>
