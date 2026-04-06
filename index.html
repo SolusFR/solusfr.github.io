@@ -231,78 +231,73 @@
 
     /* ================= RESPONSIVE MOBILE ================= */
 /* ================= RESPONSIVE (STYLE LEGAL WIKI) ================= */
-/* ================= RESPONSIVE (STYLE MINIMALISTE BAS GAUCHE) ================= */
-/* ================= RESPONSIVE (OPTIMISÉ MOBILE) ================= */
     @media screen and (max-width: 768px) {
-      /* 1. On réinitialise la position du contenu */
-      .content {
-        left: 0 !important;
-        transition: transform 0.3s ease;
-      }
-
-      /* 2. On ajuste la sidebar pour qu'elle coulisse par dessus */
-      .sidebar {
-        width: 280px !important;
-        left: -280px !important; /* Cachée par défaut */
-        transition: transform 0.3s ease !important;
-        z-index: 100;
-        background-color: rgba(14, 2, 4, 0.98) !important;
-      }
-
-      /* Quand la sidebar est ouverte (Docsify retire la classe .close du body) */
-      body:not(.close) .sidebar {
-        transform: translateX(280px);
-      }
-
-      /* 3. LE BOUTON MENU (Style bouton flottant en bas à gauche) */
+      
+      /* 1. ON GARDE TON BOUTON TEL QUEL */
       .sidebar-toggle {
-        background: var(--bg-color) !important;
-        border: 1px solid var(--accent-color) !important;
-        box-shadow: 0 0 15px rgba(255, 30, 70, 0.4);
-        border-radius: 50% !important;
-        width: 50px !important;
-        height: 50px !important;
-        left: 20px !important;
-        bottom: 20px !important;
+        background: transparent !important;
+        border: none !important;
+        width: 44px !important;
+        height: 44px !important;
+        left: 10px !important;
+        bottom: 10px !important;
         top: auto !important;
+        padding: 0 !important;
         display: flex !important;
         align-items: center;
         justify-content: center;
-        padding: 0 !important;
-        z-index: 101 !important;
       }
-
-      /* On centre les barres de l'icône burger */
-      .sidebar-toggle span {
-        background-color: var(--heading-color) !important;
+      .sidebar-toggle .sidebar-toggle-button span {
+        background: var(--heading-color) !important;
         height: 2px !important;
-        width: 22px !important;
-        margin: 4px auto !important;
+        width: 25px !important;
+        margin: 4px 0 !important;
         display: block;
       }
 
-      /* 4. Ajustements du texte et des marges */
+      /* 2. AJUSTEMENT DU CONTENU (MARKDOWN) */
       .markdown-section {
-        padding: 20px !important; /* Moins d'espace sur les côtés */
+        padding: 20px 15px !important; /* Réduit les marges pour gagner de la place */
         max-width: 100% !important;
       }
 
-      .markdown-section h1 {
-        font-size: 1.8rem; /* Titres plus petits sur mobile */
+      /* Réduction de la taille des titres pour éviter qu'ils ne sortent de l'écran */
+      .markdown-section h1 { font-size: 1.8rem !important; }
+      .markdown-section h2 { font-size: 1.4rem !important; }
+      .markdown-section h3 { font-size: 1.2rem !important; }
+
+      /* Force le texte à revenir à la ligne même si les mots sont longs (ex: liens) */
+      .markdown-section p, .markdown-section li {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
-      /* 5. Empêcher le débordement horizontal (Tableaux/Code) */
-      .markdown-section table, 
-      .markdown-section pre {
-        display: block !important;
+      /* 3. FIX DES TABLEAUX (Le plus important sur mobile) */
+      .markdown-section table {
+        display: block !important;       /* Permet le scroll interne */
         width: 100% !important;
-        overflow-x: auto !important; /* Scroll horizontal interne */
-        -webkit-overflow-scrolling: touch;
+        overflow-x: auto !important;      /* Active le scroll horizontal */
+        -webkit-overflow-scrolling: touch; /* Scroll fluide sur iPhone */
+        white-space: nowrap;              /* Empêche le texte de s'écraser dans les cellules */
+        border-radius: 8px !important;
       }
 
-      /* Masquer l'animation de fond trop lourde sur certains vieux mobiles si besoin */
-      .animated-background::before, .animated-background::after {
-        filter: blur(80px); /* Moins de flou pour booster les perfs */
+      /* 4. FIX DES BLOCS DE CODE */
+      .markdown-section pre {
+        padding: 1rem !important;
+        margin: 15px 0 !important;
+        width: 100% !important;
+        box-sizing: border-box;
+      }
+
+      /* Ajustement de la sidebar pour qu'elle ne soit pas trop large */
+      .sidebar {
+        width: 260px !important;
+      }
+      
+      /* On s'assure que le contenu ne bouge pas bizarrement quand on ouvre le menu */
+      body.close .content {
+        transform: none !important;
       }
     }
   </style>
