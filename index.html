@@ -212,76 +212,43 @@
     ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
 
     /* ================= RESPONSIVE MOBILE ================= */
+/* ================= RESPONSIVE (STYLE LEGAL WIKI) ================= */
     @media screen and (max-width: 768px) {
-      .content { left: 0 !important; width: 100vw !important; transition: transform 0.25s ease !important; }
-      .markdown-section { padding: 80px 15px 25px 15px !important; } /* Padding top pour le bouton menu */
-      .markdown-section h1 { font-size: 2rem; }
-      .markdown-section h2 { font-size: 1.5rem; }
-      .sidebar { background-color: rgba(14, 2, 4, 0.95) !important; }
-      .markdown-section table { display: block !important; overflow-x: auto !important; white-space: nowrap !important; }
-      
-      /* Bouton Menu Mobile (Hamburger) */
+      /* Bouton menu simple et natif */
       .sidebar-toggle {
-        background: rgba(14, 2, 4, 0.9) !important; backdrop-filter: blur(10px) !important;
-        border: 2px solid var(--accent-color) !important; border-radius: 50% !important;
-        bottom: 20px !important; left: 20px !important; width: 50px !important; height: 50px !important;
-        padding: 14px !important; box-shadow: 0 0 15px rgba(255, 30, 70, 0.5) !important;
-        display: flex !important; flex-direction: column !important; justify-content: space-around !important; align-items: center !important; z-index: 9999 !important;
+        background-color: rgba(11, 2, 4, 0.9) !important;
+        backdrop-filter: blur(10px);
+        width: 44px !important;
+        height: 44px !important;
+        padding: 10px !important;
+        left: 0 !important;
+        bottom: auto !important;
+        top: 0 !important;
+        border-right: 1px solid var(--accent-color);
+        border-bottom: 1px solid var(--accent-color);
       }
-      .sidebar-toggle .sidebar-toggle-button { padding: 0 !important; background: transparent !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; width: 100% !important; height: 100% !important; }
-      .sidebar-toggle span { background: var(--accent-color) !important; width: 100% !important; height: 3px !important; margin: 0 !important; border-radius: 3px !important; display: block !important; }
-    }
-  </style>
 
-  <!-- BALISE OÙ SERA INJECTÉ LE CSS DES THEMES DE DOSSIER (Custom) -->
-  <style id="custom-folder-css"></style>
-</head>
-<body>
-  
-  <!-- BALISE OÙ SERA INJECTÉ LE HTML DES THEMES DE DOSSIER (Custom) -->
-  <div id="custom-folder-html" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1;"></div>
-
-  <!-- Calque d'animation de fond -->
-  <div class="animated-background"></div>
-
-  <div id="app">✨ Ouverture des archives...</div>
-
-  <script>
-    // --- MOTEUR D'INJECTION DE THEMES PAR DOSSIER ---
-    const customCssTarget = document.getElementById('custom-folder-css');
-    const customHtmlTarget = document.getElementById('custom-folder-html');
-    let themeCache = {}; 
-    
-    // Fonction qui remonte les dossiers pour chercher un fichier "theme.html"
-    async function loadFolderCustomTheme(filePath) {
-      if (!filePath) return null;
-      let parts = filePath.split('/');
-      parts.pop(); // Retire le nom du fichier pour ne garder que le dossier
-      
-      while (parts.length > 0) {
-        let folderPath = parts.join('/');
-        let themeUrl = folderPath + '/theme.html';
-        
-        // Cache pour ne pas re-télécharger le fichier si on navigue dans le même dossier
-        if (themeCache[themeUrl] !== undefined) {
-          if (themeCache[themeUrl]) return themeCache[themeUrl];
-        } else {
-          try {
-            let res = await fetch(themeUrl);
-            if (res.ok) {
-              let text = await res.text();
-              themeCache[themeUrl] = text;
-              return text; 
-            } else {
-              themeCache[themeUrl] = null;
-            }
-          } catch(e) {
-            themeCache[themeUrl] = null;
-          }
-        }
-        parts.pop(); // Remonte d'un dossier parent
+      /* On remet la sidebar en plein écran propre */
+      .sidebar {
+        background-color: rgba(14, 2, 4, 0.98) !important;
+        box-shadow: none;
       }
-      return null; 
+
+      .content {
+        left: 0 !important;
+      }
+
+      /* Espace pour ne pas que le texte soit sous le bouton menu */
+      .markdown-section {
+        padding: 60px 20px 20px 20px !important;
+      }
+
+      /* Tableaux scrollables pour ne pas casser le design */
+      .markdown-section table {
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+      }
     }
 
     // --- CONFIGURATION DOCSIFY ---
