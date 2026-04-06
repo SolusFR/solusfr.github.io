@@ -245,6 +245,62 @@
     background-color: rgba(0, 251, 255, 0.2) !important;
     border-bottom: 2px solid var(--accent-color) !important;
   }
+  /* --- NETTOYAGE COMPLET DES RESTES BORDEAUX (MARKDOWN) --- */
+
+  /* 1. Code en ligne (ton image `/spawn`) */
+  .markdown-section code {
+    background-color: rgba(0, 251, 255, 0.1) !important; /* Fond Cyan très léger */
+    color: var(--accent-color) !important;              /* Texte Cyan */
+    border: 1px solid rgba(0, 251, 255, 0.3) !important; /* Petite bordure cyber */
+    padding: 2px 5px !important;
+  }
+
+  /* 2. Listes à puces (les points devant le texte) */
+  .markdown-section ul li::before {
+    background-color: var(--accent-color) !important; /* Puces Cyan */
+    box-shadow: 0 0 8px var(--accent-color);
+  }
+
+  /* 3. Tableaux (Lignes paires/impaires et bordures) */
+  .markdown-section table {
+    border-color: var(--border-color) !important;
+    background-color: rgba(5, 5, 15, 0.8) !important;
+  }
+  .markdown-section table tr {
+    background-color: transparent !important;
+    border-color: var(--border-color) !important;
+  }
+  .markdown-section table tr:nth-child(2n) {
+    background-color: rgba(0, 251, 255, 0.03) !important; /* Lignes alternées Cyan */
+  }
+  .markdown-section table td, 
+  .markdown-section table th {
+    border-color: var(--border-color) !important;
+    color: var(--text-color) !important;
+  }
+
+  /* 4. Citations (Blockquotes) */
+  .markdown-section blockquote {
+    border-left: 4px solid var(--accent-color) !important;
+    background-color: rgba(0, 251, 255, 0.05) !important;
+    color: #fff !important;
+    font-style: italic;
+  }
+
+  /* 5. Éléments en gras et italique */
+  .markdown-section strong {
+    color: #fff !important;
+    text-shadow: 0 0 5px var(--accent-color) !important;
+  }
+  .markdown-section em {
+    color: var(--heading-color) !important; /* L'italique devient Rose Néon */
+  }
+
+  /* 6. Les liens (bordure basse) */
+  .markdown-section a {
+    color: var(--accent-color) !important;
+    border-bottom: 1px dashed var(--accent-color) !important;
+  }
 </style>
 
 <!-- HTML injecté pour les effets visuels -->
