@@ -203,6 +203,48 @@
     background: rgba(0, 251, 255, 0.2) !important;
     text-shadow: 0 0 5px var(--accent-color) !important;
   }
+  /* --- FIX SÉPARATEURS ET BORDURES MARKDOWN --- */
+
+  /* 1. La ligne de séparation horizontale (ton image) */
+  .markdown-section hr {
+    border-bottom: 2px dashed var(--accent-color) !important;
+    opacity: 0.5;
+    /* Optionnel : ajout d'une petite lueur cyan */
+    filter: drop-shadow(0 0 5px var(--accent-color));
+  }
+
+  /* 2. Les bordures sous les titres H2 (qui étaient en bordeaux) */
+  .markdown-section h2 {
+    border-bottom: 2px solid var(--accent-color) !important;
+  }
+
+  /* 3. Les liens dans le texte (qui avaient une bordure basse bordeaux) */
+  .markdown-section a {
+    color: var(--accent-color) !important;
+    border-bottom: 1px dashed var(--accent-color) !important;
+  }
+  .markdown-section a:hover {
+    color: #fff !important;
+    border-bottom: 1px solid #fff !important;
+    text-shadow: 0 0 10px var(--accent-color) !important;
+  }
+
+  /* 4. Les citations (blockquote) */
+  .markdown-section blockquote {
+    border-left: 4px solid var(--accent-color) !important;
+    background-color: rgba(0, 251, 255, 0.05) !important;
+    color: var(--text-color) !important;
+  }
+
+  /* 5. Les tableaux (bordures des cellules) */
+  .markdown-section table, 
+  .markdown-section table td {
+    border-color: var(--border-color) !important;
+  }
+  .markdown-section table th {
+    background-color: rgba(0, 251, 255, 0.2) !important;
+    border-bottom: 2px solid var(--accent-color) !important;
+  }
 </style>
 
 <!-- HTML injecté pour les effets visuels -->
