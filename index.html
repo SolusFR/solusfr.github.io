@@ -232,48 +232,77 @@
     /* ================= RESPONSIVE MOBILE ================= */
 /* ================= RESPONSIVE (STYLE LEGAL WIKI) ================= */
 /* ================= RESPONSIVE (STYLE MINIMALISTE BAS GAUCHE) ================= */
+/* ================= RESPONSIVE (OPTIMISÉ MOBILE) ================= */
     @media screen and (max-width: 768px) {
-      /* Le bouton devient invisible (pas de fond, pas de bordure) */
-      .sidebar-toggle {
-        background: transparent !important;
-        border: none !important;
-        width: 44px !important;
-        height: 44px !important;
-        left: 10px !important;
-        bottom: 10px !important; /* Position en bas */
-        top: auto !important;    /* Désactive le positionnement haut */
-        padding: 0 !important;
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
+      /* 1. On réinitialise la position du contenu */
+      .content {
+        left: 0 !important;
+        transition: transform 0.3s ease;
       }
 
-      /* On stylise les 3 barres (l'icône burger) */
-      .sidebar-toggle .sidebar-toggle-button span {
-        background: var(--heading-color) !important; /* Couleur orange/rubis comme sur ton image */
-        height: 2px !important;
-        width: 25px !important;
-        margin: 4px 0 !important;
-        display: block;
-      }
-
+      /* 2. On ajuste la sidebar pour qu'elle coulisse par dessus */
       .sidebar {
+        width: 280px !important;
+        left: -280px !important; /* Cachée par défaut */
+        transition: transform 0.3s ease !important;
+        z-index: 100;
         background-color: rgba(14, 2, 4, 0.98) !important;
       }
 
-      .content {
-        left: 0 !important;
+      /* Quand la sidebar est ouverte (Docsify retire la classe .close du body) */
+      body:not(.close) .sidebar {
+        transform: translateX(280px);
       }
 
-      /* On remet un padding normal en haut car le bouton n'y est plus */
+      /* 3. LE BOUTON MENU (Style bouton flottant en bas à gauche) */
+      .sidebar-toggle {
+        background: var(--bg-color) !important;
+        border: 1px solid var(--accent-color) !important;
+        box-shadow: 0 0 15px rgba(255, 30, 70, 0.4);
+        border-radius: 50% !important;
+        width: 50px !important;
+        height: 50px !important;
+        left: 20px !important;
+        bottom: 20px !important;
+        top: auto !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        padding: 0 !important;
+        z-index: 101 !important;
+      }
+
+      /* On centre les barres de l'icône burger */
+      .sidebar-toggle span {
+        background-color: var(--heading-color) !important;
+        height: 2px !important;
+        width: 22px !important;
+        margin: 4px auto !important;
+        display: block;
+      }
+
+      /* 4. Ajustements du texte et des marges */
       .markdown-section {
-        padding: 40px 20px 20px 20px !important;
+        padding: 20px !important; /* Moins d'espace sur les côtés */
+        max-width: 100% !important;
       }
 
-      .markdown-section table {
+      .markdown-section h1 {
+        font-size: 1.8rem; /* Titres plus petits sur mobile */
+      }
+
+      /* 5. Empêcher le débordement horizontal (Tableaux/Code) */
+      .markdown-section table, 
+      .markdown-section pre {
         display: block !important;
-        overflow-x: auto !important;
-        white-space: nowrap !important;
+        width: 100% !important;
+        overflow-x: auto !important; /* Scroll horizontal interne */
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Masquer l'animation de fond trop lourde sur certains vieux mobiles si besoin */
+      .animated-background::before, .animated-background::after {
+        filter: blur(80px); /* Moins de flou pour booster les perfs */
       }
     }
   </style>
