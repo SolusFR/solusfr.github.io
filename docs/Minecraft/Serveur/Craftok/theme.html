@@ -114,6 +114,48 @@
     background: var(--accent-color) !important;
     border: 2px solid var(--bg-color);
   }
+  /* --- FIX COULEUR TEXTE SIDEBAR --- */
+  
+  /* 1. Couleur des liens normaux (sous-menus) */
+  .sidebar-nav ul li a {
+    color: var(--text-color) !important;
+    text-shadow: 0 0 5px rgba(0, 251, 255, 0.2);
+  }
+
+  /* 2. Couleur des dossiers (Niveau 1 : ex SHOP, RULES...) */
+  .sidebar-nav ul:not(.app-sub-sidebar) > li.collapse > a,
+  .sidebar-nav ul:not(.app-sub-sidebar) > li.collapse > p {
+    color: var(--heading-color) !important; /* Utilise le Rose Néon pour les dossiers */
+    text-shadow: 0 0 8px rgba(255, 0, 255, 0.4) !important;
+  }
+
+  /* 3. Couleur au survol */
+  .sidebar-nav ul li a:hover {
+    color: #fff !important;
+    background-color: var(--nav-hover-bg) !important;
+    text-shadow: 0 0 10px var(--accent-color) !important;
+  }
+
+  /* 4. Les chevrons (petites flèches) des dossiers */
+  .sidebar-nav li.collapse > a::before,
+  .sidebar-nav li.collapse > p::before {
+    border-right: 2px solid var(--heading-color) !important;
+    border-bottom: 2px solid var(--heading-color) !important;
+  }
+
+  /* 5. La ligne verticale de l'arborescence */
+  .sidebar-nav .app-sub-sidebar {
+    border-left: 2px solid var(--nav-line-color) !important;
+  }
+  
+  /* 6. Couleur du texte de recherche */
+  .sidebar .search input {
+    color: var(--accent-color) !important;
+    border-color: var(--border-color) !important;
+  }
+  .sidebar .search input::placeholder {
+    color: rgba(0, 251, 255, 0.4) !important;
+  }
 </style>
 
 <!-- HTML injecté pour les effets visuels -->
