@@ -1,95 +1,141 @@
+<!-- 
+  THEME.HTML - STYLE CYBERPUNK 
+  Ce fichier remplace le thème "Ruby" par une esthétique Sci-Fi / High-Tech.
+-->
+
 <style>
-  /* 1. PALETTE TIKTOK / CRAFTOK */
-  :root, [data-theme='ai'], [data-theme='ruby'], [data-theme='aqua'] {
-    --tk-cyan: #00f2ea;
-    --tk-magenta: #ff0050;
-    --theme-color: var(--tk-cyan) !important;
-    --bg-main: #121212 !important;
-    --font-headers: 'Fira Code', 'Minecraftia', monospace !important;
-    --theme-icon: "🎬" !important;
-    --ui-border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  :root {
+    /* Override des couleurs de base */
+    --bg-color: #05050a;
+    --text-color: #00f2ff;
+    --heading-color: #ff0055;
+    --accent-color: #00f2ff;
+    --accent-hover: #ff0055;
+    --border-color: #004d4d;
+    --star-color: #fdfd01;
+
+    /* Sidebar Cyber */
+    --nav-line-color: rgba(0, 242, 255, 0.2);
+    --nav-hover-bg: rgba(0, 242, 255, 0.1);
   }
 
-  /* 2. EFFET GLITCH SUR LE TITRE (LOGO STYLE) */
-  .markdown-section h1 {
-    position: relative;
-    color: #fff !important;
-    text-shadow: 2px 0 var(--tk-magenta), -2px 0 var(--tk-cyan) !important;
-    text-transform: uppercase !important;
-    letter-spacing: -1px !important;
+  /* --- FOND DYNAMIQUE CYBERPUNK --- */
+  .animated-background {
+    background-color: #05050a !important;
+    background-image: 
+      linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center center;
+    perspective: 1000px;
   }
 
-  /* 3. SIDEBAR & BOUTONS STYLE "FLUX" */
+  .animated-background::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle, rgba(255, 0, 85, 0.1) 0%, transparent 70%);
+    animation: cyber-pulse 8s infinite alternate ease-in-out;
+  }
+
+  @keyframes cyber-pulse {
+    0% { transform: translate(-5%, -5%) scale(1); }
+    100% { transform: translate(5%, 5%) scale(1.1); }
+  }
+
+  /* --- EFFET SCANLINES (Lignes de vieux moniteur) --- */
+  .cyber-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+  }
+
+  /* --- STYLE DE LA SIDEBAR --- */
   .sidebar {
-    background: #000 !important;
-    border-right: 2px solid var(--tk-magenta) !important;
+    border-right: 2px solid var(--accent-color) !important;
+    box-shadow: 5px 0 15px rgba(0, 242, 255, 0.2) !important;
   }
 
   .sidebar-nav ul li a:hover {
-    background: linear-gradient(90deg, var(--tk-cyan), var(--tk-magenta)) !important;
+    text-shadow: 0 0 8px var(--accent-color);
+    border-left: 3px solid var(--accent-color);
+  }
+
+  /* --- TITRES GLITCH --- */
+  .markdown-section h1 {
     color: #fff !important;
-    transform: skewX(-5deg); /* Petit effet dynamique */
+    text-shadow: 3px 3px 0px #ff0055, -3px -3px 0px #00f2ff !important;
+    letter-spacing: 2px;
   }
 
-  /* 4. BARRE DE LECTURE TIKTOK */
-  #reading-progress {
-    height: 4px !important;
-    background: linear-gradient(90deg, var(--tk-cyan) 0%, #fff 50%, var(--tk-magenta) 100%) !important;
-    box-shadow: 0 0 10px var(--tk-cyan) !important;
+  .markdown-section h2 {
+    border-bottom: 2px solid var(--accent-color) !important;
+    text-transform: uppercase;
+    font-style: italic;
   }
 
-  /* 5. BLOCS DE TEXTE (POUR LE PVP/KIT) */
-  .markdown-section blockquote {
-    border-left: 4px solid var(--tk-cyan) !important;
-    background: rgba(0, 242, 234, 0.05) !important;
-    box-shadow: -5px 0 0 var(--tk-magenta) !important; /* Double bordure Glitch */
+  /* --- BLOCS DE CODE & TABLES --- */
+  .markdown-section pre {
+    border: 1px solid var(--accent-color) !important;
+    box-shadow: inset 0 0 10px rgba(0, 242, 255, 0.2) !important;
   }
 
-  /* Badge spécial Grade */
-  .badge.new {
-    background: var(--tk-magenta) !important;
+  .markdown-section table {
+    border: 1px solid var(--accent-color) !important;
+  }
+
+  .markdown-section table th {
+    background-color: rgba(0, 242, 255, 0.2) !important;
     color: #fff !important;
-    box-shadow: 2px 2px 0 var(--tk-cyan) !important;
   }
+
+  /* --- SCROLLBAR --- */
+  ::-webkit-scrollbar-thumb {
+    background: var(--accent-color) !important;
+    box-shadow: 0 0 10px var(--accent-color);
+  }
+
+  /* Décoration : Coins high-tech */
+  .cyber-corner {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent-color);
+    z-index: 1000;
+    pointer-events: none;
+  }
+  .top-left { top: 10px; left: 310px; border-right: none; border-bottom: none; }
+  .bottom-right { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
 </style>
 
-<div class="glitch-line"></div>
+<!-- Éléments visuels injectés -->
+<div class="cyber-overlay"></div>
+<div class="cyber-corner top-left"></div>
+<div class="cyber-corner bottom-right"></div>
+<div class="cyber-grid-floor"></div>
 
 <style>
-  .glitch-line {
+  /* Ajout d'une grille au sol en perspective */
+  .cyber-grid-floor {
     position: fixed;
-    top: 0;
-    left: 0;
+    bottom: 0;
     width: 100%;
-    height: 2px;
-    background: var(--tk-cyan);
-    z-index: 10001;
-    animation: glitchMove 4s infinite;
-    opacity: 0.5;
-  }
-  @keyframes glitchMove {
-    0% { top: 0; background: var(--tk-cyan); }
-    50% { top: 100%; background: var(--tk-magenta); }
-    100% { top: 0; background: var(--tk-cyan); }
+    height: 300px;
+    background-image: linear-gradient(0deg, rgba(0, 242, 255, 0.15) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0, 242, 255, 0.15) 1px, transparent 1px);
+    background-size: 40px 40px;
+    transform: perspective(500px) rotateX(60deg);
+    transform-origin: bottom;
+    z-index: -1;
+    mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
   }
 </style>
-
-<script>
-  (function() {
-    console.log("🎬 Mode Craftok (TikTok Style) Activé.");
-    
-    // Change le loader en logo tiktok/vibe
-    const loader = document.getElementById('loader-star');
-    if(loader) {
-      loader.innerHTML = "🎬";
-      loader.style.textShadow = "3px 0 #ff0050, -3px 0 #00f2ea";
-    }
-
-    // Animation discrète sur les liens
-    document.querySelectorAll('.markdown-section a').forEach(a => {
-      a.style.borderBottom = "2px solid var(--tk-cyan)";
-      a.onmouseover = () => a.style.color = "var(--tk-magenta)";
-      a.onmouseout = () => a.style.color = "var(--theme-color)";
-    });
-  })();
-</script>
