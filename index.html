@@ -48,6 +48,24 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
+    /* Nettoyage de l'aperçu de recherche */
+    .search .search-results .matching-post em {
+      color: var(--accent-color) !important; /* Surligne le mot trouvé */
+      font-style: normal;
+      font-weight: bold;
+    }
+
+    /* Évite que les gros blocs de markdown ne cassent la sidebar */
+    .search .search-results .matching-post p {
+      font-size: 0.85rem !important;
+      color: #ffb3c6 !important;
+      max-height: 40px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
     
     ::selection { background: var(--accent-color); color: #fff; }
 
