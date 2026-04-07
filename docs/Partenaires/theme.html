@@ -246,6 +246,53 @@
     background: var(--gold-border) !important;
     color: #000 !important;
   }
+  /* --- DESTRUCTION RADICALE DU GLOW ROUGE SUR LES TITRES --- */
+
+  /* 1. On réinitialise TOUS les titres et leurs ombres */
+  .markdown-section h1, 
+  .markdown-section h2, 
+  .markdown-section h3, 
+  .markdown-section h4, 
+  .markdown-section h5, 
+  .markdown-section h6 {
+    /* On force une ombre Or/Bleu et on écrase l'ancienne */
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.4) !important; 
+    color: var(--heading-color) !important;
+  }
+
+  /* 2. FIX DE L'ICÔNE AVANT LE TITRE (L'étoile ✨ qui brille en rouge) */
+  .markdown-section h2::before {
+    content: "⚔️ " !important; /* On change l'étoile par une épée pour SAO */
+    color: var(--heading-color) !important;
+    /* On tue le glow jaune/rouge de l'étoile originale */
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.8) !important; 
+  }
+
+  /* 3. FIX DU SOULIGNAGE (La ligne rouge sous les titres) */
+  .markdown-section h2 {
+    border-bottom: 2px solid var(--gold-border) !important;
+    box-shadow: 0 4px 10px -5px rgba(212, 175, 55, 0.3) !important; /* Lueur sous la ligne */
+  }
+
+  /* 4. SÉCURITÉ AU SURVOL (Hover) */
+  .markdown-section h1:hover, 
+  .markdown-section h2:hover, 
+  .markdown-section h3:hover {
+    text-shadow: 0 0 20px var(--heading-color) !important;
+    color: #fff !important;
+  }
+
+  /* 5. FIX DES MOTS EN GRAS (Strong) qui pourraient avoir gardé un glow */
+  .markdown-section strong {
+    color: #fff !important;
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.4) !important; /* Glow Azur pour le gras */
+  }
+
+  /* 6. FIX DES LIENS (L'ombre portée des liens) */
+  .markdown-section a {
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
 </style>
 
 <!-- HTML SUPPLEMENTAIRE -->
