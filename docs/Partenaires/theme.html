@@ -259,6 +259,92 @@
       border: 1px solid var(--heading-color) !important;
     }
   }
+  /* ============================================================
+     FORCE RESET : SUPPRESSION TOTALE DU ROUGE / ROSE AU SURVOL
+     ============================================================ */
+
+  /* 1. On cible les titres ET les liens cachés à l'intérieur des titres */
+  .markdown-section h1:hover, .markdown-section h1 a:hover,
+  .markdown-section h2:hover, .markdown-section h2 a:hover,
+  .markdown-section h3:hover, .markdown-section h3 a:hover,
+  .markdown-section h4:hover, .markdown-section h4 a:hover,
+  .markdown-section a:hover {
+    /* On écrase l'ombre rose par une ombre Dorée (SAO) */
+    text-shadow: 0 0 15px rgba(255, 223, 0, 0.7) !important; 
+    color: #ffffff !important;
+    border-bottom-color: var(--heading-color) !important;
+    text-decoration: none !important;
+  }
+
+  /* 2. On tue l'ombre rouge sur les icônes (épée/étoile) au survol */
+  .markdown-section h2:hover::before, 
+  .markdown-section h1:hover::before {
+    text-shadow: 0 0 20px var(--heading-color) !important;
+    color: var(--heading-color) !important;
+  }
+
+  /* 3. On s'assure que le gras (strong) ne brille pas en rose */
+  .markdown-section strong:hover {
+    text-shadow: 0 0 10px var(--accent-color) !important;
+  }
+
+  /* 4. On répare le bouton de copie de code qui devient souvent rose */
+  .docsify-copy-code-button:hover {
+    background: var(--heading-color) !important;
+    color: #000 !important;
+    box-shadow: 0 0 15px var(--heading-color) !important;
+  }
+
+  /* ============================================================
+     COMPATIBILITÉ MOBILE (INDISPENSABLE)
+     ============================================================ */
+  @media screen and (max-width: 768px) {
+    /* Recentrer le contenu */
+    .content {
+      left: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      position: relative !important;
+      display: block !important;
+    }
+
+    /* Ajuster la zone de texte */
+    .markdown-section {
+      padding: 60px 20px 30px 20px !important; /* Espace pour le bouton menu */
+      max-width: 100% !important;
+    }
+
+    /* Fix du Menu Latéral sur mobile */
+    .sidebar {
+      background-color: #050a14 !important; /* Bleu SAO */
+      border-right: 1px solid var(--border-color) !important;
+      box-shadow: 10px 0 30px rgba(0,0,0,0.8) !important;
+      z-index: 1000 !important;
+    }
+
+    /* Le bouton menu (Toggle) en bas à gauche */
+    .sidebar-toggle {
+      background: rgba(5, 10, 20, 0.9) !important;
+      border: 1px solid var(--heading-color) !important;
+      bottom: 20px !important;
+      left: 20px !important;
+      width: 46px !important;
+      height: 46px !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100 !important;
+    }
+
+    /* Les 3 barres du bouton menu passent en OR */
+    .sidebar-toggle span {
+      background-color: var(--heading-color) !important;
+      width: 20px !important;
+      height: 2px !important;
+      margin: 4px 0 !important;
+    }
+  }
 </style>
 
 <!-- HTML injecté pour l'ambiance -->
