@@ -1,170 +1,209 @@
-<!-- 
-  THEME.HTML - INTEGRITY SHAPE v2
-  Ce thème modifie la structure géométrique du site.
--->
-
 <style>
   :root {
-    --bg-color: #040812;
-    --text-color: #d1d9e6;
-    --heading-color: #ffcf40; /* Or Pur */
-    --accent-color: #00b4ff;  /* Bleu Empyrée */
-    --border-color: rgba(255, 207, 64, 0.4);
-    
-    /* Variables de forme */
-    --sidebar-width: 280px;
-    --panel-bg: rgba(10, 20, 40, 0.85);
+    --bg-color: #03060b;
+    --text-color: #e3f2fd;
+    --heading-color: #ffd700;
+    --accent-color: #00e5ff;
+    --gold-border: #d4af37;
+    --panel-bg: rgba(5, 15, 30, 0.85);
   }
 
-  /* 1. RÉORGANISATION GÉOMÉTRIQUE DU SITE */
+  /* 1. RESET COMPLET DE LA STRUCTURE DOCSIFY */
   
-  /* On décolle la sidebar du bord et on lui donne une forme biseautée */
-  .sidebar {
-    left: 20px !important;
-    top: 20px !important;
-    height: calc(100vh - 40px) !important;
-    width: var(--sidebar-width) !important;
-    background: var(--panel-bg) !important;
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border-color) !important;
-    border-radius: 0px !important;
-    /* Coupe biseautée type SAO sur les coins */
-    clip-path: polygon(0 0, 100% 0, 100% 95%, 85% 100%, 0 100%);
-    box-shadow: 0 0 30px rgba(0, 180, 255, 0.1) !important;
+  body {
+    background-color: var(--bg-color) !important;
+    overflow-x: hidden;
   }
 
-  /* On centre le contenu dans une "Plaque d'Armure" flottante */
+  /* On transforme la Sidebar en Panneau Flottant (Aile gauche) */
+  .sidebar {
+    position: fixed !important;
+    top: 25px !important;
+    left: 20px !important;
+    height: calc(100vh - 50px) !important;
+    width: 280px !important;
+    background: var(--panel-bg) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--gold-border) !important;
+    border-radius: 0 !important;
+    z-index: 100;
+    /* Forme biseautée unique (Style UI SAO) */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 80% 100%, 0% 100%);
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.2) !important;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  /* On transforme le Contenu en Plaque de Cristal (Bouclier droit) */
   .content {
-    left: calc(var(--sidebar-width) + 60px) !important;
-    right: 40px !important;
-    top: 20px !important;
-    transition: all 0.3s ease;
+    position: static !important;
+    margin-left: 330px !important; /* Espace pour la sidebar + marge */
+    padding-top: 25px !important;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background: transparent !important;
   }
 
   .markdown-section {
     max-width: 900px !important;
-    margin: 0 auto !important;
-    background: rgba(255, 255, 255, 0.03) !important;
-    padding: 60px !important;
-    border: 1px solid rgba(255, 207, 64, 0.2) !important;
+    width: 90% !important;
+    margin: 0 !important;
+    background: var(--panel-bg) !important;
+    padding: 50px !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    backdrop-filter: blur(10px);
+    /* Forme hexagonale étirée */
+    clip-path: polygon(5% 0%, 95% 0%, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0% 95%, 0% 5%);
+    box-shadow: 0 10px 50px rgba(0,0,0,0.8);
     position: relative;
-    /* Forme octogonale allongée */
-    clip-path: polygon(3% 0, 97% 0, 100% 5%, 100% 95%, 97% 100%, 3% 100%, 0 95%, 0 5%);
-    box-shadow: 0 10px 50px rgba(0,0,0,0.5);
   }
 
-  /* Ajout de coins décoratifs dorés sur la plaque de contenu */
-  .markdown-section::before, .markdown-section::after {
+  /* 2. ÉLÉMENTS DÉCORATIFS (OR ET BLEU) */
+
+  /* Coins dorés sur le panneau principal */
+  .markdown-section::before {
     content: "";
     position: absolute;
-    width: 40px;
-    height: 40px;
-    border: 2px solid var(--heading-color);
-    pointer-events: none;
-  }
-  .markdown-section::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
-  .markdown-section::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
-
-  /* 2. EFFETS VISUELS DE FOND */
-  .animated-background {
-    background: radial-gradient(circle at 50% 50%, #0a1e3d 0%, #02050a 100%) !important;
-  }
-  .animated-background::before, .animated-background::after { display: none !important; }
-
-  /* Grille de visée "System Call" en fond */
-  .integrity-grid {
-    position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background-image: 
-      linear-gradient(rgba(0, 180, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 180, 255, 0.05) 1px, transparent 1px);
-    background-size: 100px 100px;
-    z-index: -1;
-    mask-image: radial-gradient(circle, black 30%, transparent 80%);
+    border: 2px solid var(--gold-border);
+    clip-path: polygon(0 0, 15% 0, 0 15%, 85% 100%, 100% 100%, 100% 85%);
+    pointer-events: none;
+    opacity: 0.5;
   }
 
-  /* 3. TYPOGRAPHIE ET COULEURS */
+  /* Titre Solus Wiki dans la sidebar */
   .sidebar > h1 {
-    font-family: 'Georgia', serif; /* Plus noble */
-    letter-spacing: 3px;
-    color: var(--heading-color) !important;
-    text-shadow: 0 0 10px rgba(255, 207, 64, 0.5) !important;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900 !important;
+    text-shadow: 0 0 10px var(--heading-color) !important;
+    letter-spacing: 2px;
+    margin-top: 30px !important;
+    border-bottom: 2px solid var(--gold-border) !important;
   }
 
+  /* Liens de la sidebar */
   .sidebar-nav ul li a {
-    color: #a0aec0 !important;
-    border-left: 2px solid transparent;
-    margin-bottom: 5px;
+    color: #b0bec5 !important;
+    border-left: 3px solid transparent !important;
+    padding: 12px 20px !important;
+    margin: 5px 10px !important;
+    background: rgba(255, 255, 255, 0.02);
   }
 
   .sidebar-nav ul li.active > a {
-    background: linear-gradient(90deg, rgba(255, 207, 64, 0.2), transparent) !important;
-    border-left: 3px solid var(--heading-color) !important;
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.3), transparent) !important;
     color: #fff !important;
+    border-left: 3px solid var(--heading-color) !important;
     box-shadow: none !important;
   }
 
-  /* Titres SAO Style */
+  /* 3. EFFETS DE FOND (SACRED ARTS) */
+
+  .animated-background {
+    background: radial-gradient(circle at 70% 30%, #0a1e3d 0%, #03060b 100%) !important;
+  }
+  .animated-background::before, .animated-background::after { display: none !important; }
+
+  /* Cercle de Sacred Art qui tourne derrière le contenu */
+  .sacred-circle {
+    position: fixed;
+    bottom: -150px;
+    right: -150px;
+    width: 600px;
+    height: 600px;
+    border: 2px solid rgba(0, 229, 255, 0.1);
+    border-radius: 50%;
+    z-index: -1;
+    animation: rotate-sacred 20s linear infinite;
+  }
+  .sacred-circle::after {
+    content: "SYSTEM CALL • GENERATE ELEMENT • CRYSTAL •";
+    position: absolute;
+    top: 10px; left: 10px; right: 10px; bottom: 10px;
+    border: 1px dashed rgba(212, 175, 55, 0.2);
+    border-radius: 50%;
+    color: rgba(0, 229, 255, 0.2);
+    font-size: 10px;
+    text-align: center;
+    line-height: 580px;
+    letter-spacing: 5px;
+  }
+
+  @keyframes rotate-sacred {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* 4. FIX MARKDOWN (PAS DE ROUGE) */
+  
   .markdown-section h1 {
-    font-size: 3rem !important;
-    background: linear-gradient(to bottom, #fff 40%, var(--heading-color) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--heading-color) !important;
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.5) !important;
     text-align: center;
   }
 
   .markdown-section h2 {
-    border-bottom: 2px solid var(--heading-color) !important;
-    padding-bottom: 10px;
-    display: flex;
-    align-items: center;
-  }
-  .markdown-section h2::after {
-    content: "";
-    flex-grow: 1;
-    height: 1px;
-    background: linear-gradient(90deg, var(--heading-color), transparent);
-    margin-left: 20px;
+    border-bottom: 1px solid var(--gold-border) !important;
+    color: #fff !important;
   }
 
-  /* 4. ÉLÉMENTS DE SYSTÈME (MARKDOWN) */
+  .markdown-section hr {
+    background: linear-gradient(90deg, transparent, var(--gold-border), transparent) !important;
+    height: 1px !important;
+    border: none !important;
+  }
+
   .markdown-section code {
-    background: rgba(0, 180, 255, 0.1) !important;
+    background: rgba(0, 229, 255, 0.1) !important;
     color: var(--accent-color) !important;
     border: 1px solid var(--accent-color) !important;
-    border-radius: 0 !important;
-    clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-    padding: 3px 15px !important;
   }
 
-  /* Bouton Partenaire (Si lien) */
-  .markdown-section a {
+  .markdown-section table {
+    border: 1px solid var(--gold-border) !important;
+  }
+  .markdown-section table th {
+    background: rgba(212, 175, 55, 0.2) !important;
     color: var(--heading-color) !important;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 2px 5px;
-    transition: 0.3s;
-  }
-  .markdown-section a:hover {
-    background: var(--heading-color);
-    color: #000 !important;
   }
 
-  /* Scrollbar fine Gold */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-thumb { background: var(--heading-color) !important; }
+  /* 5. MOBILE FIX */
+  @media screen and (max-width: 1000px) {
+    .sidebar {
+      left: -300px !important; /* Masquée par défaut sur petit écran */
+    }
+    body:not(.close) .sidebar {
+      left: 0 !important;
+      width: 280px !important;
+      clip-path: none !important;
+    }
+    .content {
+      margin-left: 0 !important;
+    }
+    .markdown-section {
+      width: 95% !important;
+      padding: 30px 15px !important;
+      clip-path: none !important;
+    }
+  }
 
-  /* Responsive Fix */
-  @media screen and (max-width: 768px) {
-    .sidebar { left: 0 !important; top: 0 !important; height: 100% !important; clip-path: none !important; }
-    .content { left: 0 !important; right: 0 !important; top: 0 !important; }
-    .markdown-section { clip-path: none !important; padding: 20px !important; }
+  /* Fix couleur de la barre de recherche */
+  .sidebar .search input {
+    color: var(--accent-color) !important;
+    border: 1px solid var(--gold-border) !important;
+    background: rgba(0,0,0,0.5) !important;
   }
 </style>
 
-<!-- HTML DE STRUCTURE -->
-<div class="integrity-grid"></div>
+<!-- HTML SUPPLEMENTAIRE -->
+<div class="sacred-circle"></div>
+<!-- Ligne de scan "System Call" -->
+<div style="position: fixed; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--accent-color), transparent); opacity: 0.3; z-index: 1000; animation: scanline 4s linear infinite;"></div>
 
-<!-- Cercles de Sacred Arts en fond -->
-<div style="position: fixed; bottom: -100px; right: -100px; width: 400px; height: 400px; border: 2px solid rgba(0, 180, 255, 0.1); border-radius: 50%; pointer-events: none;"></div>
-<div style="position: fixed; bottom: -50px; right: -50px; width: 300px; height: 300px; border: 1px solid rgba(255, 207, 64, 0.1); border-radius: 50%; pointer-events: none;"></div>
+<style>
+@keyframes scanline {
+  0% { top: 0; }
+  100% { top: 100vh; }
+}
+</style>
