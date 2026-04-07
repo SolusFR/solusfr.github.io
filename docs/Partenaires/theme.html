@@ -194,6 +194,58 @@
     border: 1px solid var(--gold-border) !important;
     background: rgba(0,0,0,0.5) !important;
   }
+  /* --- FIX HOVER & GLOW (ANTI-BORDEAUX FORCE) --- */
+
+  /* 1. Fix des titres Markdown au survol (ton image 1) */
+  .markdown-section h1:hover, 
+  .markdown-section h2:hover, 
+  .markdown-section h3:hover {
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.8) !important; /* Glow Or */
+    color: var(--heading-color) !important;
+  }
+
+  /* Si tes titres ont des bordures/soulignages au survol */
+  .markdown-section h2::after {
+    background: linear-gradient(90deg, var(--gold-border), transparent) !important;
+  }
+
+  /* 2. Fix du menu latéral au survol (ton image 2) */
+  .sidebar-nav ul li a:hover {
+    background-color: rgba(212, 175, 55, 0.15) !important; /* Fond Or très léger */
+    color: #fff !important;
+    text-shadow: 0 0 10px var(--heading-color) !important;
+    box-shadow: inset 4px 0 0 var(--heading-color) !important; /* Ligne à gauche */
+    transform: translateX(5px) !important;
+  }
+
+  /* 3. Fix du fond des blocs (ton image 2 - le rectangle sombre) */
+  /* Si c'est un lien ou un code qui devient rouge sombre */
+  .markdown-section code, 
+  .markdown-section a {
+    background-color: rgba(0, 229, 255, 0.05) !important;
+  }
+  
+  .markdown-section a:hover {
+    background-color: rgba(212, 175, 55, 0.2) !important; /* Fond Or au survol des liens */
+    color: #fff !important;
+    border-bottom: 1px solid var(--heading-color) !important;
+  }
+
+  /* 4. Suppression de l'ombre rose sur le titre principal de la sidebar */
+  .sidebar > h1:hover {
+    text-shadow: 0 0 20px var(--heading-color) !important;
+  }
+
+  /* 5. Fix des boutons de copie de code (si présents) */
+  .docsify-copy-code-button {
+    background: var(--panel-bg) !important;
+    color: var(--gold-border) !important;
+    border: 1px solid var(--gold-border) !important;
+  }
+  .docsify-copy-code-button:hover {
+    background: var(--gold-border) !important;
+    color: #000 !important;
+  }
 </style>
 
 <!-- HTML SUPPLEMENTAIRE -->
