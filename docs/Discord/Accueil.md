@@ -10,6 +10,7 @@ L'objectif de cette section est de vous fournir des éléments que vous pouvez *
 
 ### 📋 Documents Administratifs
 * **[📜 Règlement Officiel](https://solus.lifestealmc.fr/#/docs/Discord/Reglement)** : Notre charte universelle prête à l'emploi. Ne perdez plus de temps à rédiger, utilisez notre lien direct pour vos membres.
+* **[📜 Envoyer le Règlement sur votre propre serveur Discord](https://solus.lifestealmc.fr/#/docs/Discord/send-reglement.html)**
 * **Charte de Modération (Bientôt)** : Un guide déontologique pour vos modérateurs (comment agir, quand sanctionner).
 
 ### 🛡️ Sécurité & Protection (En cours 🚧)
