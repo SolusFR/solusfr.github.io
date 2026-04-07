@@ -1,145 +1,171 @@
+<!-- 
+  THEME.HTML - INTEGRITY PROTOCOL v1 (SAO ALICIZATION STYLE)
+  Inspiré par Alice Synthesis Thirty et les Chevaliers de l'Intégrité.
+-->
+
 <style>
   :root {
-    --bg-color: #03060b;
-    --text-color: #e3f2fd;
-    --heading-color: #ffd700;
-    --accent-color: #00e5ff;
-    --gold-border: #d4af37;
-    --panel-bg: rgba(5, 15, 30, 0.95);
+    /* Palette Divine : Or, Blanc, Bleu Azur */
+    --bg-color: #050a14;           /* Bleu nuit très profond */
+    --text-color: #e0f2f1;         /* Blanc cassé cristallin */
+    --heading-color: #ffdf00;      /* Or Royal */
+    --accent-color: #00d2ff;       /* Bleu Azur (Sacred Arts) */
+    --accent-hover: #ffffff;
+    --border-color: #c5a059;       /* Bronze/Or vieilli */
+    --star-color: #ffdf00;
+
+    /* Sidebar */
+    --nav-line-color: rgba(255, 223, 0, 0.2);
+    --nav-hover-bg: rgba(255, 223, 0, 0.05);
   }
 
-  /* --- 1. BASE & NETTOYAGE --- */
-  body { background-color: var(--bg-color) !important; }
-  .animated-background { background: #03060b !important; }
-  .animated-background::before, .animated-background::after { display: none !important; }
-
-  /* --- 2. STRUCTURE DESKTOP (PC) --- */
-  @media screen and (min-width: 769px) {
-    .sidebar {
-      position: fixed !important;
-      top: 20px !important;
-      left: 20px !important;
-      height: calc(100vh - 40px) !important;
-      width: 280px !important;
-      background: var(--panel-bg) !important;
-      backdrop-filter: blur(15px);
-      border: 1px solid var(--gold-border) !important;
-      clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 85% 100%, 0% 100%);
-      z-index: 100;
-    }
-    .content {
-      margin-left: 320px !important;
-      padding: 40px !important;
-    }
-    .markdown-section {
-      max-width: 900px !important;
-      background: var(--panel-bg) !important;
-      padding: 50px !important;
-      border: 1px solid rgba(212, 175, 55, 0.3) !important;
-      clip-path: polygon(3% 0%, 97% 0%, 100% 5%, 100% 95%, 97% 100%, 3% 100%, 0% 95%, 0% 5%);
-    }
+  /* 1. NETTOYAGE DU FOND BORDEAUX */
+  .animated-background::before, 
+  .animated-background::after {
+    display: none !important;
   }
 
-  /* --- 3. STRUCTURE MOBILE (FIX) --- */
-  @media screen and (max-width: 768px) {
-    /* On laisse Docsify gérer la position, on change juste le look */
-    .sidebar {
-      background-color: var(--panel-bg) !important;
-      border-right: 1px solid var(--gold-border) !important;
-      box-shadow: 10px 0 30px rgba(0,0,0,0.8) !important;
-      left: 0 !important; /* Important pour Docsify mobile */
-      transition: transform 0.3s ease !important;
-    }
-
-    .content {
-      left: 0 !important;
-      margin-left: 0 !important;
-      width: 100% !important;
-      padding: 0 !important;
-    }
-
-    .markdown-section {
-      padding: 20px 15px !important;
-      background: transparent !important; /* Plus léger sur mobile */
-      border: none !important;
-      clip-path: none !important; /* On retire la forme complexe sur mobile */
-    }
-
-    /* Fix du bouton de menu (Toggle) */
-    .sidebar-toggle {
-      background: var(--bg-color) !important;
-      border: 1px solid var(--gold-border) !important;
-      width: 44px !important;
-      height: 44px !important;
-      bottom: 20px !important;
-      left: 20px !important;
-      z-index: 1001 !important;
-      display: flex !important;
-      align-items: center;
-      justify-content: center;
-    }
+  /* 2. NOUVEAU FOND : PARTICULES D'OR ET LUEUR DIVINE */
+  .animated-background {
+    background: radial-gradient(circle at center, #0a1931 0%, #050a14 100%) !important;
+    overflow: hidden;
   }
 
-  /* --- 4. STYLE INTERNE (ANTI-ROUGE) --- */
+  /* Effet de lueur divine qui descend du haut */
+  .integrity-light {
+    position: fixed;
+    top: -10%; left: 0; width: 100%; height: 50%;
+    background: radial-gradient(ellipse at center, rgba(255, 223, 0, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+    animation: divine-pulse 8s infinite alternate ease-in-out;
+  }
 
-  /* Titres */
-  .markdown-section h1, .markdown-section h2, .markdown-section h3 {
+  @keyframes divine-pulse {
+    from { opacity: 0.3; transform: translateY(0); }
+    to { opacity: 0.6; transform: translateY(20px); }
+  }
+
+  /* 3. STYLE DES TITRES (PREMIUM GOLD) */
+  .markdown-section h1 {
     color: var(--heading-color) !important;
-    text-shadow: 0 0 12px rgba(212, 175, 55, 0.4) !important;
+    text-shadow: 0 0 15px rgba(255, 223, 0, 0.5) !important;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: 5px;
+    border-bottom: none !important;
   }
-  .markdown-section h2::before { content: "⚔️ " !important; color: var(--heading-color) !important; text-shadow: none !important; }
-  .markdown-section h2 { border-bottom: 1px solid var(--gold-border) !important; }
 
-  /* Écrase le Rose/Rouge au Hover (Menu) */
+  .markdown-section h1::after {
+    content: "";
+    display: block;
+    width: 150px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--heading-color), transparent);
+    margin: 10px auto;
+  }
+
+  .markdown-section h2 {
+    color: #ffffff !important;
+    border-left: 4px solid var(--heading-color) !important;
+    border-bottom: 1px solid rgba(255, 223, 0, 0.2) !important;
+    padding-left: 15px !important;
+    background: linear-gradient(90deg, rgba(255, 223, 0, 0.05), transparent);
+    text-transform: none;
+  }
+
+  .markdown-section h2::before {
+    content: "⚔️ " !important;
+    font-size: 0.9rem;
+  }
+
+  /* 4. SIDEBAR : ÉLÉGANCE ROYALE */
+  .sidebar {
+    background-color: rgba(5, 10, 20, 0.95) !important;
+    border-right: 1px solid var(--border-color) !important;
+    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .sidebar > h1 {
+    color: var(--heading-color) !important;
+    text-shadow: 0 0 10px rgba(255, 223, 0, 0.4) !important;
+    border-bottom-color: var(--border-color) !important;
+  }
+
+  .sidebar-nav ul li a {
+    color: #b0bec5 !important;
+    transition: 0.4s;
+  }
+
   .sidebar-nav ul li a:hover {
     color: var(--heading-color) !important;
-    background: rgba(212, 175, 55, 0.1) !important;
-    text-shadow: 0 0 8px var(--heading-color) !important;
+    background: var(--nav-hover-bg) !important;
+    transform: translateX(8px);
   }
+
   .sidebar-nav ul li.active > a {
-    background: linear-gradient(90deg, rgba(212, 175, 55, 0.3), transparent) !important;
+    background: linear-gradient(90deg, var(--border-color), transparent) !important;
     color: #fff !important;
-    border-left: 3px solid var(--heading-color) !important;
+    font-weight: bold !important;
     box-shadow: none !important;
+    border-left: 3px solid #fff;
   }
 
-  /* Markdown Elements */
-  .markdown-section code {
-    background: rgba(0, 229, 255, 0.1) !important;
-    color: var(--accent-color) !important;
-    border: 1px solid var(--accent-color) !important;
-  }
+  /* 5. MARKDOWN FIX (FINI LE ROUGE) */
+  
+  /* Séparateur HR Royal */
   .markdown-section hr {
-    background: linear-gradient(90deg, transparent, var(--gold-border), transparent) !important;
-    height: 1px !important;
     border: none !important;
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent) !important;
+    margin: 40px 0 !important;
+    opacity: 0.8;
   }
-  .markdown-section table th { background: rgba(212, 175, 55, 0.2) !important; color: var(--heading-color) !important; }
-  .markdown-section table td { border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important; }
 
-  /* Barre de recherche */
-  .sidebar .search input {
+  /* Code en ligne (Style System Call) */
+  .markdown-section code {
+    background-color: rgba(0, 210, 255, 0.1) !important;
     color: var(--accent-color) !important;
-    border: 1px solid var(--gold-border) !important;
-    background: rgba(0,0,0,0.5) !important;
+    border: 1px solid rgba(0, 210, 255, 0.3) !important;
+    border-radius: 4px;
   }
 
-  /* --- 5. EFFETS VISUELS --- */
-  .sacred-circle {
-    position: fixed; bottom: -100px; right: -100px; width: 500px; height: 500px;
-    border: 1px solid rgba(0, 229, 255, 0.15); border-radius: 50%; z-index: -1;
-    animation: rotate-sacred 30s linear infinite;
+  /* Blocs de code (System Console) */
+  .markdown-section pre {
+    border: 1px solid var(--border-color) !important;
+    background: rgba(5, 10, 20, 0.8) !important;
+    border-left: 4px solid var(--heading-color) !important;
   }
-  @keyframes rotate-sacred { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-  .scanline {
-    position: fixed; top: 0; left: 0; width: 100%; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-    opacity: 0.1; z-index: 1000; animation: scan 8s linear infinite;
+  /* Tableaux Partenaires (Premium) */
+  .markdown-section table {
+    border: 1px solid var(--border-color) !important;
+    background: rgba(255, 223, 0, 0.02) !important;
   }
-  @keyframes scan { 0% { top: 0; } 100% { top: 100vh; } }
+  .markdown-section table th {
+    background-color: rgba(197, 160, 89, 0.2) !important;
+    color: var(--heading-color) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+  }
+  .markdown-section table td {
+    border-bottom: 1px solid rgba(197, 160, 89, 0.1) !important;
+  }
+
+  /* Citations / Blockquotes */
+  .markdown-section blockquote {
+    border-left: 4px solid var(--heading-color) !important;
+    background: rgba(255, 223, 0, 0.03) !important;
+    color: #cfd8dc !important;
+  }
+
+  /* Scrollbar Or */
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-color) !important;
+  }
 </style>
 
-<!-- HTML -->
-<div class="sacred-circle"></div>
-<div class="scanline"></div>
+<!-- HTML injecté pour l'ambiance -->
+<div class="integrity-light"></div>
+
+<!-- Particules flottantes (Poussière d'étoiles/Sacred Art) -->
+<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; background: url('https://www.transparenttextures.com/patterns/stardust.png'); opacity: 0.3;"></div>
