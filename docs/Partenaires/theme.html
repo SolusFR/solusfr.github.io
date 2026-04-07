@@ -209,6 +209,56 @@
       background-color: var(--heading-color) !important;
     }
   }
+  /* --- DESTRUCTION DU GLOW ROUGE AU SURVOL (HOVER) --- */
+
+  /* 1. On force l'ombre dorée même quand on passe la souris dessus */
+  .markdown-section h1:hover, 
+  .markdown-section h2:hover, 
+  .markdown-section h3:hover,
+  .markdown-section h4:hover {
+    text-shadow: 0 0 20px rgba(255, 223, 0, 0.7) !important; /* Lueur d'Or intense */
+    color: #ffffff !important; /* Le texte devient blanc pur au survol pour l'effet premium */
+  }
+
+  /* 2. On empêche l'icône (épée/étoile) de briller en rouge au survol */
+  .markdown-section h2:hover::before {
+    text-shadow: 0 0 15px var(--heading-color) !important;
+  }
+
+  /* 3. On change la barre de soulignement pour qu'elle ne devienne pas rouge */
+  .markdown-section h2:hover {
+    border-bottom: 2px solid var(--heading-color) !important;
+  }
+
+  /* --- COMPATIBILITÉ MOBILE (FIX MENU & TEXTE) --- */
+  @media screen and (max-width: 768px) {
+    .content {
+      left: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      position: relative !important;
+    }
+    .markdown-section {
+      padding: 40px 15px 20px 15px !important; /* On laisse de la place en haut pour le bouton */
+    }
+    .sidebar {
+      background-color: #050a14 !important;
+      border-right: 1px solid var(--border-color) !important;
+      z-index: 1000 !important;
+    }
+    /* On change la couleur des 3 barres du bouton menu pour qu'elles soient OR */
+    .sidebar-toggle span {
+      background-color: var(--heading-color) !important;
+    }
+    /* On s'assure que le bouton menu reste visible et pas bordeaux */
+    .sidebar-toggle {
+      background: rgba(5, 10, 20, 0.8) !important;
+      bottom: 20px !important;
+      left: 20px !important;
+      border-radius: 50% !important;
+      border: 1px solid var(--heading-color) !important;
+    }
+  }
 </style>
 
 <!-- HTML injecté pour l'ambiance -->
