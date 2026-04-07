@@ -1,6 +1,7 @@
   * **Discord**
     * [Accueil](docs/Discord/Accueil.md)
     * [Reglement](docs/Discord/Reglement.md)
+    * [Send Discord](docs/Discord/send-discord.md)
   * **Minecraft**
     * **Serveur**
       * **Craftok**
