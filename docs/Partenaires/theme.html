@@ -162,6 +162,53 @@
   ::-webkit-scrollbar-thumb {
     background: var(--border-color) !important;
   }
+  /* --- FIX DÉFINITIF DU CONTOUR ROUGE (GLOW) --- */
+
+  /* 1. On écrase l'ombre rouge des titres par une ombre Dorée/Jaune */
+  .markdown-section h1, 
+  .markdown-section h2, 
+  .markdown-section h3, 
+  .markdown-section h4 {
+    text-shadow: 0 0 15px rgba(255, 223, 0, 0.4) !important; /* Glow Or */
+    color: var(--heading-color) !important;
+  }
+
+  /* 2. On retire le soulignage bordeaux qui peut apparaître au survol ou par défaut */
+  .markdown-section h2 {
+    border-bottom: 2px solid var(--border-color) !important;
+    box-shadow: none !important; /* Supprime l'ombre portée sous la ligne */
+  }
+
+  /* 3. Fix de l'icône (l'épée ou l'étoile) qui brille peut-être encore en rouge */
+  .markdown-section h2::before {
+    text-shadow: 0 0 10px var(--heading-color) !important;
+  }
+
+  /* 4. Fix du texte en gras (strong) qui a souvent un glow rouge dans ton index.html */
+  .markdown-section strong {
+    color: #fff !important;
+    text-shadow: 0 0 8px rgba(255, 223, 0, 0.3) !important;
+  }
+
+  /* 5. COMPATIBILITÉ MOBILE (IMPORTANT) */
+  @media screen and (max-width: 768px) {
+    .content {
+      left: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+    }
+    .markdown-section {
+      padding: 20px 15px !important;
+    }
+    .sidebar {
+      background-color: #050a14 !important;
+      border-right: 1px solid var(--border-color) !important;
+    }
+    /* Le bouton menu (toggle) ne doit pas être bordeaux */
+    .sidebar-toggle span {
+      background-color: var(--heading-color) !important;
+    }
+  }
 </style>
 
 <!-- HTML injecté pour l'ambiance -->
