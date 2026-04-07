@@ -5,90 +5,84 @@
     --heading-color: #ffd700;
     --accent-color: #00e5ff;
     --gold-border: #d4af37;
-    --panel-bg: rgba(5, 15, 30, 0.9);
+    --panel-bg: rgba(5, 15, 30, 0.95);
   }
 
-  /* --- 1. STRUCTURE PC (DESKTOP) --- */
-  
+  /* --- 1. BASE & NETTOYAGE --- */
   body { background-color: var(--bg-color) !important; }
+  .animated-background { background: #03060b !important; }
+  .animated-background::before, .animated-background::after { display: none !important; }
 
-  /* Sidebar Flottante PC */
-  .sidebar {
-    position: fixed !important;
-    top: 20px !important;
-    left: 20px !important;
-    height: calc(100vh - 40px) !important;
-    width: 280px !important;
-    background: var(--panel-bg) !important;
-    backdrop-filter: blur(15px);
-    border: 1px solid var(--gold-border) !important;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 85% 100%, 0% 100%);
-    z-index: 100;
-  }
-
-  /* Contenu Flottant PC */
-  .content {
-    margin-left: 320px !important; /* Espace pour la sidebar */
-    padding: 40px !important;
-    transition: all 0.3s ease;
-  }
-
-  .markdown-section {
-    max-width: 900px !important;
-    background: var(--panel-bg) !important;
-    padding: 50px !important;
-    border: 1px solid rgba(212, 175, 55, 0.3) !important;
-    clip-path: polygon(3% 0%, 97% 0%, 100% 5%, 100% 95%, 97% 100%, 3% 100%, 0% 95%, 0% 5%);
-    box-shadow: 0 10px 50px rgba(0,0,0,0.8);
-  }
-
-  /* --- 2. ADAPTATION MOBILE (RESPONSIVE) --- */
-
-  @media screen and (max-width: 1024px) {
-    /* On annule les marges et les biseaux qui mangent l'espace */
-    .content {
-      margin-left: 0 !important;
-      padding: 10px !important;
-      width: 100% !important;
-    }
-
+  /* --- 2. STRUCTURE DESKTOP (PC) --- */
+  @media screen and (min-width: 769px) {
     .sidebar {
-      left: -300px !important; /* On cache la sidebar par défaut */
-      top: 0 !important;
-      height: 100% !important;
+      position: fixed !important;
+      top: 20px !important;
+      left: 20px !important;
+      height: calc(100vh - 40px) !important;
       width: 280px !important;
-      clip-path: none !important; /* Pas de biseau sur mobile */
+      background: var(--panel-bg) !important;
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--gold-border) !important;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 85% 100%, 0% 100%);
+      z-index: 100;
+    }
+    .content {
+      margin-left: 320px !important;
+      padding: 40px !important;
+    }
+    .markdown-section {
+      max-width: 900px !important;
+      background: var(--panel-bg) !important;
+      padding: 50px !important;
+      border: 1px solid rgba(212, 175, 55, 0.3) !important;
+      clip-path: polygon(3% 0%, 97% 0%, 100% 5%, 100% 95%, 97% 100%, 3% 100%, 0% 95%, 0% 5%);
+    }
+  }
+
+  /* --- 3. STRUCTURE MOBILE (FIX) --- */
+  @media screen and (max-width: 768px) {
+    /* On laisse Docsify gérer la position, on change juste le look */
+    .sidebar {
+      background-color: var(--panel-bg) !important;
+      border-right: 1px solid var(--gold-border) !important;
+      box-shadow: 10px 0 30px rgba(0,0,0,0.8) !important;
+      left: 0 !important; /* Important pour Docsify mobile */
+      transition: transform 0.3s ease !important;
     }
 
-    /* Quand on ouvre la sidebar sur mobile */
-    body:not(.close) .sidebar {
+    .content {
       left: 0 !important;
-      box-shadow: 10px 0 30px rgba(0,0,0,0.9) !important;
+      margin-left: 0 !important;
+      width: 100% !important;
+      padding: 0 !important;
     }
 
     .markdown-section {
-      padding: 30px 15px !important;
-      width: 100% !important;
-      clip-path: none !important; /* On enlève la forme octogonale pour voir tout le texte */
-      border-left: none !important;
-      border-right: none !important;
+      padding: 20px 15px !important;
+      background: transparent !important; /* Plus léger sur mobile */
+      border: none !important;
+      clip-path: none !important; /* On retire la forme complexe sur mobile */
     }
 
-    .markdown-section h1 { font-size: 1.8rem !important; }
-    .markdown-section h2 { font-size: 1.4rem !important; }
-
-    /* On réduit la taille du cercle magique en fond pour éviter les bugs de scroll horizontal */
-    .sacred-circle {
-      width: 300px;
-      height: 300px;
-      bottom: -50px;
-      right: -50px;
+    /* Fix du bouton de menu (Toggle) */
+    .sidebar-toggle {
+      background: var(--bg-color) !important;
+      border: 1px solid var(--gold-border) !important;
+      width: 44px !important;
+      height: 44px !important;
+      bottom: 20px !important;
+      left: 20px !important;
+      z-index: 1001 !important;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
     }
   }
 
-  /* --- 3. FIX DE TOUS LES ÉLÉMENTS ROUGES / BORDEAUX --- */
+  /* --- 4. STYLE INTERNE (ANTI-ROUGE) --- */
 
-  /* Fix Titres (Plus de lueur rose) */
+  /* Titres */
   .markdown-section h1, .markdown-section h2, .markdown-section h3 {
     color: var(--heading-color) !important;
     text-shadow: 0 0 12px rgba(212, 175, 55, 0.4) !important;
@@ -96,7 +90,7 @@
   .markdown-section h2::before { content: "⚔️ " !important; color: var(--heading-color) !important; text-shadow: none !important; }
   .markdown-section h2 { border-bottom: 1px solid var(--gold-border) !important; }
 
-  /* Fix Sidebar Hovers (Plus de rose) */
+  /* Écrase le Rose/Rouge au Hover (Menu) */
   .sidebar-nav ul li a:hover {
     color: var(--heading-color) !important;
     background: rgba(212, 175, 55, 0.1) !important;
@@ -109,7 +103,7 @@
     box-shadow: none !important;
   }
 
-  /* Fix Markdown elements (Plus de bordeaux) */
+  /* Markdown Elements */
   .markdown-section code {
     background: rgba(0, 229, 255, 0.1) !important;
     color: var(--accent-color) !important;
@@ -120,14 +114,17 @@
     height: 1px !important;
     border: none !important;
   }
-  .markdown-section table, .markdown-section table td { border-color: rgba(212, 175, 55, 0.3) !important; }
   .markdown-section table th { background: rgba(212, 175, 55, 0.2) !important; color: var(--heading-color) !important; }
+  .markdown-section table td { border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important; }
 
-  /* --- 4. DÉCORATIONS SYSTÈME --- */
+  /* Barre de recherche */
+  .sidebar .search input {
+    color: var(--accent-color) !important;
+    border: 1px solid var(--gold-border) !important;
+    background: rgba(0,0,0,0.5) !important;
+  }
 
-  .animated-background { background: #03060b !important; }
-  .animated-background::before, .animated-background::after { display: none !important; }
-
+  /* --- 5. EFFETS VISUELS --- */
   .sacred-circle {
     position: fixed; bottom: -100px; right: -100px; width: 500px; height: 500px;
     border: 1px solid rgba(0, 229, 255, 0.15); border-radius: 50%; z-index: -1;
@@ -135,21 +132,12 @@
   }
   @keyframes rotate-sacred { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-  /* Scanline System Call */
   .scanline {
     position: fixed; top: 0; left: 0; width: 100%; height: 2px;
     background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-    opacity: 0.2; z-index: 1000; animation: scan 6s linear infinite;
+    opacity: 0.1; z-index: 1000; animation: scan 8s linear infinite;
   }
   @keyframes scan { 0% { top: 0; } 100% { top: 100vh; } }
-
-  /* Le bouton menu sur mobile (Toggle) doit être Or/Bleu */
-  .sidebar-toggle {
-    background: rgba(5, 15, 30, 0.8) !important;
-    border: 1px solid var(--gold-border) !important;
-    border-radius: 5px !important;
-  }
-  .sidebar-toggle span { background: var(--heading-color) !important; }
 </style>
 
 <!-- HTML -->
