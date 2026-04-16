@@ -107,3 +107,6 @@ Si vous maîtrisez ces étapes, vous obtiendrez un contrôle quasi total sur vot
 `Perfection Analytique = Mort de l'Humanité.`
 
 À force de voir les gens comme des équations mathématiques et des outils, le concept même de joie, d'amour ou de confiance perdra son sens. Vous serez le roi invaincu sur l'échiquier, mais un roi entouré de morceaux de bois sans vie.
+
+
+**Règle d'or :** La manipulation la plus parfaite est celle que personne, absolument personne, ne soupçonne. Si on vous traite de manipulateur, c'est que vous avez échoué à être comme Ayanokoji.
